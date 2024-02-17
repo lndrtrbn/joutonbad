@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Tournament {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  name          String
+  location      String
+  startDate     DateTime
+  endDate       DateTime
+  prices        Int[]          @default([])
+  minLevel      Level          @default(P12)
+  maxLevel      Level          @default(N1)
+  disciplines   Discipline[]   @default([])
+  links         Link[]
+  registrations Registration[]
+  inChargeId    String         @db.ObjectId
+  inCharge      Player         @relation(fields: [inChargeId], references: [id])
+  freezed       Boolean?       @default(false)
+}
+
+type Link {
+  name          String
+  url           String
+}
+
+model Player {
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  kcId           String?        
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  name           String
+  lastname       String
+  license        String         @unique
+  club           String         @default("REC")
+  registrations  Registration[]
+  inChargeOf     Tournament[]
+  favoriteDevice Device         @default(desktop)
+}
+
+type Partner {
+  name          String
+  lastname      String
+  license       String
+  level         Level
+  club          String         @default("REC")
+}
+
+model Registration {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  discipline    Discipline
+  level         Level
+  sent          Boolean        @default(false)
+  tournament    Tournament     @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  tournamentId  String         @db.ObjectId
+  player        Player         @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  playerId      String         @db.ObjectId
+  partner       Partner?
+  cancelled     String?
+}
+
+enum Device {
+  desktop
+  mobile
+}
+
+enum Discipline {
+  SH
+  SD
+  DH
+  DD
+  DM
+}
+
+enum Level {
+  NC
+  P12
+  P11
+  P10
+  D9
+  D8
+  D7
+  R6
+  R5
+  R4
+  N3
+  N2
+  N1
+}

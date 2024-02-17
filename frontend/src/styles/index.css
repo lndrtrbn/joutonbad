@@ -1,0 +1,29 @@
+@import "./reset.css";
+
+@import url("https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&display=swap");
+
+/* https://tailwindcss.com/docs/guides/vite */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    font-size: 14px;
+    font-family: "Readex Pro";
+    user-select: text;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}

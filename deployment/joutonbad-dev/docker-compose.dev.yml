@@ -1,0 +1,116 @@
+version: "3"
+
+name: joutonbad-dev
+
+volumes:
+  postgres_data:
+  mongo_data:
+
+secrets:
+  postgres_user:
+    file: secrets/postgres_user.txt
+  postgres_pwd:
+    file: secrets/postgres_pwd.txt
+  keycloak_user:
+    file: secrets/keycloak_user.txt
+  keycloak_pwd:
+    file: secrets/keycloak_pwd.txt
+  mongo_pwd:
+    file: secrets/mongo_pwd.txt
+  api_secrets:
+    file: secrets/api_secrets.txt
+
+services:
+  postgresql-dev:
+    container_name: postgresql-dev
+    image: bitnami/postgresql:14.9.0
+    restart: always
+    volumes:
+      - postgres_data:/bitnami/postgresql
+    environment:
+      POSTGRESQL_DATABASE: keycloak
+      POSTGRESQL_USERNAME_FILE: /run/secrets/postgres_user
+      POSTGRESQL_PASSWORD_FILE: /run/secrets/postgres_pwd
+    secrets:
+      - postgres_user
+      - postgres_pwd
+
+  keycloak-dev:
+    container_name: keycloak-dev
+    image: bitnami/keycloak:22.0.1
+    restart: always
+    environment:
+      KEYCLOAK_DATABASE_HOST: postgresql-dev
+      KEYCLOAK_DATABASE_NAME: keycloak
+      KEYCLOAK_DATABASE_USER_FILE: /run/secrets/postgres_user
+      KEYCLOAK_DATABASE_PASSWORD_FILE: /run/secrets/postgres_pwd
+      KEYCLOAK_ADMIN_USER_FILE: /run/secrets/keycloak_user
+      KEYCLOAK_ADMIN_PASSWORD_FILE: /run/secrets/keycloak_pwd
+    ports:
+      - 127.0.0.1:8081:8080
+    depends_on:
+      - postgresql-dev
+    secrets:
+      - postgres_user
+      - postgres_pwd
+      - keycloak_user
+      - keycloak_pwd
+
+  mongo-primary-dev:
+    container_name: mongo-primary-dev
+    image: bitnami/mongodb:4.2.21
+    restart: always
+    environment:
+      MONGODB_ADVERTISED_HOSTNAME: mongo-primary-dev
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_REPLICA_SET_KEY: replicasetkey123
+      MONGODB_ROOT_PASSWORD_FILE: /run/secrets/mongo_pwd
+    volumes:
+      - mongo_data:/bitnami/mongodb
+    ports:
+      - 127.0.0.1:27019:27017
+    secrets:
+      - mongo_pwd
+
+  mongo-secondary-dev:
+    container_name: mongo-secondary-dev
+    image: bitnami/mongodb:4.2.21
+    depends_on:
+      - mongo-primary-dev
+    restart: always
+    environment:
+      MONGODB_ADVERTISED_HOSTNAME: mongo-secondary-dev
+      MONGODB_REPLICA_SET_MODE: secondary
+      MONGODB_REPLICA_SET_KEY: replicasetkey123
+      MONGODB_INITIAL_PRIMARY_HOST: mongo-primary-dev
+      MONGODB_INITIAL_PRIMARY_PORT_NUMBER: 27017
+      MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD_FILE: /run/secrets/mongo_pwd
+    secrets:
+      - mongo_pwd
+
+  api-dev:
+    container_name: api-dev
+    build:
+      context: ../../backend
+      dockerfile: ./Dockerfile
+    image: rec/joutonbad-back-dev
+    restart: always
+    environment:
+      API_PORT: 3000
+      SECRET_NAME: api_secrets
+    ports:
+      - 127.0.0.1:3001:3000
+    secrets:
+      - api_secrets
+    depends_on:
+      - mongo-primary-dev
+
+  app-dev:
+    container_name: app-dev
+    build:
+      context: ../../frontend
+      dockerfile: ./Dockerfile
+    image: rec/joutonbad-front-dev
+    restart: always
+    ports:
+      - 127.0.0.1:8889:80

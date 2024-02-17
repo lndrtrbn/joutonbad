@@ -1,0 +1,17 @@
+import { ReactNode } from "react"
+
+import [component]Style from "./[component].style"
+
+type Props = {
+  children?: ReactNode
+}
+
+export default function [component]({
+  children
+}: Props) {
+  return (
+    <div className={[component]Style.base}>
+      {children}
+    </div>
+  )
+}

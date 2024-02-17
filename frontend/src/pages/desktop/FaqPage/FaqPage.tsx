@@ -1,0 +1,30 @@
+import { FAQ } from "../../../utils/faq";
+import FaqPageStyle from "./FaqPage.style";
+import Title from "../../../components/Title/Title";
+import Separator from "../../../components/Separator/Separator";
+
+export default function FaqPage() {
+  return (
+    <div>
+      <div>
+        <Title size="3xl">Foire aux questions</Title>
+      </div>
+
+      <Separator />
+
+      <div className={FaqPageStyle.base}>
+        {FAQ.map((faq, i) => (
+          <section key={i}>
+            <Title size="xl">{faq.question}</Title>
+
+            {faq.answers.map((answer, i) => (
+              <Title key={i} subtitle>
+                {answer}
+              </Title>
+            ))}
+          </section>
+        ))}
+      </div>
+    </div>
+  );
+}
