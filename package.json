@@ -1,0 +1,11 @@
+{
+  "name": "joutonbad",
+  "version": "1.0.0",
+  "author": "Landry Trebon",
+  "scripts": {
+    "prettier": "prettier . --write"
+  },
+  "devDependencies": {
+    "prettier": "3.2.5"
+  }
+}
