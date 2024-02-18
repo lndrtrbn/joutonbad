@@ -61,7 +61,9 @@ export class RegistrationService {
    * @param payload Data of the registration to create.
    * @returns The created registration.
    */
-  async create(payload: RegistrationCreatePayload): Promise<Registration> {
+  async create(
+    payload: RegistrationCreatePayload,
+  ): Promise<Registration> {
     const player = await this.playerService.getOneWhere({
       license: trimLicense(payload.playerLicense),
     });
@@ -70,21 +72,24 @@ export class RegistrationService {
       throw new NoPlayerFoundException();
     }
 
-    const existingRegistration = await this.prisma.registration.findFirst({
-      where: {
-        player: {
-          license: player.license,
+    const existingRegistration =
+      await this.prisma.registration.findFirst({
+        where: {
+          player: {
+            license: player.license,
+          },
+          tournamentId: payload.tournamentId,
+          discipline: payload.discipline,
+          cancelled: {
+            isSet: false,
+          },
         },
-        tournamentId: payload.tournamentId,
-        discipline: payload.discipline,
-        cancelled: {
-          isSet: false,
-        },
-      },
-    });
+      });
 
     if (existingRegistration) {
-      this.logger.error(`Player ${payload.playerLicense} already registered`);
+      this.logger.error(
+        `Player ${payload.playerLicense} already registered`,
+      );
       throw new AlreadyRegisteredException();
     }
 
@@ -122,7 +127,9 @@ export class RegistrationService {
         },
       },
     };
-    const registrations: Prisma.RegistrationCreateInput[] = [registration];
+    const registrations: Prisma.RegistrationCreateInput[] = [
+      registration,
+    ];
 
     if (payload.partner) {
       const partner = await this.prisma.player.findUnique({

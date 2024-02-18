@@ -40,7 +40,7 @@ export default function InputSelect<T>({
 
   const filteredItems = useMemo(() => {
     return items.filter((item) =>
-      toLabel(item).toLowerCase().includes(search.toLowerCase())
+      toLabel(item).toLowerCase().includes(search.toLowerCase()),
     );
   }, [items, search, toLabel]);
 

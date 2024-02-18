@@ -61,14 +61,14 @@ export default function RegistrationsList({
     if (selectedPlayer) {
       filteredRegistrations = [
         ...filteredRegistrations.filter(
-          (reg) => reg.player.id === selectedPlayer.id
+          (reg) => reg.player.id === selectedPlayer.id,
         ),
       ];
     }
     if (selectedTournament) {
       filteredRegistrations = [
         ...filteredRegistrations.filter(
-          (reg) => reg.tournament?.id === selectedTournament.id
+          (reg) => reg.tournament?.id === selectedTournament.id,
         ),
       ];
     }

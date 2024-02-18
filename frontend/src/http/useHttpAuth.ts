@@ -27,7 +27,7 @@ export default function useHttpAuth() {
       const endpoint = `${API_URL}/signin`;
       return postAxios<KcUser>(endpoint, payload);
     },
-    [postAxios]
+    [postAxios],
   );
 
   const refreshToken = useCallback(async () => {
@@ -41,7 +41,7 @@ export default function useHttpAuth() {
       const endpoint = `${API_URL}/forgotpwd`;
       return postAxios<void>(endpoint, { email });
     },
-    [postAxios]
+    [postAxios],
   );
 
   const verifyEmail = useCallback(
@@ -49,7 +49,7 @@ export default function useHttpAuth() {
       const endpoint = `${API_URL}/verifyemail`;
       return postAxios<void>(endpoint, { email });
     },
-    [postAxios]
+    [postAxios],
   );
 
   const signup = useCallback(
@@ -57,7 +57,7 @@ export default function useHttpAuth() {
       const endpoint = `${API_URL}/signup`;
       return postAxios<void>(endpoint, payload);
     },
-    [postAxios]
+    [postAxios],
   );
 
   return { login, signup, refreshToken, forgotPassword, verifyEmail };

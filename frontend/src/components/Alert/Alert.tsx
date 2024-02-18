@@ -36,7 +36,7 @@ export default function Alert({
         <FontAwesomeIcon
           className={twMerge(
             AlertStyle.icon,
-            AlertStyle.iconType[type]
+            AlertStyle.iconType[type],
           )}
           icon={icon}
         />

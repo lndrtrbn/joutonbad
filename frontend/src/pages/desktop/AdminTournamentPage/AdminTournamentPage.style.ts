@@ -1,5 +1,5 @@
 const AdminTournamentPageStyle = {
   base: "",
-}
+};
 
-export default AdminTournamentPageStyle
+export default AdminTournamentPageStyle;

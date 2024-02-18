@@ -24,7 +24,7 @@ export default function TournamentPage() {
   const { getTournamentById } = useHttpTournament();
   const { createRegistration } = useHttpRegistration();
   const [tournament, refetchTournament] = useFetch(() =>
-    getTournamentById(id || "")
+    getTournamentById(id || ""),
   );
 
   const registrationsDone = useMemo(() => {

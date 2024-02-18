@@ -25,7 +25,7 @@ export default function Tag({
         TagStyle[size],
         inverted && TagStyle.inverted,
         active && TagStyle.active,
-        onClick && TagStyle.clickable
+        onClick && TagStyle.clickable,
       )}
       onClick={onClick}
     >

@@ -15,7 +15,7 @@ export default function InputSelectTournaments({
   placeholder = "Tournoi",
 }: Props) {
   const sortedTournaments = (tournaments ?? []).sort((a, b) =>
-    a.name.localeCompare(b.name)
+    a.name.localeCompare(b.name),
   );
 
   return (

@@ -21,8 +21,8 @@ export default function InputTag({
       value.includes(tag)
         ? value.filter((val) => val != tag)
         : unique
-        ? [tag]
-        : [...value, tag]
+          ? [tag]
+          : [...value, tag],
     );
   }
 

@@ -52,7 +52,7 @@ export default function MFormRegistrationSingle({
       reg.player.license == user?.license &&
       !reg.cancelled &&
       (reg.discipline == Discipline.SD ||
-        reg.discipline == Discipline.SH)
+        reg.discipline == Discipline.SH),
   );
 
   if (!registration && !canRegister) return null;
@@ -105,7 +105,7 @@ export default function MFormRegistrationSingle({
                 <MInputSwitch
                   items={subsetLevels(
                     tournament.minLevel,
-                    tournament.maxLevel
+                    tournament.maxLevel,
                   )}
                   value={value}
                   onChange={onChange}

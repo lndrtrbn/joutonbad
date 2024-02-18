@@ -10,7 +10,7 @@ import ScreenLoader from "./components/ScreenLoader/ScreenLoader.tsx";
 import "./styles/index.css";
 
 ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById("root") as HTMLElement,
 ).render(
   <Suspense fallback={<ScreenLoader />}>
     <AuthProvider>
@@ -20,5 +20,5 @@ ReactDOM.createRoot(
         </AlertsProvider>
       </SvgProvider>
     </AuthProvider>
-  </Suspense>
+  </Suspense>,
 );

@@ -85,7 +85,9 @@ export class TournamentService {
     });
   }
 
-  async getPlayerTournament(license: string): Promise<FullTournament[]> {
+  async getPlayerTournament(
+    license: string,
+  ): Promise<FullTournament[]> {
     return this.prisma.tournament.findMany({
       where: {
         registrations: {
@@ -116,7 +118,9 @@ export class TournamentService {
    * @param payload Data of the tournament to create.
    * @returns The created tournament.
    */
-  async create(payload: TournamentCreatePayload): Promise<Tournament> {
+  async create(
+    payload: TournamentCreatePayload,
+  ): Promise<Tournament> {
     this.logger.log(`[create] With: ${payload}`);
 
     const data = {
@@ -175,7 +179,8 @@ export class TournamentService {
     const tournament = await this.getById(id);
 
     if (!tournament) throw new NoTournamentFoundException();
-    if (tournament.registrations.length > 0) throw new CannotDeleteException();
+    if (tournament.registrations.length > 0)
+      throw new CannotDeleteException();
 
     return this.prisma.tournament.delete({
       where: { id },

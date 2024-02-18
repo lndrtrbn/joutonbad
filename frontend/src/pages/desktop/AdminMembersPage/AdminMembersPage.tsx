@@ -36,7 +36,7 @@ export default function AdminMembersPage() {
       .filter(
         (player) =>
           !onlyAdmins ||
-          admins?.find((admin) => admin.id === player.id)
+          admins?.find((admin) => admin.id === player.id),
       );
   }, [players, inactive, active, admins, onlyAdmins]);
 
@@ -106,8 +106,8 @@ export default function AdminMembersPage() {
           {filteredPlayers
             .sort((a, b) =>
               `${a.lastname} ${a.name}`.localeCompare(
-                `${b.lastname} ${b.name}`
-              )
+                `${b.lastname} ${b.name}`,
+              ),
             )
             .map((player, i) => (
               <MemberRow

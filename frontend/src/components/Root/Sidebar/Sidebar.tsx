@@ -32,7 +32,7 @@ export default function Sidebar() {
           SidebarStyle.layout,
           closable && SidebarStyle.tranform,
           closable && SidebarStyle.baseSm,
-          opened && SidebarStyle.noTranform
+          opened && SidebarStyle.noTranform,
         )}
       >
         <SidebarHeader />

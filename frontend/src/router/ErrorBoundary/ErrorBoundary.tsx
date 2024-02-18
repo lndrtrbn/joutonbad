@@ -22,7 +22,7 @@ export default function ErrorBoundary() {
     <div
       className={twMerge(
         ErrorBoundaryStyle.base,
-        ErrorBoundaryStyle.colors
+        ErrorBoundaryStyle.colors,
       )}
     >
       <FontAwesomeIcon

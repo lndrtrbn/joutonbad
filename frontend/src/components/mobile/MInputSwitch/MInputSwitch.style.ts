@@ -1,5 +1,5 @@
 const MInputSwitchStyle = {
   base: "",
-}
+};
 
-export default MInputSwitchStyle
+export default MInputSwitchStyle;

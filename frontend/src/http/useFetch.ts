@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 type UseFetch<T> = [T | undefined, () => void];
 
 export default function useFetch<T>(
-  request: () => Promise<T>
+  request: () => Promise<T>,
 ): UseFetch<T> {
   const fetchingRef = useRef(false);
   const fetchedRef = useRef(false);

@@ -16,31 +16,46 @@ export class AuthController {
 
   @Post("signup")
   @Public()
-  async signup(@Body() payload: KeycloakUserCreatePayload): Promise<void> {
+  async signup(
+    @Body() payload: KeycloakUserCreatePayload,
+  ): Promise<void> {
     await this.authService.createUser(payload);
   }
 
   @Post("signin")
   @Public()
-  async signin(@Body() payload: SigninPayload): Promise<GrantProperties> {
-    return this.authService.signin(payload.username, payload.password);
+  async signin(
+    @Body() payload: SigninPayload,
+  ): Promise<GrantProperties> {
+    return this.authService.signin(
+      payload.username,
+      payload.password,
+    );
   }
 
   @Post("refreshtoken")
   @Public()
-  async refresh(@Body() payload: RefreshPayload): Promise<GrantProperties> {
+  async refresh(
+    @Body() payload: RefreshPayload,
+  ): Promise<GrantProperties> {
     return this.authService.refreshApiToken(payload.token);
   }
 
   @Post("forgotpwd")
   @Public()
   async forgotPwd(@Body() payload: ForgotPwdPayload): Promise<void> {
-    this.authService.executeuserActions(payload.email, ["UPDATE_PASSWORD"]);
+    this.authService.executeuserActions(payload.email, [
+      "UPDATE_PASSWORD",
+    ]);
   }
 
   @Post("verifyemail")
   @Public()
-  async verifyEmail(@Body() payload: ForgotPwdPayload): Promise<void> {
-    this.authService.executeuserActions(payload.email, ["VERIFY_EMAIL"]);
+  async verifyEmail(
+    @Body() payload: ForgotPwdPayload,
+  ): Promise<void> {
+    this.authService.executeuserActions(payload.email, [
+      "VERIFY_EMAIL",
+    ]);
   }
 }

@@ -35,7 +35,7 @@ export type TournamentList = {
 }[];
 
 export function groupByMonth(
-  tournaments: Tournament[]
+  tournaments: Tournament[],
 ): TournamentList {
   const newList: TournamentList = [];
   byStartDate(tournaments).forEach((tournament) => {
@@ -44,7 +44,7 @@ export function groupByMonth(
       "MMMM yyyy",
       {
         locale: fr,
-      }
+      },
     );
 
     const monthList = newList.find((item) => item.month === month);
@@ -62,7 +62,7 @@ export function groupByMonth(
 
 export function filterDiscipline(
   discipline?: Discipline,
-  tournaments?: Tournament[]
+  tournaments?: Tournament[],
 ) {
   return (tournaments ?? []).filter((tournament) => {
     return !discipline || tournament.disciplines.includes(discipline);
@@ -72,7 +72,7 @@ export function filterDiscipline(
 export function filterLevel(
   minLevel?: Level,
   maxLevel?: Level,
-  tournaments?: Tournament[]
+  tournaments?: Tournament[],
 ) {
   const min = LEVELS.indexOf(minLevel ?? Level.NC);
   const max = LEVELS.indexOf(maxLevel ?? Level.N1);
@@ -108,7 +108,7 @@ export function byCreatedDate(tournaments?: Tournament[]) {
   return (tournaments ?? []).sort(
     (a, b) =>
       new Date(b.createdAt).getTime() -
-      new Date(a.createdAt).getTime()
+      new Date(a.createdAt).getTime(),
   );
 }
 
@@ -116,6 +116,6 @@ export function byStartDate(tournaments?: Tournament[]) {
   return (tournaments ?? []).sort(
     (a, b) =>
       new Date(a.startDate).getTime() -
-      new Date(b.startDate).getTime()
+      new Date(b.startDate).getTime(),
   );
 }

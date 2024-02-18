@@ -52,7 +52,7 @@ export default function MInputRange<Data>({
           style={twMerge(
             inRange(i) && MInputRangeStyle.inRange,
             i === min && MInputRangeStyle.startRange,
-            i === max && MInputRangeStyle.endRange
+            i === max && MInputRangeStyle.endRange,
           )}
           onClick={() => changeRange(i)}
         >

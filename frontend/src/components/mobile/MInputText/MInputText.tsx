@@ -34,7 +34,7 @@ export default function MInputText({
         className={twMerge(
           MInputTextStyle.input,
           MInputTextStyle.inputColors,
-          style
+          style,
         )}
         type={type}
         placeholder={placeholder}

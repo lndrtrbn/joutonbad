@@ -44,7 +44,7 @@ export default function RegistrationRow({
           onCancel?.(registration.id, reason);
           close();
         }}
-      />
+      />,
     );
   }
 
@@ -66,7 +66,7 @@ export default function RegistrationRow({
           </span>{" "}
           ?
         </p>
-      </ModalConfirm>
+      </ModalConfirm>,
     );
   }
 
@@ -88,7 +88,7 @@ export default function RegistrationRow({
           </span>{" "}
           ?
         </p>
-      </ModalConfirm>
+      </ModalConfirm>,
     );
   }
 
@@ -102,7 +102,7 @@ export default function RegistrationRow({
             RegistrationRowStyle.double,
           registration.partner &&
             registration.cancelled &&
-            RegistrationRowStyle.triple
+            RegistrationRowStyle.triple,
         )}
       >
         <span className="w-32">

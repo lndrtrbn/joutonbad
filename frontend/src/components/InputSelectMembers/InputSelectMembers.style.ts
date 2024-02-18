@@ -1,5 +1,5 @@
 const InputSelectMembersStyle = {
   base: "",
-}
+};
 
-export default InputSelectMembersStyle
+export default InputSelectMembersStyle;

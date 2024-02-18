@@ -69,7 +69,7 @@ export default function MTournamentCard({
         className={twMerge(
           MTournamentCardStyle.base,
           MTournamentCardStyle[variant],
-          style
+          style,
         )}
       >
         <div className={MTournamentCardStyle.row}>

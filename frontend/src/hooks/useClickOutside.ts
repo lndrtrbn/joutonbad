@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
  * @returns The ref to link to the DOM element.
  */
 export default function useClickOutside(
-  callback: (e: MouseEvent) => void
+  callback: (e: MouseEvent) => void,
 ) {
   const ref = useRef<HTMLDivElement>(null);
   const savedCallback = useRef(callback);

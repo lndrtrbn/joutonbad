@@ -23,7 +23,7 @@ const AuthContext = createContext<Context | undefined>(undefined);
 export function AuthProvider({ children }: ProviderProps) {
   const userState = useState<User | undefined>(getLocalItem("user"));
   const profilState = useState<Player | undefined>(
-    getLocalItem("profil")
+    getLocalItem("profil"),
   );
 
   const [user] = userState;
@@ -54,7 +54,7 @@ export function useAuthContext() {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error(
-      "useAuthContext must be used within a AuthProvider"
+      "useAuthContext must be used within a AuthProvider",
     );
   }
   return context;

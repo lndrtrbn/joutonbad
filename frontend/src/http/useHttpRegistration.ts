@@ -36,7 +36,7 @@ export default function useHttpRegistration() {
     () => ({
       Authorization: `Bearer ${user?.accessToken}`,
     }),
-    [user]
+    [user],
   );
 
   const getAllRegistrations = useCallback(async () => {
@@ -49,7 +49,7 @@ export default function useHttpRegistration() {
       const endpoint = `${API_URL}/registration/tournament/${id}`;
       return getAxios<Registration[]>(endpoint, headers);
     },
-    [headers, getAxios]
+    [headers, getAxios],
   );
 
   const createRegistration = useCallback(
@@ -57,7 +57,7 @@ export default function useHttpRegistration() {
       const endpoint = `${API_URL}/registration`;
       return postAxios<Registration>(endpoint, payload, headers);
     },
-    [headers, postAxios]
+    [headers, postAxios],
   );
 
   const updateRegistration = useCallback(
@@ -65,7 +65,7 @@ export default function useHttpRegistration() {
       const endpoint = `${API_URL}/registration/${id}`;
       return patchAxios<Registration>(endpoint, payload, headers);
     },
-    [headers, patchAxios]
+    [headers, patchAxios],
   );
 
   const deleteRegistration = useCallback(
@@ -73,7 +73,7 @@ export default function useHttpRegistration() {
       const endpoint = `${API_URL}/registration/${id}`;
       return deleteAxios<Registration>(endpoint, headers);
     },
-    [headers, deleteAxios]
+    [headers, deleteAxios],
   );
 
   return {

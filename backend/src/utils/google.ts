@@ -101,13 +101,16 @@ export function tournamentsToSheetData(
       { userEnteredValue: { stringValue: tournament.name } },
       { userEnteredValue: { stringValue: tournament.location } },
       {
-        userEnteredValue: { stringValue: tournament.disciplines.join(",") },
+        userEnteredValue: {
+          stringValue: tournament.disciplines.join(","),
+        },
       },
       {
         userEnteredValue: {
           // https://stackoverflow.com/a/73535864
           numberValue:
-            (tournament.startDate.getTime() / 1000 + 3600) / 86400 + 25569,
+            (tournament.startDate.getTime() / 1000 + 3600) / 86400 +
+            25569,
         },
         userEnteredFormat: {
           numberFormat: {
@@ -120,7 +123,8 @@ export function tournamentsToSheetData(
         userEnteredValue: {
           // https://stackoverflow.com/a/73535864
           numberValue:
-            (tournament.endDate.getTime() / 1000 + 3600) / 86400 + 25569,
+            (tournament.endDate.getTime() / 1000 + 3600) / 86400 +
+            25569,
         },
         userEnteredFormat: {
           numberFormat: {
@@ -129,9 +133,15 @@ export function tournamentsToSheetData(
           },
         },
       },
-      { userEnteredValue: { numberValue: tournament.prices[0] ?? -1 } },
-      { userEnteredValue: { numberValue: tournament.prices[1] ?? -1 } },
-      { userEnteredValue: { numberValue: tournament.prices[2] ?? -1 } },
+      {
+        userEnteredValue: { numberValue: tournament.prices[0] ?? -1 },
+      },
+      {
+        userEnteredValue: { numberValue: tournament.prices[1] ?? -1 },
+      },
+      {
+        userEnteredValue: { numberValue: tournament.prices[2] ?? -1 },
+      },
       { userEnteredValue: { stringValue: tournament.minLevel } },
       { userEnteredValue: { stringValue: tournament.maxLevel } },
     ],
@@ -174,7 +184,11 @@ export function registrationsToSheetData(
             },
           },
         },
-        { userEnteredValue: { numberValue: parseInt(reg.player.license) } },
+        {
+          userEnteredValue: {
+            numberValue: parseInt(reg.player.license),
+          },
+        },
         {
           userEnteredValue: {
             stringValue: `${reg.player.name} ${reg.player.lastname}`,
@@ -188,7 +202,11 @@ export function registrationsToSheetData(
     if (reg.partner) {
       row.values = [
         ...row.values,
-        { userEnteredValue: { numberValue: parseInt(reg.partner.license) } },
+        {
+          userEnteredValue: {
+            numberValue: parseInt(reg.partner.license),
+          },
+        },
         {
           userEnteredValue: {
             stringValue: `${reg.partner.name} ${reg.partner.lastname}`,

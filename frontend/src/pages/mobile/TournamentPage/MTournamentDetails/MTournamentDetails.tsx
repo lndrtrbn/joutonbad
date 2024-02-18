@@ -98,7 +98,7 @@ export default function MTournamentDetails({ tournament }: Props) {
         Fin des inscriptions le{" "}
         {format(
           subDays(new Date(tournament.startDate), 14),
-          "dd/MM "
+          "dd/MM ",
         )}
       </MCardInfo>
     </>

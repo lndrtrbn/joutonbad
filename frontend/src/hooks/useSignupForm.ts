@@ -34,7 +34,7 @@ const schema = z
 
 export default function useSignupForm(
   canReset: boolean,
-  apiError?: APIError
+  apiError?: APIError,
 ) {
   const [globalError, setGlobalError] = useState("");
 
@@ -59,7 +59,7 @@ export default function useSignupForm(
       switch (apiError.message) {
         case APIErrorMessage.ALREADY_EXISTING_USER:
           setGlobalError(
-            "Un compte existe déjà pour cette licence ou cet email"
+            "Un compte existe déjà pour cette licence ou cet email",
           );
           break;
         case APIErrorMessage.NO_PLAYER_FOUND:
@@ -67,7 +67,7 @@ export default function useSignupForm(
           break;
         case APIErrorMessage.PLAYER_ALREADY_LINKED:
           setGlobalError(
-            "Le profil lié à cette licence est déjà actif"
+            "Le profil lié à cette licence est déjà actif",
           );
           break;
         default:

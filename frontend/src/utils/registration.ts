@@ -48,10 +48,10 @@ export type Registration = {
 
 export function filterByDiscipline(
   registrations?: Registration[],
-  disciplines?: Discipline[]
+  disciplines?: Discipline[],
 ) {
   return (registrations ?? []).filter((reg) =>
-    (disciplines ?? []).includes(reg.discipline)
+    (disciplines ?? []).includes(reg.discipline),
   );
 }
 

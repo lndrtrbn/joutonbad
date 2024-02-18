@@ -57,7 +57,7 @@ export default function AdminTournamentsPage() {
             .sort(
               (a, b) =>
                 new Date(a.startDate).getTime() -
-                new Date(b.startDate).getTime()
+                new Date(b.startDate).getTime(),
             )
             .map((tournament, i) => (
               <TournamentRow

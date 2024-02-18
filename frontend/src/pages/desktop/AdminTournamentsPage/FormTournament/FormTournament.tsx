@@ -51,7 +51,7 @@ const schema = z.object({
     z.object({
       name: z.string().min(1),
       url: z.string().min(1),
-    })
+    }),
   ),
   freezed: z.boolean(),
 });
@@ -120,12 +120,12 @@ export default function FormTournament({
       startDate: parse(
         data.startDate,
         "dd/MM/yyyy",
-        new Date()
+        new Date(),
       ).toISOString(),
       endDate: parse(
         data.endDate,
         "dd/MM/yyyy",
-        new Date()
+        new Date(),
       ).toISOString(),
       prices: data.prices.map((price) => parseFloat(price)),
     });

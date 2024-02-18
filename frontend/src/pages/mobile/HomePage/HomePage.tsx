@@ -52,7 +52,7 @@ export default function HomePage() {
 
       (myTournaments ?? []).forEach((tournament) => {
         const registrations = tournament.registrations.filter(
-          (reg) => reg.player.license == user.license
+          (reg) => reg.player.license == user.license,
         );
         setRegistrations((regs) => [...regs, ...registrations]);
         if (registrations.length == 1)
@@ -74,8 +74,8 @@ export default function HomePage() {
       filterLevel(
         levelRange[0],
         levelRange[1],
-        filterDiscipline(discipline, tournaments?.slice(0, 10))
-      )
+        filterDiscipline(discipline, tournaments?.slice(0, 10)),
+      ),
     );
   }, [tournaments, discipline, levelRange]);
 

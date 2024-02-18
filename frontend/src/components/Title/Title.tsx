@@ -19,7 +19,7 @@ export default function Title({
       className={twMerge(
         TitleStyle.base,
         TitleStyle[size],
-        subtitle && TitleStyle.subtitle
+        subtitle && TitleStyle.subtitle,
       )}
     >
       {children}

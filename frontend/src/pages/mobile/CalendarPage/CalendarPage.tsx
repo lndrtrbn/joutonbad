@@ -42,9 +42,9 @@ export default function CalendarPage() {
         filterLevel(
           levelRange[0],
           levelRange[1],
-          filterDiscipline(discipline, filterToCome(tournaments))
-        )
-      )
+          filterDiscipline(discipline, filterToCome(tournaments)),
+        ),
+      ),
     );
     setPast(groupByMonth(filterPast(tournaments)));
   }, [tournaments, discipline, levelRange]);

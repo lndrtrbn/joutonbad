@@ -32,7 +32,7 @@ export default function MInputCheckbox({
         color="text-m-main"
         style={twMerge(
           MInputCheckboxStyle.checkmark,
-          value && MInputCheckboxStyle.checked
+          value && MInputCheckboxStyle.checked,
         )}
       >
         {value && <FontAwesomeIcon icon={faCheck} />}

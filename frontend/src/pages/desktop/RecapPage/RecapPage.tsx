@@ -38,7 +38,7 @@ export default function RecapPage() {
         ?.sort(
           (a, b) =>
             new Date(a.startDate).getTime() -
-            new Date(b.startDate).getTime()
+            new Date(b.startDate).getTime(),
         )
         .forEach((tournament) => {
           // Sort tournaments if passed or not.
@@ -49,7 +49,7 @@ export default function RecapPage() {
           // Compute how much the player have to pay.
           const registrations = tournament.registrations.filter(
             (reg) =>
-              reg.player.license == user.license && !reg.cancelled
+              reg.player.license == user.license && !reg.cancelled,
           ).length;
           setParticipations((val) => val + registrations);
           if (registrations == 1)

@@ -37,7 +37,7 @@ export default function MIcon({
         !naked && bg,
         naked && MIconStyle.naked,
         disabled && MIconStyle.disabled,
-        style
+        style,
       )}
       onClick={onClick}
     >

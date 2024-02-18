@@ -7,11 +7,11 @@ type UseLazyFetch<T, Payload> = [
   T | undefined,
   APIError | undefined,
   boolean,
-  boolean
+  boolean,
 ];
 
 export default function useLazyFetch<T, Payload>(
-  request: (p: Payload) => Promise<T>
+  request: (p: Payload) => Promise<T>,
 ): UseLazyFetch<T, Payload> {
   const fetchingRef = useRef(false);
   const [fetching, setFetching] = useState(false);
@@ -42,7 +42,7 @@ export default function useLazyFetch<T, Payload>(
         getData();
       }
     },
-    [request]
+    [request],
   );
 
   return [fetch, data, error, fetching, fetched];

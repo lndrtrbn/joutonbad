@@ -27,7 +27,7 @@ export function useAlertsContext() {
   const context = useContext(AlertsContext);
   if (!context) {
     throw new Error(
-      "useAlertsContext must be used within a AlertsProvider"
+      "useAlertsContext must be used within a AlertsProvider",
     );
   }
 
@@ -37,7 +37,7 @@ export function useAlertsContext() {
     (alert: Alert) => {
       setAlerts((old) => old.filter((a) => a !== alert));
     },
-    [setAlerts]
+    [setAlerts],
   );
 
   const addAlert = useCallback(
@@ -45,7 +45,7 @@ export function useAlertsContext() {
       setAlerts((old) => [...old, alert]);
       setTimeout(() => removeAlert(alert), 5000);
     },
-    [setAlerts, removeAlert]
+    [setAlerts, removeAlert],
   );
 
   return { alerts, addAlert, removeAlert };

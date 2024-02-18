@@ -42,46 +42,46 @@ export default function useAxios() {
         }
       }
     },
-    [setUser, addAlert]
+    [setUser, addAlert],
   );
 
   const getAxios = useCallback(
     <T>(endpoint: string, headers?: RawAxiosRequestHeaders) =>
       call(() => axios.get<T>(endpoint, { headers })),
-    [call]
+    [call],
   );
 
   const postAxios = useCallback(
     <T>(
       endpoint: string,
       data: unknown,
-      headers?: RawAxiosRequestHeaders
+      headers?: RawAxiosRequestHeaders,
     ) => call(() => axios.post<T>(endpoint, data, { headers })),
-    [call]
+    [call],
   );
 
   const postFormAxios = useCallback(
     <T>(
       endpoint: string,
       data: unknown,
-      headers?: RawAxiosRequestHeaders
+      headers?: RawAxiosRequestHeaders,
     ) => call(() => axios.postForm<T>(endpoint, data, { headers })),
-    [call]
+    [call],
   );
 
   const patchAxios = useCallback(
     <T>(
       endpoint: string,
       data: unknown,
-      headers?: RawAxiosRequestHeaders
+      headers?: RawAxiosRequestHeaders,
     ) => call(() => axios.patch<T>(endpoint, data, { headers })),
-    [call]
+    [call],
   );
 
   const deleteAxios = useCallback(
     <T>(endpoint: string, headers?: RawAxiosRequestHeaders) =>
       call(() => axios.delete<T>(endpoint, { headers })),
-    [call]
+    [call],
   );
 
   return {

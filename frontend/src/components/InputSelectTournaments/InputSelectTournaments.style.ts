@@ -1,5 +1,5 @@
 const InputSelectTournamentsStyle = {
   base: "",
-}
+};
 
-export default InputSelectTournamentsStyle
+export default InputSelectTournamentsStyle;

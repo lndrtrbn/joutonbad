@@ -16,7 +16,7 @@ export default function AdminRegistrationsPage() {
     deleteRegistration,
   } = useHttpRegistration();
   const [registrations, refetchRegistrations] = useFetch(
-    getAllRegistrations
+    getAllRegistrations,
   );
 
   const [registrationsToDo, setTodo] = useState<Registration[]>([]);

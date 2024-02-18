@@ -33,7 +33,7 @@ export default function useHttpPlayer() {
     () => ({
       Authorization: `Bearer ${user?.accessToken}`,
     }),
-    [user]
+    [user],
   );
 
   const getAllPlayers = useCallback(async () => {
@@ -46,7 +46,7 @@ export default function useHttpPlayer() {
       const endpoint = `${API_URL}/player/${licence}`;
       return getAxios<Player>(endpoint, headers);
     },
-    [headers, getAxios]
+    [headers, getAxios],
   );
 
   const getAdminPlayers = useCallback(async () => {
@@ -59,7 +59,7 @@ export default function useHttpPlayer() {
       const endpoint = `${API_URL}/player`;
       return postAxios<Player>(endpoint, payload, headers);
     },
-    [headers, postAxios]
+    [headers, postAxios],
   );
 
   const updateProfil = useCallback(
@@ -67,7 +67,7 @@ export default function useHttpPlayer() {
       const endpoint = `${API_URL}/player/profil`;
       return patchAxios<Player>(endpoint, payload, headers);
     },
-    [headers, patchAxios]
+    [headers, patchAxios],
   );
 
   const uploadPlayers = useCallback(
@@ -75,7 +75,7 @@ export default function useHttpPlayer() {
       const endpoint = `${API_URL}/player/csv`;
       return postFormAxios<Player[]>(endpoint, { file }, headers);
     },
-    [headers, postFormAxios]
+    [headers, postFormAxios],
   );
 
   const deletePlayer = useCallback(
@@ -83,7 +83,7 @@ export default function useHttpPlayer() {
       const endpoint = `${API_URL}/player/${id}`;
       return deleteAxios<Player>(endpoint, headers);
     },
-    [headers, deleteAxios]
+    [headers, deleteAxios],
   );
 
   return {

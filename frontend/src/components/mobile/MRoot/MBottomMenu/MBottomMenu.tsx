@@ -24,7 +24,7 @@ export default function MBottomMenu() {
     <div
       className={twMerge(
         MBottomMenuStyle.base,
-        MBottomMenuStyle.layout
+        MBottomMenuStyle.layout,
       )}
     >
       {user && isEditor(user) && (

@@ -42,7 +42,7 @@ export default function RegistrationDouble({
       ((isMixte && reg.discipline == Discipline.DM) ||
         (!isMixte &&
           (reg.discipline == Discipline.DD ||
-            reg.discipline == Discipline.DH)))
+            reg.discipline == Discipline.DH))),
   );
 
   function registerDouble(data: RegistrationDoubleInputs) {
@@ -68,12 +68,12 @@ export default function RegistrationDouble({
       switch (error.message) {
         case APIErrorMessage.ALREADY_REGISTERED:
           setErrorMsg(
-            "Tu es déjà inscrit.e à ce tournoi sur ce tableau"
+            "Tu es déjà inscrit.e à ce tournoi sur ce tableau",
           );
           break;
         case APIErrorMessage.ALREADY_REGISTERED_PARTNER:
           setErrorMsg(
-            "Ton/ta partenaire est déjà inscrit.e avec une autre personne"
+            "Ton/ta partenaire est déjà inscrit.e avec une autre personne",
           );
           break;
         default:

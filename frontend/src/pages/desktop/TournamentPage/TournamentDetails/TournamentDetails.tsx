@@ -99,7 +99,7 @@ export default function TournamentDetails({ tournament }: Props) {
         <Alert type="info">
           Fin des inscriptions le{" "}
           {strDate(
-            subDays(new Date(tournament.startDate), 14).toISOString()
+            subDays(new Date(tournament.startDate), 14).toISOString(),
           )}
         </Alert>
       ) : (

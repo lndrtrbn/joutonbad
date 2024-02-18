@@ -36,7 +36,7 @@ export default function MInputSelect<T>({
   const filteredItems = useMemo(() => {
     return items
       .filter((item) =>
-        toLabel(item).toLowerCase().includes(search.toLowerCase())
+        toLabel(item).toLowerCase().includes(search.toLowerCase()),
       )
       .sort((a, b) => toLabel(a).localeCompare(toLabel(b)));
   }, [items, search, toLabel]);

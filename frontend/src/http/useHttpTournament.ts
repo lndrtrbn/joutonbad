@@ -28,7 +28,7 @@ export default function useHttpTournament() {
     () => ({
       Authorization: `Bearer ${user?.accessToken}`,
     }),
-    [user]
+    [user],
   );
 
   const getTournamentById = useCallback(
@@ -36,7 +36,7 @@ export default function useHttpTournament() {
       const endpoint = `${API_URL}/tournament/${id}`;
       return getAxios<Tournament>(endpoint, headers);
     },
-    [headers, getAxios]
+    [headers, getAxios],
   );
 
   const getTournamentsByPlayer = useCallback(async () => {
@@ -54,7 +54,7 @@ export default function useHttpTournament() {
       const endpoint = `${API_URL}/tournament`;
       return postAxios<Tournament>(endpoint, payload, headers);
     },
-    [headers, postAxios]
+    [headers, postAxios],
   );
 
   const updateTournament = useCallback(
@@ -62,7 +62,7 @@ export default function useHttpTournament() {
       const endpoint = `${API_URL}/tournament/${id}`;
       return patchAxios<Tournament>(endpoint, payload, headers);
     },
-    [headers, patchAxios]
+    [headers, patchAxios],
   );
 
   const deleteTournament = useCallback(
@@ -70,7 +70,7 @@ export default function useHttpTournament() {
       const endpoint = `${API_URL}/tournament/${id}`;
       return deleteAxios<Tournament>(endpoint, headers);
     },
-    [headers, deleteAxios]
+    [headers, deleteAxios],
   );
 
   return {

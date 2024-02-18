@@ -1,10 +1,17 @@
 import { PrismaClient, Player } from "@prisma/client";
-import { INestApplication, Injectable, OnModuleInit } from "@nestjs/common";
+import {
+  INestApplication,
+  Injectable,
+  OnModuleInit,
+} from "@nestjs/common";
 
 import { WhoAreYouException } from "../exceptions/whoAreYou.exception";
 
 @Injectable()
-export class PrismaService extends PrismaClient implements OnModuleInit {
+export class PrismaService
+  extends PrismaClient
+  implements OnModuleInit
+{
   async onModuleInit() {
     await this.$connect();
   }

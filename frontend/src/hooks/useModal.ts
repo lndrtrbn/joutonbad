@@ -4,7 +4,7 @@ import { ReactNode, ReactPortal, useState } from "react";
 type UseModal = [
   ReactPortal | undefined,
   (modal: ReactNode) => void,
-  () => void
+  () => void,
 ];
 
 /**

@@ -17,7 +17,7 @@ export default function AlertPortal() {
         <div
           className={twMerge(
             AlertPortalStyle.base,
-            AlertPortalStyle.position
+            AlertPortalStyle.position,
           )}
         >
           {alerts.map((alert, i) => (
@@ -38,7 +38,7 @@ export default function AlertPortal() {
             </>
           ))}
         </div>,
-        document.body
+        document.body,
       )}
     </>
   );

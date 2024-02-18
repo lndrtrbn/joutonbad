@@ -54,7 +54,7 @@ type ColorScale<T extends string> = {
 
 function colorScale<T extends string>(
   name: T,
-  baseColor: string
+  baseColor: string,
 ): ColorScale<T> {
   return {
     [`${name}10`]: `rgb(${baseColor} / 0.1)`,

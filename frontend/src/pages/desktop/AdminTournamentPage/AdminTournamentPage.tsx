@@ -18,7 +18,7 @@ export default function AdminTournamentPage() {
 
   const { getTournamentById, updateTournament } = useHttpTournament();
   const [tournament, refetchTournament] = useFetch(() =>
-    getTournamentById(id || "")
+    getTournamentById(id || ""),
   );
 
   const { getAdminPlayers } = useHttpPlayer();

@@ -28,7 +28,7 @@ export default function TournamentRegistrationSimple({
       reg.player.license == playerLicense &&
       !reg.cancelled &&
       (reg.discipline == Discipline.SD ||
-        reg.discipline == Discipline.SH)
+        reg.discipline == Discipline.SH),
   );
 
   function registerSimple(data: RegistrationSingleInputs) {

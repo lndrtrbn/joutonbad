@@ -79,7 +79,7 @@ export default function MFormRegistrationDouble({
       ((isMixte && reg.discipline == Discipline.DM) ||
         (!isMixte &&
           (reg.discipline == Discipline.DD ||
-            reg.discipline == Discipline.DH)))
+            reg.discipline == Discipline.DH))),
   );
 
   if (!registration && !canRegister) return null;
@@ -147,7 +147,7 @@ export default function MFormRegistrationDouble({
                 <MInputSwitch
                   items={subsetLevels(
                     tournament.minLevel,
-                    tournament.maxLevel
+                    tournament.maxLevel,
                   )}
                   value={value}
                   onChange={onChange}
@@ -165,7 +165,7 @@ export default function MFormRegistrationDouble({
                 <MInputSwitch
                   items={subsetLevels(
                     tournament.minLevel,
-                    tournament.maxLevel
+                    tournament.maxLevel,
                   )}
                   value={value}
                   onChange={onChange}
@@ -196,12 +196,12 @@ export default function MFormRegistrationDouble({
                 style="w-full sm:w-[380px]"
                 placeholder="Partenaire"
                 items={(players ?? []).sort((a, b) =>
-                  a.name.localeCompare(b.name)
+                  a.name.localeCompare(b.name),
                 )}
                 toLabel={(p) =>
                   `${p.lastname} ${p.name}, ${p.license.padStart(
                     8,
-                    "0"
+                    "0",
                   )}`
                 }
               />

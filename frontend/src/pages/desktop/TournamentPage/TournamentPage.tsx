@@ -26,7 +26,7 @@ export default function TournamentPage() {
   const { getTournamentById } = useHttpTournament();
   const { createRegistration } = useHttpRegistration();
   const [tournament, refetchTournament] = useFetch(() =>
-    getTournamentById(id || "")
+    getTournamentById(id || ""),
   );
 
   const [submitError, setError] = useState<{
@@ -44,7 +44,7 @@ export default function TournamentPage() {
 
   async function register(
     discipline: Discipline,
-    payload: CreateRegistrationPayload
+    payload: CreateRegistrationPayload,
   ) {
     try {
       setError(undefined);

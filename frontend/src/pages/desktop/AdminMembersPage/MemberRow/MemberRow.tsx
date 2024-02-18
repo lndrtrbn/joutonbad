@@ -49,7 +49,7 @@ export default function MemberRow({
           Si le profil est supprimé, toutes ses inscriptions seront
           également supprimées en même temps.
         </p>
-      </ModalConfirm>
+      </ModalConfirm>,
     );
   }
 
@@ -58,14 +58,14 @@ export default function MemberRow({
       <div
         className={twMerge(
           MemberRowStyle.base,
-          alt && MemberRowStyle.alt
+          alt && MemberRowStyle.alt,
         )}
       >
         <span className={MemberRowStyle.status}>
           <FontAwesomeIcon
             className={twMerge(
               MemberRowStyle.active,
-              !member.kcId && MemberRowStyle.inactive
+              !member.kcId && MemberRowStyle.inactive,
             )}
             size="xs"
             icon={faCircle}

@@ -13,12 +13,14 @@ const { componentName } = yargs(hideBin(process.argv))
   .example("$0 new Badge", "creates a component Badge")
   .parse();
 
-console.info(`[NC] Trying to create new component '${componentName}'`);
+console.info(
+  `[NC] Trying to create new component '${componentName}'`,
+);
 
 const componentFolder = path.join(
   __dirname,
   "../src/components",
-  componentName
+  componentName,
 );
 
 if (fs.existsSync(componentFolder)) {
@@ -39,7 +41,7 @@ let styleTemplate = "";
 try {
   componentTemplate = fs.readFileSync(
     path.join(templatesFolder, "component.template.txt"),
-    "utf8"
+    "utf8",
   );
 } catch (err) {
   console.error("[NC] ERROR: Cannot read component template");
@@ -49,21 +51,30 @@ try {
 try {
   styleTemplate = fs.readFileSync(
     path.join(templatesFolder, "style.template.txt"),
-    "utf8"
+    "utf8",
   );
 } catch (err) {
   console.error("[NC] ERROR: Cannot read style template");
   process.exit(1);
 }
 
-componentTemplate = componentTemplate.replace(/\[component\]/g, componentName);
-styleTemplate = styleTemplate.replace(/\[component\]/g, componentName);
+componentTemplate = componentTemplate.replace(
+  /\[component\]/g,
+  componentName,
+);
+styleTemplate = styleTemplate.replace(
+  /\[component\]/g,
+  componentName,
+);
 
 fs.mkdirSync(componentFolder);
 
 console.info(`[NC] Folder '${componentName}' created`);
 
-const componentFile = path.join(componentFolder, `${componentName}.tsx`);
+const componentFile = path.join(
+  componentFolder,
+  `${componentName}.tsx`,
+);
 
 try {
   fs.writeFileSync(componentFile, componentTemplate);
@@ -73,7 +84,10 @@ try {
   process.exit(1);
 }
 
-const styleFile = path.join(componentFolder, `${componentName}.style.ts`);
+const styleFile = path.join(
+  componentFolder,
+  `${componentName}.style.ts`,
+);
 
 try {
   fs.writeFileSync(styleFile, styleTemplate);

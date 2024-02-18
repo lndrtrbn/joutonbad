@@ -36,7 +36,7 @@ export default function RegistrationAdminForm({
 
   async function register(
     discipline: Discipline,
-    payload: CreateRegistrationPayload
+    payload: CreateRegistrationPayload,
   ) {
     try {
       setError(undefined);

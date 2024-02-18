@@ -12,9 +12,15 @@ export type PlayerUpdatePayload = Pick<
   "favoriteDevice"
 >;
 
-export type CsvPlayer = [licence: string, name: string, firstname: string];
+export type CsvPlayer = [
+  licence: string,
+  name: string,
+  firstname: string,
+];
 
-export function csvPlayerToCreatePayload(csv: CsvPlayer): PlayerCreatePayload {
+export function csvPlayerToCreatePayload(
+  csv: CsvPlayer,
+): PlayerCreatePayload {
   return {
     license: trimLicense(csv[2]),
     lastname: csv[0],

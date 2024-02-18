@@ -38,11 +38,11 @@ export default function AdminGlobalPage() {
       setErrorMsg("");
     } else if (error?.message === APIErrorMessage.CANNOT_EXPORT) {
       setErrorMsg(
-        "Une erreur est survenue lors de la tentative d'export vers Google Drive. Le document n'a pas pu être mis à jour"
+        "Une erreur est survenue lors de la tentative d'export vers Google Drive. Le document n'a pas pu être mis à jour",
       );
     } else {
       setErrorMsg(
-        "Erreur inconnue lors de l'export. Le document n'a pas pu être mis à jour"
+        "Erreur inconnue lors de l'export. Le document n'a pas pu être mis à jour",
       );
     }
   }, [error]);

@@ -1,5 +1,5 @@
 const MTournamentRegistrationsStyle = {
   base: "",
-}
+};
 
-export default MTournamentRegistrationsStyle
+export default MTournamentRegistrationsStyle;

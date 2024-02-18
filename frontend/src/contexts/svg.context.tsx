@@ -33,7 +33,7 @@ export function SvgProvider({ children }: ProviderProps) {
             (await import(`../assets/svg/${name}.svg`))
               .ReactComponent as FC<SVGProps<SVGElement>>,
           ] as const;
-        })
+        }),
       );
       setSvgs(
         loadedSvgs.reduce(
@@ -41,8 +41,8 @@ export function SvgProvider({ children }: ProviderProps) {
             ...acc,
             [name]: svg,
           }),
-          {}
-        ) as Svg
+          {},
+        ) as Svg,
       );
     };
     importSvgIcon();
@@ -62,7 +62,7 @@ export function useSvgContext() {
   const context = useContext(SvgContext);
   if (!context) {
     throw new Error(
-      "useSvgContext must be used within a SvgProvider"
+      "useSvgContext must be used within a SvgProvider",
     );
   }
 

@@ -1,5 +1,5 @@
 const MInputLabelStyle = {
   base: "",
-}
+};
 
-export default MInputLabelStyle
+export default MInputLabelStyle;

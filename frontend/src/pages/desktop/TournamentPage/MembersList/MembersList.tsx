@@ -17,8 +17,8 @@ export default function MembersList({ registrations }: Props) {
           .filter((reg) => !reg.cancelled)
           .sort((a, b) =>
             `${a.player.lastname} ${a.player.name}`.localeCompare(
-              `${b.player.lastname} ${b.player.name}`
-            )
+              `${b.player.lastname} ${b.player.name}`,
+            ),
           )
           .map((registration) => (
             <PlayerRegistration

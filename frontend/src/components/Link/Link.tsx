@@ -31,7 +31,7 @@ export default function Link({
           LinkStyle.hover,
           !inline && LinkStyle.notInline,
           inline && LinkStyle.inline,
-          isActive && LinkStyle.active
+          isActive && LinkStyle.active,
         )
       }
     >

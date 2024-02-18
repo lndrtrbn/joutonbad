@@ -44,7 +44,7 @@ export default function MHeader({ onTop }: Props) {
       className={twMerge(
         MHeaderStyle.base,
         MHeaderStyle.layout,
-        onTop && MHeaderStyle.top
+        onTop && MHeaderStyle.top,
       )}
     >
       {mainRoutes.includes(pathname) ? (

@@ -38,7 +38,7 @@ export default function useLoginForm(apiError?: APIError) {
       switch (apiError.message) {
         case APIErrorMessage.UNAUTHORIZED:
           setGlobalError(
-            "Les informations de connexion sont invalides"
+            "Les informations de connexion sont invalides",
           );
           break;
         default:

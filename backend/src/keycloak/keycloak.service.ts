@@ -1,11 +1,18 @@
 import axios, { AxiosError } from "axios";
 import { GrantProperties } from "keycloak-connect";
-import { Injectable, Logger, UnauthorizedException } from "@nestjs/common";
+import {
+  Injectable,
+  Logger,
+  UnauthorizedException,
+} from "@nestjs/common";
 
 import { CONFIG } from "src/config";
 import { trimLicense } from "src/utils/license";
 import { authorization, urlEncoded } from "src/utils/headers";
-import { GetTokenPayload, KeycloakUser } from "src/keycloak/keycloakUser";
+import {
+  GetTokenPayload,
+  KeycloakUser,
+} from "src/keycloak/keycloakUser";
 import { InternalErrorException } from "src/exceptions/internalError.exception";
 
 @Injectable()
@@ -36,9 +43,13 @@ export class KeycloakService {
     };
 
     try {
-      const { data } = await axios.post<GrantProperties>(URL, payload, {
-        headers: urlEncoded(),
-      });
+      const { data } = await axios.post<GrantProperties>(
+        URL,
+        payload,
+        {
+          headers: urlEncoded(),
+        },
+      );
       return data;
     } catch (error) {
       this.logger.error(`[getApiToken] ${JSON.stringify(error)}`);
@@ -63,9 +74,12 @@ export class KeycloakService {
       CONFIG.kcApiPwd,
     );
     return (
-      await axios.get(`${CONFIG.kcUrl}/admin/realms/${CONFIG.kcRealm}/users`, {
-        headers: authorization(access_token),
-      })
+      await axios.get(
+        `${CONFIG.kcUrl}/admin/realms/${CONFIG.kcRealm}/users`,
+        {
+          headers: authorization(access_token),
+        },
+      )
     ).data;
   }
 

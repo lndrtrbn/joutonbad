@@ -46,7 +46,7 @@ export default function InputText({
             InputTextStyle.colors,
             style,
             inError && InputTextStyle.error,
-            disabled && InputTextStyle.disabled
+            disabled && InputTextStyle.disabled,
           )}
           type={type}
           placeholder={placeholder}

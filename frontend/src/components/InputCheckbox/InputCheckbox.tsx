@@ -23,7 +23,7 @@ export default function InputCheckbox({
     <div
       className={twMerge(
         InputCheckboxStyle.base,
-        checked && InputCheckboxStyle.checked
+        checked && InputCheckboxStyle.checked,
       )}
       onClick={check}
     >

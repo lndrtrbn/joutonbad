@@ -54,7 +54,7 @@ export default function TournamentRow({
 
   function askDelete() {
     open(
-      tournament.registrations.length > 0 ? infoModal : confirmModal
+      tournament.registrations.length > 0 ? infoModal : confirmModal,
     );
   }
 
@@ -63,7 +63,7 @@ export default function TournamentRow({
       <div
         className={twMerge(
           TournamentRowStyle.base,
-          alt && TournamentRowStyle.alt
+          alt && TournamentRowStyle.alt,
         )}
       >
         <span className={TournamentRowStyle.dates}>

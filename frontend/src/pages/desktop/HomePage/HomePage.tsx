@@ -23,10 +23,10 @@ export default function HomePage() {
   useEffect(() => {
     const now = new Date().setHours(0, 0, 0, 0);
     const toCome = tournaments?.filter(
-      (t) => compareAsc(now, new Date(t.startDate)) <= 0
+      (t) => compareAsc(now, new Date(t.startDate)) <= 0,
     );
     const past = tournaments?.filter(
-      (t) => compareAsc(now, new Date(t.startDate)) > 0
+      (t) => compareAsc(now, new Date(t.startDate)) > 0,
     );
     setToCome(groupByMonth(toCome ?? []));
     setPast(groupByMonth(past ?? []));

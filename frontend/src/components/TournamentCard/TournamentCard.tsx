@@ -21,14 +21,14 @@ export default function TournamentCard({ tournament }: Props) {
       onMouseLeave={() => setHovered(false)}
       className={twMerge(
         TournamentCardStyle.base,
-        TournamentCardStyle.hover
+        TournamentCardStyle.hover,
       )}
     >
       <Link to={`/tournoi/${tournament.id}`}>
         <div
           className={twMerge(
             TournamentCardStyle.meta,
-            hovered && TournamentCardStyle.metaHover
+            hovered && TournamentCardStyle.metaHover,
           )}
         >
           <p>{tournament.location}</p>

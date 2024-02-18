@@ -1,5 +1,5 @@
 const MButtonLoaderStyle = {
   base: "",
-}
+};
 
-export default MButtonLoaderStyle
+export default MButtonLoaderStyle;

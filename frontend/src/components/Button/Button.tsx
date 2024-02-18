@@ -29,7 +29,7 @@ export default function Button({
         ButtonStyle[variant].hover,
         active && ButtonStyle[variant].active,
         disabled && ButtonStyle.disabled,
-        style
+        style,
       )}
       onClick={onClick}
       disabled={disabled}

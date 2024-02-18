@@ -16,14 +16,14 @@ export default function useDevice() {
   const [device, setDevice] = useState<Device>(
     isMobileBrowser && profil?.favoriteDevice === "mobile"
       ? "mobile"
-      : "desktop"
+      : "desktop",
   );
 
   useEffect(() => {
     setDevice(
       isMobileBrowser && profil?.favoriteDevice === "mobile"
         ? "mobile"
-        : "desktop"
+        : "desktop",
     );
   }, [profil]);
 

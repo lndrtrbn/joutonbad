@@ -27,7 +27,7 @@ export default function MButton({
         MButtonStyle[variant],
         MButtonStyle[size],
         disabled && MButtonStyle.disabled,
-        style
+        style,
       )}
       onClick={onClick}
       disabled={disabled}
