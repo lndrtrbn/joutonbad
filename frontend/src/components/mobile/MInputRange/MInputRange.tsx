@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import MButton from "../MButton/MButton";
 import MScrollRow from "../MScrollRow/MScrollRow";
 import MInputRangeStyle from "./MInputRange.style";
+import { useState } from "react";
 
 type Props<Data> = {
   items: readonly Data[];
@@ -19,6 +20,10 @@ export default function MInputRange<Data>({
   value,
   style,
 }: Props<Data>) {
+  const [extremity, setExtremity] = useState<
+    "min" | "max" | undefined
+  >();
+
   const min = value ? items.indexOf(value[0]) : 0;
   const max = value ? items.indexOf(value[1]) : items.length;
 
@@ -27,19 +32,18 @@ export default function MInputRange<Data>({
   }
 
   function changeRange(index: number) {
-    let newMin = min;
-    let newMax = max;
-
-    if (index < min) {
-      newMin = index;
-    } else if (index > max) {
-      newMax = index;
-    } else if (index - min < max - index) {
-      newMin = index;
-    } else {
-      newMax = index;
+    if (!extremity) {
+      if (index === min) setExtremity("min");
+      if (index === max) setExtremity("max");
+      return;
     }
-    onChange([items[newMin], items[newMax]]);
+
+    if (extremity === "min" && index <= max) {
+      onChange([items[index], items[max]]);
+    } else if (extremity === "max" && index >= min) {
+      onChange([items[min], items[index]]);
+    }
+    setExtremity(undefined);
   }
 
   return (
@@ -48,11 +52,17 @@ export default function MInputRange<Data>({
         <MButton
           key={toLabel(item)}
           size="small"
-          variant={inRange(i) ? "main" : "light"}
+          variant={inRange(i) ? "main" : "white"}
           style={twMerge(
             inRange(i) && MInputRangeStyle.inRange,
             i === min && MInputRangeStyle.startRange,
             i === max && MInputRangeStyle.endRange,
+            extremity === "min" &&
+              i === min &&
+              MInputRangeStyle.active,
+            extremity === "max" &&
+              i === max &&
+              MInputRangeStyle.active,
           )}
           onClick={() => changeRange(i)}
         >
