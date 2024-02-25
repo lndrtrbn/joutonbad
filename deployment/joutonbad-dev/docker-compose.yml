@@ -8,17 +8,17 @@ volumes:
 
 secrets:
   postgres_user:
-    file: secrets/postgres_user.txt
+    file: secrets/postgres_user
   postgres_pwd:
-    file: secrets/postgres_pwd.txt
+    file: secrets/postgres_pwd
   keycloak_user:
-    file: secrets/keycloak_user.txt
+    file: secrets/keycloak_user
   keycloak_pwd:
-    file: secrets/keycloak_pwd.txt
+    file: secrets/keycloak_pwd
   mongo_pwd:
-    file: secrets/mongo_pwd.txt
+    file: secrets/mongo_pwd
   api_secrets:
-    file: secrets/api_secrets.txt
+    file: secrets/api_secrets
 
 services:
   postgresql-dev:
