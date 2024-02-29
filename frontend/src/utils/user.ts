@@ -30,5 +30,5 @@ export function kcUserToUser(
 }
 
 export function isEditor(user: User): boolean {
-  return user.roles.includes("joutonbad-admin");
+  return user.roles.includes("tournois-api-editor");
 }
