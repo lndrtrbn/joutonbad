@@ -55,9 +55,18 @@ export default function RecapPage() {
           if (registrations == 1)
             setCost((c) => c + tournament.prices[0]);
           if (registrations == 2)
-            setCost((c) => c + tournament.prices[1]);
+            setCost(
+              (c) =>
+                c + (tournament.prices[1] ?? tournament.prices[0]),
+            );
           if (registrations == 3)
-            setCost((c) => c + tournament.prices[2]);
+            setCost(
+              (c) =>
+                c +
+                (tournament.prices[2] ??
+                  tournament.prices[1] ??
+                  tournament.prices[0]),
+            );
         });
 
       setToCome(newToCome);

@@ -10,4 +10,5 @@ export type Player = {
   license: string;
   club: string;
   favoriteDevice: Device;
+  favoriteColor?: string;
 };

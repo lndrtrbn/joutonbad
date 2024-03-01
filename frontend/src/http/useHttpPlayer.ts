@@ -15,6 +15,7 @@ export type CreatePlayerPayload = {
 
 export type UpdateProfilPayload = {
   favoriteDevice: Device;
+  favoriteColor: string;
 };
 
 export default function useHttpPlayer() {

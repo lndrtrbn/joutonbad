@@ -1,8 +1,8 @@
 const MButtonStyle = {
-  base: "border border-m-main rounded-full font-bold outline-none",
+  base: "rounded-full font-bold outline-none",
   main: "bg-m-main text-m-black",
-  white: "border-none bg-m-moon10 text-m-white",
-  light: "text-m-white",
+  white: "bg-m-moon10 text-m-white",
+  light: "border border-m-main text-m-white",
   large: "p-12 py-4 text-xl",
   small: "p-6 py-3 text-md",
   disabled: "bg-m-white10 text-m-black",

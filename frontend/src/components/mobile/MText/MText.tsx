@@ -17,11 +17,13 @@ export type MTextProps = {
   type?: TextType;
   color?: TextColor;
   style?: string;
+  onClick?: () => void;
 };
 
 type ElementProps = {
   children: ReactNode;
   className: string;
+  onClick?: () => void;
 };
 
 const ELEMENTS: { [key: string]: FC<ElementProps> } = {
@@ -35,6 +37,7 @@ const ELEMENTS: { [key: string]: FC<ElementProps> } = {
 
 export default function MText({
   children,
+  onClick,
   type = "text",
   color = "text-m-white",
   style,
@@ -42,7 +45,10 @@ export default function MText({
   const Text = ELEMENTS[type];
 
   return (
-    <Text className={twMerge(MTextStyle.size[type], color, style)}>
+    <Text
+      className={twMerge(MTextStyle.size[type], color, style)}
+      onClick={onClick}
+    >
       {children}
     </Text>
   );

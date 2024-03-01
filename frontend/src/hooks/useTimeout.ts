@@ -20,7 +20,7 @@ export default function useTimeout(
   callback: () => void,
   delay: number,
 ) {
-  const timeoutRef = useRef<number>();
+  const timeoutRef = useRef<NodeJS.Timeout>();
   const savedCallback = useRef(callback);
 
   useEffect(() => {

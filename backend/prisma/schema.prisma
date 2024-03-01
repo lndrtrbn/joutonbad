@@ -46,6 +46,7 @@ model Player {
   registrations  Registration[]
   inChargeOf     Tournament[]
   favoriteDevice Device         @default(desktop)
+  favoriteColor  String?
 }
 
 type Partner {

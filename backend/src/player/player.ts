@@ -9,7 +9,7 @@ export type PlayerCreatePayload = Pick<
 
 export type PlayerUpdatePayload = Pick<
   Prisma.PlayerUpdateInput,
-  "favoriteDevice"
+  "favoriteDevice" | "favoriteColor"
 >;
 
 export type CsvPlayer = [

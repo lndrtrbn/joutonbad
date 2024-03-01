@@ -1,3 +1,5 @@
+import { colorScale } from "../../utils/color";
+
 /**
  * Colors used in the Tailwind design system.
  * Look at tailwind.config.ts.
@@ -36,45 +38,12 @@ const red = "#e63946";
 const yellow = "#f6bd60";
 const blue = "#3a86ff";
 
-type ColorScaleKeys<T extends string> =
-  | T
-  | `${T}10`
-  | `${T}20`
-  | `${T}30`
-  | `${T}40`
-  | `${T}50`
-  | `${T}60`
-  | `${T}70`
-  | `${T}80`
-  | `${T}90`;
-
-type ColorScale<T extends string> = {
-  [key in ColorScaleKeys<T>]: string;
-};
-
-function colorScale<T extends string>(
-  name: T,
-  baseColor: string,
-): ColorScale<T> {
-  return {
-    [`${name}10`]: `rgb(${baseColor} / 0.1)`,
-    [`${name}20`]: `rgb(${baseColor} / 0.2)`,
-    [`${name}30`]: `rgb(${baseColor} / 0.3)`,
-    [`${name}40`]: `rgb(${baseColor} / 0.4)`,
-    [`${name}50`]: `rgb(${baseColor} / 0.5)`,
-    [`${name}60`]: `rgb(${baseColor} / 0.6)`,
-    [`${name}70`]: `rgb(${baseColor} / 0.7)`,
-    [`${name}80`]: `rgb(${baseColor} / 0.8)`,
-    [`${name}90`]: `rgb(${baseColor} / 0.9)`,
-    [`${name}`]: `rgb(${baseColor} / 1)`,
-  } as ColorScale<T>;
-}
-
+export const DEFAULT_MOBILE_MAIN_COLOR = "128 237 153";
 const m = {
   ...colorScale("moon", "166 188 224"),
   ...colorScale("moonlight", "218 230 248"),
   ...colorScale("white", "255 255 255"),
-  ...colorScale("main", "128 237 153"),
+  ...colorScale("main", "var(--color-main)"),
   ...colorScale("black", "29 32 37"),
   veryBlack: "#171a1f",
 };

@@ -19,6 +19,7 @@ Web application to help manage and centralize the registrations of your club's b
       - [Email configuration](#email-configuration)
     - [\[FIRST LAUNCH\] Prepare the environment](#first-launch-prepare-the-environment)
     - [Start applications](#start-applications)
+  - [\[backend\] How to run a migration](#backend-how-to-run-a-migration)
 
 ## Repository organization
 
@@ -131,3 +132,13 @@ In each **frontend** and **backend** folder run the command:
 ```sh
 npm start
 ```
+
+## [backend] How to run a migration
+
+Go to the migration folder (`backend/prisma/migrations`) and run this command:
+
+```sh
+node <filename>
+```
+
+Where `filename` is s Javascript file containing the migration.

@@ -52,15 +52,24 @@ export default function HomePage() {
 
       (myTournaments ?? []).forEach((tournament) => {
         const registrations = tournament.registrations.filter(
-          (reg) => reg.player.license == user.license,
+          (reg) =>
+            reg.player.license == user.license && !reg.cancelled,
         );
         setRegistrations((regs) => [...regs, ...registrations]);
         if (registrations.length == 1)
           setCost((c) => c + tournament.prices[0]);
         if (registrations.length == 2)
-          setCost((c) => c + tournament.prices[1]);
+          setCost(
+            (c) => c + (tournament.prices[1] ?? tournament.prices[0]),
+          );
         if (registrations.length == 3)
-          setCost((c) => c + tournament.prices[2]);
+          setCost(
+            (c) =>
+              c +
+              (tournament.prices[2] ??
+                tournament.prices[1] ??
+                tournament.prices[0]),
+          );
       });
     }
   }, [myTournaments, user]);
