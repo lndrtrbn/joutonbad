@@ -22,7 +22,7 @@ export default function MCardInfo({
   return (
     <MContainer style={twMerge(MCardInfoStyle.base, style)}>
       <MIcon naked icon={icon} />
-      <MText type="small" color="text-m-moonlight60">
+      <MText type="small" color="text-m-moonlight/60">
         {children}
       </MText>
     </MContainer>

@@ -28,18 +28,18 @@ type VariantStyle = {
 
 const variantStyles: { [key: string]: VariantStyle } = {
   main: {
-    iconBg: "bg-m-black20",
+    iconBg: "bg-m-black/20",
     iconColor: "text-m-black",
     text: "text-m-black",
-    smallText: "text-m-black50",
+    smallText: "text-m-black/50",
     tag: "dark",
     tagActive: "black",
   },
   light: {
-    iconBg: "bg-m-moon10",
+    iconBg: "bg-m-moon/10",
     iconColor: "text-m-white",
     text: "text-m-white",
-    smallText: "text-m-moon50",
+    smallText: "text-m-moon/50",
     tag: "light",
     tagActive: "main",
   },

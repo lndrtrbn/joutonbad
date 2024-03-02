@@ -17,7 +17,7 @@ export default function MInputLabel({
 }: Props) {
   return (
     <label className={twMerge(MInputLabelStyle.base, style)}>
-      <MText type="small" color="text-m-moonlight60" style="mb-4">
+      <MText type="small" color="text-m-moonlight/60" style="mb-4">
         {name}
       </MText>
       {children}

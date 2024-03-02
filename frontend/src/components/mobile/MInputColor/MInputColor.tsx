@@ -49,7 +49,7 @@ export default function MInputColor({
       <div className={MInputColorStyle.labels}>
         <MText
           type="small"
-          color="text-m-moonlight60"
+          color="text-m-moonlight/60"
           onClick={focus}
         >
           {label}
@@ -57,7 +57,7 @@ export default function MInputColor({
         {defaultValue && defaultValue !== value && (
           <MText
             type="small"
-            color="text-m-moonlight20"
+            color="text-m-moonlight/20"
             onClick={reset}
           >
             Remettre la couleur par default

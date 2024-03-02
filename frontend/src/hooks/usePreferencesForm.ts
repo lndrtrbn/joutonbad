@@ -3,9 +3,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import useHttpPlayer from "../http/useHttpPlayer";
-import { hexToRgb, rgbToHex } from "../utils/color";
 import { useAuthContext } from "../contexts/auth.context";
-import { DEFAULT_MOBILE_MAIN_COLOR } from "../styles/designSystem/colors";
+import { DEFAULT_MAIN_COLOR } from "../styles/designSystem/colors";
 
 export const PreferencesSchema = z.object({
   preferMobile: z.boolean(),
@@ -23,9 +22,7 @@ export default function usePreferencesForm() {
   const form = useForm<PreferencesInputs>({
     defaultValues: {
       preferMobile: profil?.favoriteDevice === "mobile",
-      favoriteColor: rgbToHex(
-        profil?.favoriteColor ?? DEFAULT_MOBILE_MAIN_COLOR,
-      ),
+      favoriteColor: profil?.favoriteColor ?? DEFAULT_MAIN_COLOR,
     },
     resolver: zodResolver(PreferencesSchema),
   });
@@ -37,12 +34,12 @@ export default function usePreferencesForm() {
       if (profil) {
         const updated = await updateProfil({
           favoriteDevice: data.preferMobile ? "mobile" : "desktop",
-          favoriteColor: hexToRgb(data.favoriteColor),
+          favoriteColor: data.favoriteColor,
         });
         setProfil(updated);
         reset({
           preferMobile: updated.favoriteDevice === "mobile",
-          favoriteColor: rgbToHex(updated.favoriteColor),
+          favoriteColor: updated.favoriteColor,
         });
       }
     } catch (error) {

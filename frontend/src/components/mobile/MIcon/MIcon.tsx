@@ -22,7 +22,7 @@ export type MIconProps = {
 export default function MIcon({
   icon,
   onClick,
-  bg = "bg-m-moon10",
+  bg = "bg-m-moon/10",
   color = "text-m-white",
   size = "text-2xl",
   naked = false,

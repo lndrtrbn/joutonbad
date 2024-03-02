@@ -1,5 +1,3 @@
-import { colorScale } from "../../utils/color";
-
 /**
  * Colors used in the Tailwind design system.
  * Look at tailwind.config.ts.
@@ -38,14 +36,14 @@ const red = "#e63946";
 const yellow = "#f6bd60";
 const blue = "#3a86ff";
 
-export const DEFAULT_MOBILE_MAIN_COLOR = "128 237 153";
+export const DEFAULT_MAIN_COLOR = "#80ED99";
+
 const m = {
-  ...colorScale("moon", "166 188 224"),
-  ...colorScale("moonlight", "218 230 248"),
-  ...colorScale("white", "255 255 255"),
-  ...colorScale("main", "var(--color-main)"),
-  ...colorScale("black", "29 32 37"),
-  veryBlack: "#171a1f",
+  moon: "rgb(166 188 224)",
+  moonlight: "rgb(218 230 248)",
+  white: "rgb(255 255 255)",
+  black: "rgb(29 32 37)",
+  main: "rgb(var(--color-main))",
 };
 
 const colors = {
@@ -59,7 +57,9 @@ const colors = {
   m,
 };
 
-export type TextColor = `text-m-${keyof typeof colors.m}`;
-export type BgColor = `bg-m-${keyof typeof colors.m}`;
+type AllColors = keyof typeof colors.m;
+type Opacity = "" | `/${number}`;
+export type TextColor = `text-m-${AllColors}${Opacity}`;
+export type BgColor = `bg-m-${AllColors}${Opacity}`;
 
 export default colors;

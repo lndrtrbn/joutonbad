@@ -16,7 +16,7 @@ export default function FaqPage() {
           {faq.answers.map((answer, i) => (
             <MText
               key={i}
-              color="text-m-moonlight60"
+              color="text-m-moonlight/60"
               style="mb-4"
               type="small"
             >

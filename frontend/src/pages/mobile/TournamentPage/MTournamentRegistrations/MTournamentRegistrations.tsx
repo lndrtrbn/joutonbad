@@ -58,7 +58,7 @@ export default function MTournamentRegistrations({
             {reg.partner && (
               <MText
                 type="small"
-                color="text-m-moonlight60"
+                color="text-m-moonlight/60"
                 style="block"
               >
                 {reg.partner.lastname} {reg.partner.name}
@@ -68,7 +68,7 @@ export default function MTournamentRegistrations({
           <MText type="small">{reg.discipline}</MText>
           <MIcon
             icon={reg.sent ? faCheck : faHourglass}
-            color={reg.sent ? "text-m-main" : "text-m-moon60"}
+            color={reg.sent ? "text-m-main" : "text-m-moon/60"}
             size="text-xl"
             naked
           />

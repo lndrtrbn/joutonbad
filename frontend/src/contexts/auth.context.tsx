@@ -7,9 +7,9 @@ import {
 
 import { User } from "../utils/user";
 import { Player } from "../utils/player";
+import { hexToRgb } from "../utils/color";
 import { ContextData, ProviderProps } from "./context.type";
 import { getLocalItem, setLocalItem } from "../utils/localStorage";
-import { DEFAULT_MOBILE_MAIN_COLOR } from "../styles/designSystem/colors";
 
 type Context = {
   user: ContextData<User | undefined>;
@@ -45,10 +45,11 @@ export function AuthProvider({ children }: ProviderProps) {
         profil: profilState,
       }}
     >
-      <style>
-        :root{" "}
-        {`{--color-main: ${profil?.favoriteColor ?? DEFAULT_MOBILE_MAIN_COLOR};}`}
-      </style>
+      <style>{`
+      :root {
+        --color-main: ${hexToRgb(profil?.favoriteColor)};
+      }
+      `}</style>
       {children}
     </AuthContext.Provider>
   );

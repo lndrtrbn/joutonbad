@@ -77,7 +77,7 @@ export default function MFormRegistrationSingle({
       <MText type="accent">Inscription Simple</MText>
 
       {registration ? (
-        <MText type="small" color="text-m-moonlight60">
+        <MText type="small" color="text-m-moonlight/60">
           Inscrit.e
         </MText>
       ) : (

@@ -15,7 +15,7 @@ export default function MFact({ label, value, style }: Props) {
       <MText type="subtitle" color="text-m-main">
         {value}
       </MText>
-      <MText type="text" color="text-m-moon50" style="mb-1">
+      <MText type="text" color="text-m-moon/50" style="mb-1">
         {label}
       </MText>
     </MContainer>

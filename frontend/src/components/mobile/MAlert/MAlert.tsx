@@ -30,7 +30,7 @@ export default function MAlert({ type, children, style }: Props) {
     <MContainer
       style={twMerge(MAlertStyle.base, MAlertStyle[type], style)}
     >
-      <MIcon bg="bg-m-black20" icon={icon} />
+      <MIcon bg="bg-m-black/20" icon={icon} />
       <div className={MAlertStyle.msg}>{children}</div>
     </MContainer>
   );

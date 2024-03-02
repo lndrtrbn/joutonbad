@@ -15,7 +15,7 @@ type Props = {
 
 export default function MContainer({
   children,
-  bg = "bg-m-moon10",
+  bg = "bg-m-moon/10",
   border = "rounded-3xl",
   style,
   onClick,

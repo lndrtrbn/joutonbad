@@ -30,10 +30,14 @@ export default function MTournamentDetails({ tournament }: Props) {
       <div className={MTournamentDetailsStyle.row}>
         <MIcon icon={faSun} />
         <div className={MTournamentDetailsStyle.col}>
-          <MText type="small" color="text-m-moonlight60" style="pb-2">
+          <MText
+            type="small"
+            color="text-m-moonlight/60"
+            style="pb-2"
+          >
             Du {strDate(tournament.startDate)}
           </MText>
-          <MText type="small" color="text-m-moonlight60">
+          <MText type="small" color="text-m-moonlight/60">
             Au {strDate(tournament.endDate)}
           </MText>
         </div>
@@ -52,7 +56,7 @@ export default function MTournamentDetails({ tournament }: Props) {
       <MScrollRow style="px-6 mb-6">
         <MContainer style="gap-6 shrink-0" bg="bg-m-main">
           <div className={MTournamentDetailsStyle.bullet}>
-            <MText type="small" color="text-m-black70">
+            <MText type="small" color="text-m-black/70">
               Lieu
             </MText>
             <MText type="text" color="text-m-black" style="mb-1">
@@ -60,7 +64,7 @@ export default function MTournamentDetails({ tournament }: Props) {
             </MText>
           </div>
           <div className={MTournamentDetailsStyle.bullet}>
-            <MText type="small" color="text-m-black70">
+            <MText type="small" color="text-m-black/70">
               Classements
             </MText>
             <MText type="text" color="text-m-black" style="mb-1">
@@ -68,7 +72,7 @@ export default function MTournamentDetails({ tournament }: Props) {
             </MText>
           </div>
           <div className={MTournamentDetailsStyle.bullet}>
-            <MText type="small" color="text-m-black70">
+            <MText type="small" color="text-m-black/70">
               Tableaux
             </MText>
             <MText type="text" color="text-m-black" style="mb-1">
@@ -76,7 +80,7 @@ export default function MTournamentDetails({ tournament }: Props) {
             </MText>
           </div>
           <div className={MTournamentDetailsStyle.bullet}>
-            <MText type="small" color="text-m-black70">
+            <MText type="small" color="text-m-black/70">
               Responsable
             </MText>
             <MText type="text" color="text-m-black" style="mb-1">
@@ -84,7 +88,7 @@ export default function MTournamentDetails({ tournament }: Props) {
             </MText>
           </div>
           <div className={MTournamentDetailsStyle.bullet}>
-            <MText type="small" color="text-m-black70">
+            <MText type="small" color="text-m-black/70">
               Prix / nb tableaux
             </MText>
             <MText type="text" color="text-m-black" style="mb-1">

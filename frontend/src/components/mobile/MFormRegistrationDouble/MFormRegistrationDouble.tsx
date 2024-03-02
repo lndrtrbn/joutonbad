@@ -114,7 +114,7 @@ export default function MFormRegistrationDouble({
       </MText>
 
       {registration ? (
-        <MText type="small" color="text-m-moonlight60">
+        <MText type="small" color="text-m-moonlight/60">
           Inscrit.e avec {registration.partner?.lastname}{" "}
           {registration.partner?.name} ({registration.partner?.club})
         </MText>
@@ -218,7 +218,7 @@ export default function MFormRegistrationDouble({
                 )}
               />
               <MCardInfo icon={faInfo}>
-                <MText type="small" color="text-m-moonlight60">
+                <MText type="small" color="text-m-moonlight/60">
                   Coche la case ci-dessus si ton ou ta partenaire a
                   déjà réglé son inscription de son côté
                 </MText>

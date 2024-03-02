@@ -3,7 +3,7 @@ const MTournamentCardStyle = {
   row: "flex gap-6 items-center",
   tags: "flex gap-2 flex-wrap",
   main: "bg-m-main",
-  light: "bg-m-moon10",
+  light: "bg-m-moon/10",
 };
 
 export default MTournamentCardStyle;

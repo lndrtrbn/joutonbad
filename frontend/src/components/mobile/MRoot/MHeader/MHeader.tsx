@@ -54,7 +54,7 @@ export default function MHeader({ onTop }: Props) {
       )}
       <div className="flex-1" />
       <MContainer style="p-4 px-6 rounded-full">
-        <MText color="text-m-moonlight60" type="small">
+        <MText color="text-m-moonlight/60" type="small">
           {user?.license}
         </MText>
       </MContainer>
