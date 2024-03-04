@@ -78,13 +78,10 @@ export function filterLevel(
   const max = LEVELS.indexOf(maxLevel ?? Level.N1);
 
   return (tournaments ?? []).filter((tournament) => {
-    const isMinInside =
-      min >= LEVELS.indexOf(tournament.minLevel) &&
-      min <= LEVELS.indexOf(tournament.maxLevel);
-    const isMaxInside =
-      max >= LEVELS.indexOf(tournament.minLevel) &&
-      max <= LEVELS.indexOf(tournament.maxLevel);
-    return isMinInside || isMaxInside;
+    return (
+      LEVELS.indexOf(tournament.minLevel) >= min &&
+      LEVELS.indexOf(tournament.maxLevel) <= max
+    );
   });
 }
 
