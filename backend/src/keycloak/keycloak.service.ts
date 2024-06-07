@@ -23,7 +23,7 @@ export class KeycloakService {
    * Get an access token (and additionnal token data) for a user.
    *
    * @param username The username of the user who wants a token.
-   * @param password The password of the usre who wants a token.
+   * @param password The password of the user who wants a token.
    * @returns All data about the token for this user.
    */
   async getApiToken(
