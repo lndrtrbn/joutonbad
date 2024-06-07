@@ -86,7 +86,7 @@ export class AuthService {
    * @param userEmail The email of the user to execute actions.
    * @param actions Actions to execute.
    */
-  async executeuserActions(
+  async executeUserActions(
     userEmail: string,
     actions: string[],
   ): Promise<void> {

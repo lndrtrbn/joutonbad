@@ -44,7 +44,7 @@ export class AuthController {
   @Post("forgotpwd")
   @Public()
   async forgotPwd(@Body() payload: ForgotPwdPayload): Promise<void> {
-    this.authService.executeuserActions(payload.email, [
+    this.authService.executeUserActions(payload.email, [
       "UPDATE_PASSWORD",
     ]);
   }
@@ -54,7 +54,7 @@ export class AuthController {
   async verifyEmail(
     @Body() payload: ForgotPwdPayload,
   ): Promise<void> {
-    this.authService.executeuserActions(payload.email, [
+    this.authService.executeUserActions(payload.email, [
       "VERIFY_EMAIL",
     ]);
   }
