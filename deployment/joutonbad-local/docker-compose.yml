@@ -18,10 +18,13 @@ services:
 
   keycloak:
     container_name: keycloak
-    image: bitnami/keycloak:22.0.1
+    build:
+      context: ../../keycloak
+      dockerfile: ./Dockerfile
+    image: joutonbad/keycloak
     restart: always
     environment:
-      KEYCLOAK_ADMIN_USER: admin
+      KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: adminpwd
       KEYCLOAK_DATABASE_NAME: keycloak
       KEYCLOAK_DATABASE_USER: keycloak
@@ -31,17 +34,31 @@ services:
     depends_on:
       - postgresql
 
-  mongo:
-    # https://github.com/prisma/prisma/issues/8266#issuecomment-966618742
-    container_name: mongo
+  mongo-primary:
+    container_name: mongo-primary
     image: bitnami/mongodb:4.2.21
     restart: always
     environment:
-      MONGODB_ROOT_USER: root
-      MONGODB_ROOT_PASSWORD: root
+      MONGODB_ADVERTISED_HOSTNAME: mongo-primary
       MONGODB_REPLICA_SET_MODE: primary
       MONGODB_REPLICA_SET_KEY: replicasetkey123
+      MONGODB_ROOT_USER: root
+      MONGODB_ROOT_PASSWORD: root
     volumes:
       - mongo_data:/bitnami/mongodb
     ports:
       - 27018:27017
+
+  mongo-secondary:
+    container_name: mongo-secondary
+    image: bitnami/mongodb:4.2.21
+    depends_on:
+      - mongo-primary
+    restart: always
+    environment:
+      MONGODB_ADVERTISED_HOSTNAME: mongo-secondary
+      MONGODB_REPLICA_SET_MODE: secondary
+      MONGODB_REPLICA_SET_KEY: replicasetkey123
+      MONGODB_INITIAL_PRIMARY_HOST: mongo-primary
+      MONGODB_INITIAL_PRIMARY_PORT_NUMBER: 27017
+      MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD: root
