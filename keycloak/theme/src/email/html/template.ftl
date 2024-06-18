@@ -28,11 +28,7 @@
             padding-bottom: 0;
           "
         >
-          <img
-            src="${url.resourcesUrl}/img/logo.png"
-            title="Joutonbad"
-            alt="Joutonbad"
-          />
+          Joutonbad
         </td>
       </tr>
       <tr>
