@@ -12,7 +12,7 @@
       ${link}
 
       Si tu n'es pas à l'origine de la création du compte, ignore ce message.
-    <#if reqActionItem == "UPDATE_PASSWORD">
+    <#elseif reqActionItem == "UPDATE_PASSWORD">
       Changement de mot de passe
 
       Une demande de changement de mot de passe a été faite pour cette adresse mail.

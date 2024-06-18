@@ -16,7 +16,7 @@
           </p>
           <p style="text-align: center"><a href="${link}">Valider mon adresse mail</a></p>
           <p>Si tu n'es pas à l'origine de la création du compte, ignore ce message.</p>
-        <#if reqActionItem == "UPDATE_PASSWORD">
+        <#elseif reqActionItem == "UPDATE_PASSWORD">
           <h3 style="margin: 0">Changement de mot de passe</h3>
           <p>
             Une demande de changement de mot de passe a été faite pour cette adresse mail.
