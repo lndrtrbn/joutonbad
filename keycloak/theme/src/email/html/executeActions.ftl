@@ -4,5 +4,23 @@
 
 <#import "template.ftl" as layout>
 <@layout.emailLayout>
-${kcSanitize(msg("executeActionsBodyHtml",link, linkExpiration, realmName, requiredActionsText, linkExpirationFormatter(linkExpiration)))?no_esc}
+<tr>
+  <td style="width: 100%;">
+    <#list requiredActions>
+      <#items as reqActionItem>
+        <#if reqActionItem == "VERIFY_EMAIL">
+          <h3 style="margin: 0">Vérification de l'adresse mail</h3>
+          <p>
+            Tu viens de créer un compte pour gérer tes inscriptions aux tournois avec le club du REC Badminton.
+            Afin de finaliser ton inscription, valide ton email avec le lien ci-dessous:
+          </p>
+          <p style="text-align: center"><a href="${link}">Valider mon adresse mail</a></p>
+          <p>Si tu n'es pas à l'origine de la création du compte, ignore ce message.</p>
+        <#else>
+          <p>${kcSanitize(msg("executeActionsBodyHtml",link, linkExpiration, realmName, requiredActionsText, linkExpirationFormatter(linkExpiration)))?no_esc}</p>
+        </#if>
+      </#items>
+    </#list>
+  </td>
+</tr>
 </@layout.emailLayout>

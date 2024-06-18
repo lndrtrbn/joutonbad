@@ -105,8 +105,8 @@ Finally we configure Keycloak to be able to send emails.
   - Set From with `recbad35.inscriptions.tournois@gmail.com`,
   - Set Display name with `Rec Badminton - inscriptions tournois`,
   - Set Host with `smtp.gmail.com`,
-  - Set Port with `465`,
-  - Enable SSL,
+  - Set Port with `587`,
+  - Enable StartTLS,
   - Enable Authentication,
   - Set Username with `recbad35.inscriptions.tournois`,
   - Set Password with 16 digit code from Google.

@@ -162,7 +162,7 @@ export class AuthService {
       const user = (await this.keycloakService.getUsers()).find(
         (u) => u.username == license,
       );
-      await this.executeActions(user.id, user.requiredActions);
+      await this.executeActions(user.id, ["VERIFY_EMAIL"]);
 
       if (user) {
         await this.playerService.link(license, user);
