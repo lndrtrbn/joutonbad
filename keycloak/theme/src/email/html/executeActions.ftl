@@ -16,6 +16,14 @@
           </p>
           <p style="text-align: center"><a href="${link}">Valider mon adresse mail</a></p>
           <p>Si tu n'es pas à l'origine de la création du compte, ignore ce message.</p>
+        <#if reqActionItem == "UPDATE_PASSWORD">
+          <h3 style="margin: 0">Changement de mot de passe</h3>
+          <p>
+            Une demande de changement de mot de passe a été faite pour cette adresse mail.
+            Tu peux changer ton mot de passe avec le lien ci-dessous:
+          </p>
+          <p style="text-align: center"><a href="${link}">Changer mon mot de passe</a></p>
+          <p>Si tu n'es pas à l'origine de cette demande, ignore ce message.</p>
         <#else>
           <p>${kcSanitize(msg("executeActionsBodyHtml",link, linkExpiration, realmName, requiredActionsText, linkExpirationFormatter(linkExpiration)))?no_esc}</p>
         </#if>
