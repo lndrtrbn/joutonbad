@@ -44,7 +44,7 @@ services:
       KEYCLOAK_DATABASE_NAME: keycloak
       KEYCLOAK_DATABASE_USER_FILE: /run/secrets/postgres_user
       KEYCLOAK_DATABASE_PASSWORD_FILE: /run/secrets/postgres_pwd
-      KEYCLOAK_ADMIN_USER_FILE: /run/secrets/keycloak_user
+      KEYCLOAK_ADMIN_FILE: /run/secrets/keycloak_user
       KEYCLOAK_ADMIN_PASSWORD_FILE: /run/secrets/keycloak_pwd
     ports:
       - 127.0.0.1:8081:8080

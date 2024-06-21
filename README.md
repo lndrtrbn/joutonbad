@@ -55,7 +55,7 @@ docker compose up -d
 First we create a realm and a client. They represent our app.
 
 - Go to http://localhost:8080/ to configure Keycloak.
-- Use the account set in the `docker-compose.yml` file to log in with `KEYCLOAK_ADMIN_USER` and `KEYCLOAK_ADMIN_PASSWORD`.
+- Use the account set in the `docker-compose.yml` file to log in with `KEYCLOAK_ADMIN` and `KEYCLOAK_ADMIN_PASSWORD`.
 - Create a new Realm called `joutonbad` (top-left button).
 - Create a new Client (Menu: Clients then Create button):
   - Set the Client ID to `joutonbad-api`,
@@ -66,9 +66,11 @@ First we create a realm and a client. They represent our app.
 
 #### Custom role
 
+> This role is for users that can access the admin panel in the app.
+
 Then we create a custom role that represent admins in our app.
 
-- Menu: Clients > the client you created and roles tab then Create button:
+- Menu: Clients > the client you created and Roles tab then Create button:
   - Set a name for this role,
   - Save the role.
 - Menu: Realm roles then Create button:
@@ -103,8 +105,8 @@ Finally we configure Keycloak to be able to send emails.
   - Set From with `recbad35.inscriptions.tournois@gmail.com`,
   - Set Display name with `Rec Badminton - inscriptions tournois`,
   - Set Host with `smtp.gmail.com`,
-  - Set Port with `465`,
-  - Enable SSL,
+  - Set Port with `587`,
+  - Enable StartTLS,
   - Enable Authentication,
   - Set Username with `recbad35.inscriptions.tournois`,
   - Set Password with 16 digit code from Google.
