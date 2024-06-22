@@ -11,7 +11,7 @@ type AuthLayoutProps = {
 export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <div className={style.base}>
-      <LogoVertical />
+      <LogoVertical withTitle />
 
       <div className={style.container}>{children}</div>
 

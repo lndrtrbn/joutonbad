@@ -19,6 +19,7 @@ const colors = {
   black: "rgb(29 32 37)",
   error: "rgb(239 35 60)",
   success: "rgb(64 165 120)",
+  bg: "rgb(247 249 250)",
   m,
 };
 

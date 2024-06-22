@@ -11,7 +11,7 @@ const ButtonStyle = {
     active: "border-main text-main",
   },
   icon: {
-    base: "font-bold h-10 w-10 text-black bg-black/10 rounded-full",
+    base: "font-bold h-10 w-10 text-black border-black/10 bg-bg border rounded-full",
     hover: "flex items-center justify-center",
     active: "",
   },

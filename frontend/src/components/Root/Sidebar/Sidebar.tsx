@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-import SidebarStyle from "./Sidebar.style";
 import Button from "../../Button/Button";
+import SidebarStyle from "./Sidebar.style";
 import SidebarNav from "./SidebarNav/SidebarNav";
-import SidebarHeader from "./SidebarHeader/SidebarHeader";
 import SidebarFooter from "./SidebarFooter/SidebarFooter";
+import LogoVertical from "../../LogoVertical/LogoVertical";
 import useClickOutside from "../../../hooks/useClickOutside";
 import { useWindowDimensions } from "../../../hooks/useWindowDimensions";
 
@@ -25,6 +25,7 @@ export default function Sidebar() {
   return (
     <>
       {closable && opened && <div className={SidebarStyle.bg}></div>}
+
       <div
         ref={ref}
         className={twMerge(
@@ -35,17 +36,17 @@ export default function Sidebar() {
           opened && SidebarStyle.noTranform,
         )}
       >
-        <SidebarHeader />
+        <LogoVertical />
         <SidebarNav />
         <SidebarFooter />
 
-        {closable && (
+        {closable && !opened && (
           <Button
             onClick={toggle}
             style={SidebarStyle.button}
             variant="icon"
           >
-            <FontAwesomeIcon icon={opened ? faXmark : faBars} />
+            <FontAwesomeIcon icon={faBars} />
           </Button>
         )}
       </div>

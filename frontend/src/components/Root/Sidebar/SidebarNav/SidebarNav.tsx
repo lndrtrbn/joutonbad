@@ -3,6 +3,9 @@ import {
   faGear,
   faFire,
   faUser,
+  faUserGroup,
+  faMedal,
+  faAddressCard,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarDays } from "@fortawesome/free-regular-svg-icons";
 
@@ -29,14 +32,31 @@ export default function SidebarNav() {
           Mon profil
         </Link>
       )}
+
+      {user && isEditor(user) && (
+        <>
+          <div className="mx-4 my-2 border-b border-black/10" />
+
+          <Link to="/admin/membres" icon={faUserGroup}>
+            Membres
+          </Link>
+          <Link to="/admin/tournois" icon={faMedal}>
+            Tournois
+          </Link>
+          <Link to="/admin/inscriptions" icon={faAddressCard}>
+            Inscriptions
+          </Link>
+          <Link to="/admin/global" icon={faGear}>
+            Global
+          </Link>
+        </>
+      )}
+
+      <div className="mx-4 my-2 border-b border-black/10" />
+
       <Link to="/faq" icon={faQuestion}>
         FAQ
       </Link>
-      {user && isEditor(user) && (
-        <Link to="/admin" icon={faGear}>
-          Admin
-        </Link>
-      )}
     </div>
   );
 }
