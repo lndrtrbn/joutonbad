@@ -3,7 +3,7 @@
  * Look at tailwind.config.ts.
  */
 
-export const DEFAULT_MAIN_COLOR = "#78e391";
+export const DEFAULT_MAIN_COLOR = "#da3124";
 
 const m = {
   moon: "rgb(166 188 224)",
@@ -18,6 +18,7 @@ const colors = {
   white: "rgb(255 255 255)",
   black: "rgb(29 32 37)",
   error: "rgb(239 35 60)",
+  success: "rgb(64 165 120)",
   m,
 };
 

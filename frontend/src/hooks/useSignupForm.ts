@@ -25,11 +25,11 @@ const schema = z
     username: z.string().min(1),
     password: z.string().min(1),
     passwordConfirm: z.string().min(1),
-    email: z.string().email(),
+    email: z.string().email("L'adresse mail est incorrecte"),
   })
   .refine((data) => data.password === data.passwordConfirm, {
-    message: "Passwords don't match",
-    path: ["confirm"],
+    message: "Les mots de passe ne sont pas identiques",
+    path: ["passwordConfirm"],
   });
 
 export default function useSignupForm(
@@ -37,15 +37,17 @@ export default function useSignupForm(
   apiError?: APIError,
 ) {
   const [globalError, setGlobalError] = useState("");
+  const clearGlobalError = () => setGlobalError("");
 
   const form = useForm<SignupFormInputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      username: "",
-      password: "",
-      passwordConfirm: "",
-      email: "",
+      username: "07007922",
+      password: "lndr",
+      passwordConfirm: "lndr",
+      email: "lndr.trbn@gmail.com",
     },
+    mode: "onTouched",
   });
 
   useEffect(() => {
@@ -79,5 +81,5 @@ export default function useSignupForm(
     }
   }, [apiError]);
 
-  return [form, globalError] as const;
+  return [form, globalError, clearGlobalError] as const;
 }

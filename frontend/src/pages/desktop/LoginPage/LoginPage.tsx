@@ -1,37 +1,47 @@
+import { useLocation } from "react-router-dom";
+
 import FormLogin from "./FormLogin/FormLogin";
 import useLogin from "../../../hooks/useLogin";
-import LoginPageStyle from "./LoginPage.style";
 import Link from "../../../components/Link/Link";
 import Title from "../../../components/Title/Title";
-import LogoVertical from "../../../components/LogoVertical/LogoVertical";
+import Alert from "../../../components/Alert/Alert";
+import AuthLayout from "../../../components/AuthLayout/AuthLayout";
 
 export default function LoginPage() {
   const [callLogin, error, fetching] = useLogin();
+  const { state } = useLocation();
 
   return (
-    <div className={LoginPageStyle.base}>
-      <LogoVertical />
+    <AuthLayout>
+      <Title size="3xl">Connexion</Title>
 
-      <div className={LoginPageStyle.container}>
-        <Title size="3xl">Connexion</Title>
-        <FormLogin
-          onSubmit={callLogin}
-          error={error}
-          loading={fetching}
-        />
-        <Link to="/signup" inline>
-          Créer mon compte
-        </Link>
-        <Link to="/forgotpwd" inline>
-          Mot de passe oublié
-        </Link>
-      </div>
+      {state === "from-signup" && (
+        <Alert type="success">
+          <p>Ton compte a bien été créé.</p>
+          <p>Un email t'a été envoyé pour le valider.</p>
+        </Alert>
+      )}
+      {state === "from-forgotpwd" && (
+        <Alert type="success">
+          <p>
+            Un email a été envoyé à ton adresse. Tu y trouveras un
+            lien pour changer ton mot de passe.
+          </p>
+        </Alert>
+      )}
 
-      <div className={LoginPageStyle.botton}>
-        <Title size="xl" style="mb-0 sm:mb-0">
-          REC Badminton
-        </Title>
-      </div>
-    </div>
+      <FormLogin
+        onSubmit={callLogin}
+        error={error}
+        loading={fetching}
+      />
+
+      <Link to="/signup" inline>
+        Créer mon compte
+      </Link>
+      <Link to="/forgotpwd" inline>
+        Mot de passe oublié
+      </Link>
+    </AuthLayout>
   );
 }

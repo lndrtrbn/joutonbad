@@ -1,4 +1,4 @@
 export type Alert = {
-  type: "info" | "success" | "warning" | "error";
+  type: "info" | "success" | "error";
   message: string;
 };

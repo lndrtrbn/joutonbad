@@ -1,13 +1,10 @@
 import { Controller } from "react-hook-form";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import useForgotPwdForm, {
   FormForgotPwdProps,
 } from "../../../../hooks/useForgotPwdForm";
-import FormForgotPwdStyle from "./FormForgotPwd.style";
-import Button from "../../../../components/Button/Button";
 import InputText from "../../../../components/InputText/InputText";
+import ButtonLoading from "../../../../components/ButtonLoading/ButtonLoading";
 
 export default function FormForgotPwd({
   onSubmit,
@@ -17,33 +14,32 @@ export default function FormForgotPwd({
   const {
     control,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForgotPwdForm(canReset);
 
   return (
     <form
-      className={FormForgotPwdStyle.base}
+      className="flex flex-col gap-4 w-full"
       onSubmit={handleSubmit(onSubmit)}
     >
       <Controller
         name="email"
         control={control}
-        render={({ field: { value, onChange } }) => (
+        render={({ field: { value, onChange, onBlur } }) => (
           <InputText
             value={value}
             onChange={onChange}
+            onBlur={onBlur}
             placeholder="Email"
             width="sm:w-full"
+            inError={!!errors.email}
+            error={errors.email?.message}
           />
         )}
       />
-      <Button disabled={!isValid || loading}>
-        {loading ? (
-          <FontAwesomeIcon icon={faSpinner} spin />
-        ) : (
-          <>Changer mon mot de passe</>
-        )}
-      </Button>
+      <ButtonLoading disabled={!isValid || loading} loading={loading}>
+        Changer de mot de passe
+      </ButtonLoading>
     </form>
   );
 }

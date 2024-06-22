@@ -14,7 +14,7 @@ export type FormForgotPwdProps = {
 };
 
 const schema = z.object({
-  email: z.string().email(),
+  email: z.string().email("L'adresse mail est incorrecte"),
 });
 
 export default function useForgotPwdForm(canReset: boolean) {
@@ -23,6 +23,7 @@ export default function useForgotPwdForm(canReset: boolean) {
     defaultValues: {
       email: "",
     },
+    mode: "onTouched",
   });
 
   useEffect(() => {

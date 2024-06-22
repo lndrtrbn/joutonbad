@@ -10,6 +10,7 @@ export type InputTextProps = {
   value: string;
   onChange?: (value: string) => void;
   onReset?: () => void;
+  onBlur?: () => void;
   placeholder?: string;
   error?: string;
   inError?: boolean;
@@ -24,6 +25,7 @@ export default function InputText({
   value,
   onChange,
   onReset,
+  onBlur,
   placeholder,
   error,
   inError = false,
@@ -52,6 +54,7 @@ export default function InputText({
           placeholder={placeholder}
           value={value}
           onChange={handleChanges}
+          onBlur={onBlur}
           disabled={disabled}
           readOnly={readonly}
         />
