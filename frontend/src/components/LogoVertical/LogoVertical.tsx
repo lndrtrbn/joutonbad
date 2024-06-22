@@ -1,4 +1,5 @@
 import Svg from "../Svg/Svg";
+import Title from "../Title/Title";
 import LogoVerticalStyle from "./LogoVertical.style";
 
 export default function LogoVertical() {
@@ -6,10 +7,11 @@ export default function LogoVertical() {
     <div className={LogoVerticalStyle.base}>
       <Svg name="logo" size={48} style={LogoVerticalStyle.logo} />
 
-      <span className={LogoVerticalStyle.title}>REC</span>
-      <span className={LogoVerticalStyle.subtitle}>
-        Gestion tournois
-      </span>
+      <Title size="2xl" style="mb-0 sm:mb-0">
+        Joutonbad
+      </Title>
+
+      <p>Inscription tournois</p>
     </div>
   );
 }

@@ -7,7 +7,6 @@ import SignupPageStyle from "./SignupPage.style";
 import Alert from "../../../components/Alert/Alert";
 import Title from "../../../components/Title/Title";
 import Button from "../../../components/Button/Button";
-import Version from "../../../components/Version/Version";
 import useVerifyEmail from "../../../hooks/useVerifyEmail";
 import { SignupFormInputs } from "../../../hooks/useSignupForm";
 import LogoVertical from "../../../components/LogoVertical/LogoVertical";
@@ -55,8 +54,6 @@ export default function SignupPage() {
 
       <Link to="/login">J'ai déjà un compte</Link>
       <div className={SignupPageStyle.botton} />
-
-      <Version />
     </div>
   );
 }

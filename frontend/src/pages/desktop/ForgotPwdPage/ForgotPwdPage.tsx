@@ -3,7 +3,6 @@ import Alert from "../../../components/Alert/Alert";
 import Title from "../../../components/Title/Title";
 import useForgotPwd from "../../../hooks/useForgotPwd";
 import ForgotPwdPageStyle from "./ForgotPwdPage.style";
-import Version from "../../../components/Version/Version";
 import FormForgotPwd from "./FormForgotPwd/FormForgotPwd";
 import LogoVertical from "../../../components/LogoVertical/LogoVertical";
 
@@ -33,7 +32,6 @@ export default function ForgotPwdPage() {
 
       <Link to="/login">J'ai déjà un compte</Link>
       <div className={ForgotPwdPageStyle.botton} />
-      <Version />
     </div>
   );
 }

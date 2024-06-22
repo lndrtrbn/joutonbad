@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 
 import RootStyle from "./Root.style";
 import Sidebar from "./Sidebar/Sidebar";
-import Version from "../Version/Version";
 import { kcUserToUser } from "../../utils/user";
 import useHttpAuth from "../../http/useHttpAuth";
 import useInterval from "../../hooks/useInterval";
@@ -26,8 +25,6 @@ export default function Root() {
       <div className={RootStyle.main}>
         <Outlet />
       </div>
-
-      <Version />
     </div>
   );
 }

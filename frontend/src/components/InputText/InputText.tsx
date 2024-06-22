@@ -65,7 +65,7 @@ export default function InputText({
           </Button>
         )}
       </div>
-      {inError && (
+      {inError && error && (
         <span className={InputTextStyle.errorText}>{error}</span>
       )}
     </div>

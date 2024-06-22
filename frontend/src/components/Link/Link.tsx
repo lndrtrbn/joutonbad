@@ -28,7 +28,6 @@ export default function Link({
       className={({ isActive }) =>
         twMerge(
           LinkStyle.base,
-          LinkStyle.hover,
           !inline && LinkStyle.notInline,
           inline && LinkStyle.inline,
           isActive && LinkStyle.active,

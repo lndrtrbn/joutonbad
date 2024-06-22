@@ -7,12 +7,14 @@ export type TitleProps = {
   children: ReactNode;
   size?: "md" | "xl" | "2xl" | "3xl";
   subtitle?: boolean;
+  style?: string;
 };
 
 export default function Title({
   children,
   size = "md",
   subtitle = false,
+  style = "",
 }: TitleProps) {
   return (
     <div
@@ -20,6 +22,7 @@ export default function Title({
         TitleStyle.base,
         TitleStyle[size],
         subtitle && TitleStyle.subtitle,
+        style,
       )}
     >
       {children}
