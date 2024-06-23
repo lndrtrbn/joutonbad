@@ -15,12 +15,14 @@ export type AlertProps = {
   type: AlertType["type"];
   children: ReactNode;
   onClose?: () => void;
+  style?: string;
 };
 
 export default function Alert({
   type,
   children,
   onClose,
+  style = "",
 }: AlertProps) {
   const icon = {
     info: faInfo,
@@ -29,7 +31,7 @@ export default function Alert({
   }[type];
 
   return (
-    <div className={AlertStyle.container}>
+    <div className={twMerge(AlertStyle.container, style)}>
       <div className={twMerge(AlertStyle.base, AlertStyle[type])}>
         <FontAwesomeIcon className={AlertStyle.icon} icon={icon} />
 

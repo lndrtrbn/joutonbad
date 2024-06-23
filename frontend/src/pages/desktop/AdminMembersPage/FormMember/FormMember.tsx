@@ -1,14 +1,12 @@
 import * as z from "zod";
-import { twMerge } from "tailwind-merge";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 
-import FormMemberStyle from "./FormMember.style";
 import Alert from "../../../../components/Alert/Alert";
-import Button from "../../../../components/Button/Button";
 import InputText from "../../../../components/InputText/InputText";
 import { APIError, APIErrorMessage } from "../../../../utils/error";
+import ButtonLoading from "../../../../components/ButtonLoading/ButtonLoading";
 
 export type FormMemberInputs = {
   name: string;
@@ -27,15 +25,20 @@ const schema = z.object({
 type Props = {
   onSubmit: (data: FormMemberInputs) => void;
   error?: APIError;
+  loading?: boolean;
 };
 
-export default function FormMember({ onSubmit, error }: Props) {
+export default function FormMember({
+  onSubmit,
+  error,
+  loading = false,
+}: Props) {
   const [errorMsg, setErrorMsg] = useState("");
 
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = useForm<FormMemberInputs>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -59,7 +62,7 @@ export default function FormMember({ onSubmit, error }: Props) {
   return (
     <>
       <form
-        className={FormMemberStyle.base}
+        className="flex gap-4 flex-wrap"
         onSubmit={handleSubmit(onSubmit)}
       >
         <Controller
@@ -70,8 +73,7 @@ export default function FormMember({ onSubmit, error }: Props) {
               value={value}
               onChange={onChange}
               placeholder="Prénom"
-              inError={!!errors.name?.message}
-              width={FormMemberStyle.inputText}
+              width="flex-1"
             />
           )}
         />
@@ -83,8 +85,7 @@ export default function FormMember({ onSubmit, error }: Props) {
               value={value}
               onChange={onChange}
               placeholder="Nom"
-              inError={!!errors.lastname?.message}
-              width={FormMemberStyle.inputText}
+              width="flex-1"
             />
           )}
         />
@@ -96,18 +97,27 @@ export default function FormMember({ onSubmit, error }: Props) {
               value={value}
               onChange={onChange}
               placeholder="Licence"
-              inError={!!errors.license?.message}
-              width={twMerge(FormMemberStyle.inputText, "sm:w-44")}
+              width="w-full"
             />
           )}
         />
-        <Button disabled={!isValid}>Ajouter</Button>
+        <ButtonLoading
+          disabled={!isValid || loading}
+          loading={loading}
+          style="w-full"
+        >
+          Ajouter
+        </ButtonLoading>
       </form>
 
-      {error && (
-        <div className={FormMemberStyle.error}>
-          <Alert type="error">{errorMsg}</Alert>
-        </div>
+      {errorMsg && (
+        <Alert
+          type="error"
+          onClose={() => setErrorMsg("")}
+          style="mt-4"
+        >
+          {errorMsg}
+        </Alert>
       )}
     </>
   );

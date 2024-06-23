@@ -61,6 +61,13 @@ export default function MemberRow({
           alt && MemberRowStyle.alt,
         )}
       >
+        <span className={MemberRowStyle.license}>
+          {member.license}
+        </span>
+        <span className={MemberRowStyle.name}>
+          {member.lastname} {member.name}
+        </span>
+
         <span className={MemberRowStyle.status}>
           <FontAwesomeIcon
             className={twMerge(
@@ -71,12 +78,6 @@ export default function MemberRow({
             icon={faCircle}
           />{" "}
           {member.kcId ? "Actif.ve" : "Inactif.ve"}
-        </span>
-        <span className={MemberRowStyle.license}>
-          {member.license}
-        </span>
-        <span className={MemberRowStyle.name}>
-          {member.lastname} {member.name}
         </span>
 
         <FontAwesomeIcon

@@ -17,15 +17,11 @@ export default function App() {
   const [fetchPlayer, player] = useLazyFetch(getPlayer);
 
   useEffect(() => {
-    if (user) {
-      fetchPlayer(user.license);
-    }
-  }, [user, fetchPlayer]);
+    if (user && !player) fetchPlayer(user.license);
+  }, [user, fetchPlayer, player]);
 
   useEffect(() => {
-    if (player) {
-      setProfil(player);
-    }
+    if (player) setProfil(player);
   }, [player, setProfil]);
 
   return (

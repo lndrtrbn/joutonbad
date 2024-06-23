@@ -9,12 +9,7 @@ export default function useFetch<T>(
   const fetchedRef = useRef(false);
   const [data, setData] = useState<T>();
 
-  const refetch = useCallback(() => {
-    fetchingRef.current = false;
-    fetchedRef.current = false;
-  }, []);
-
-  useEffect(() => {
+  const fetch = useCallback(() => {
     async function getData() {
       const res = await request();
       setData(res);
@@ -26,6 +21,16 @@ export default function useFetch<T>(
       getData();
     }
   }, [request]);
+
+  const refetch = useCallback(() => {
+    fetchingRef.current = false;
+    fetchedRef.current = false;
+    fetch();
+  }, [fetch]);
+
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
 
   return [data, refetch];
 }

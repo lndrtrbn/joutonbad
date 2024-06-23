@@ -1,6 +1,5 @@
 import { ChangeEvent } from "react";
 
-import FormMembersUploadStyle from "./FormMembersUpload.style";
 import InputUpload from "../../../../components/InputUpload/InputUpload";
 
 type Props = {
@@ -16,12 +15,6 @@ export default function FormMembersUpload({ onSubmit }: Props) {
   }
 
   return (
-    <div className={FormMembersUploadStyle.base}>
-      <InputUpload
-        label="Importer"
-        accept=".csv"
-        onChange={onUpload}
-      />
-    </div>
+    <InputUpload label="Importer" accept=".csv" onChange={onUpload} />
   );
 }

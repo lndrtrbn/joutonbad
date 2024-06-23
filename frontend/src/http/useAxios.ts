@@ -34,7 +34,7 @@ export default function useAxios() {
           throw apiError;
         } else {
           addAlert({
-            type: "warning",
+            type: "error",
             message:
               "Une erreur inconnue est survenue. Si elle t'empêche d'utiliser l'application correctement contacte un.e responsable",
           });

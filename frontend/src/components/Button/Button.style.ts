@@ -6,12 +6,12 @@ const ButtonStyle = {
     active: "bg-main",
   },
   light: {
-    base: "font-bold h-10 px-6 text-black border-2 border-black rounded-full",
+    base: "font-bold h-10 px-6 text-black border border-black rounded-full",
     hover: "hover:border-main hover:text-main",
     active: "border-main text-main",
   },
   icon: {
-    base: "font-bold h-10 w-10 text-black border-black/10 bg-bg border rounded-full",
+    base: "font-bold h-10 w-10 text-black border border-black/10 bg-bg rounded-full",
     hover: "flex items-center justify-center",
     active: "",
   },

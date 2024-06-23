@@ -5,7 +5,7 @@ const AlertStyle = {
   info: "bg-bg text-bg",
   error: "bg-error/20 text-error",
   success: "bg-success/20 text-success",
-  icon: "mt-1",
+  icon: "mt-1 cursor-pointer",
 };
 
 export default AlertStyle;
