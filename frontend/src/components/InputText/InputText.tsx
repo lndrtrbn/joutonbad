@@ -1,10 +1,10 @@
-import { ChangeEvent } from "react";
 import { twMerge } from "tailwind-merge";
-
-import InputTextStyle from "./InputText.style";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ChangeEvent, MouseEvent } from "react";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import Button from "../Button/Button";
+import InputTextStyle from "./InputText.style";
 
 export type InputTextProps = {
   value: string;
@@ -19,6 +19,7 @@ export type InputTextProps = {
   disabled?: boolean;
   type?: string;
   readonly?: boolean;
+  label?: string;
 };
 
 export default function InputText({
@@ -34,9 +35,15 @@ export default function InputText({
   disabled = false,
   type = "text",
   readonly = false,
+  label,
 }: InputTextProps) {
   function handleChanges(event: ChangeEvent<HTMLInputElement>) {
     onChange?.(event.target.value);
+  }
+
+  function handleReset(event: MouseEvent<HTMLButtonElement>) {
+    event.stopPropagation();
+    onReset?.();
   }
 
   return (
@@ -49,6 +56,7 @@ export default function InputText({
             style,
             inError && InputTextStyle.error,
             disabled && InputTextStyle.disabled,
+            !!label && InputTextStyle.withLabel,
           )}
           type={type}
           placeholder={placeholder}
@@ -58,11 +66,15 @@ export default function InputText({
           disabled={disabled}
           readOnly={readonly}
         />
-        {onReset && (
+        {label && (
+          <label className={InputTextStyle.label}>{label}</label>
+        )}
+        {onReset && value && (
           <Button
             style={InputTextStyle.resetBtn}
             variant="inline"
-            onClick={onReset}
+            onClick={handleReset}
+            type="button"
           >
             <FontAwesomeIcon size="lg" icon={faClose} />
           </Button>

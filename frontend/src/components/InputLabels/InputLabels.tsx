@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Button from "../Button/Button";
 import InputLabel from "../InputLabel/InputLabel";
@@ -8,7 +10,6 @@ type Props = {
   value?: [string, string][];
   onChange: (value: [string, string][]) => void;
   label: string;
-  addLabel: string;
   namePlaceholder: string;
   valuePlaceholder: string;
 };
@@ -17,7 +18,6 @@ export default function InputLabels({
   value = [],
   onChange,
   label,
-  addLabel,
   namePlaceholder,
   valuePlaceholder,
 }: Props) {
@@ -25,7 +25,17 @@ export default function InputLabels({
 
   return (
     <div className={InputLabelsStyle.base}>
-      {label && <p className={InputLabelsStyle.label}>{label}</p>}
+      <div className="flex items-center gap-4">
+        <p className={InputLabelsStyle.label}>{label}</p>
+        <Button
+          type="button"
+          variant="icon"
+          onClick={() => setQty((val) => [...val, 0])}
+          disabled={value.length < qty.length}
+        >
+          <FontAwesomeIcon icon={faAdd} />
+        </Button>
+      </div>
 
       <div className={InputLabelsStyle.inputs}>
         {qty.map((_, i) => (
@@ -41,17 +51,13 @@ export default function InputLabels({
                 ...value.slice(i + 1),
               ])
             }
+            onDelete={() => {
+              setQty((val) => val.slice(0, val.length - 1));
+              onChange([...value.slice(0, i), ...value.slice(i + 1)]);
+            }}
           />
         ))}
       </div>
-
-      <Button
-        type="button"
-        variant="light"
-        onClick={() => setQty((val) => [...val, 0])}
-      >
-        {addLabel}
-      </Button>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 const InputArrayStyle = {
   base: "",
-  label: "font-medium text-black-l",
-  inputs: "mt-2 mb-4 flex flex gap-4",
+  label: "font-medium text-black",
+  inputs: "mt-2 mb-4 flex flex gap-4 flex-wrap",
 };
 
 export default InputArrayStyle;

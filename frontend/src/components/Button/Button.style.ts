@@ -12,7 +12,7 @@ const ButtonStyle = {
   },
   icon: {
     base: "font-bold h-10 w-10 text-black border border-black/10 bg-bg rounded-full",
-    hover: "flex items-center justify-center",
+    hover: "flex items-center justify-center hover:text-main",
     active: "",
   },
   link: {

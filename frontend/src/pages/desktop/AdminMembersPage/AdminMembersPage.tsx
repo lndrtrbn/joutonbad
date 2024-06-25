@@ -51,7 +51,7 @@ export default function AdminMembersPage() {
       <Separator />
 
       <div className={AdminMembersPageStyle.base}>
-        <div className="w-full sm:w-[400px] flex flex-col gap-12 border border-black/10 p-6 rounded-2xl shrink-0">
+        <div className="w-full sm:w-[380px] flex flex-col gap-12 border border-black/10 p-6 rounded-2xl shrink-0">
           <section>
             <Title size="2xl">Ajouter un.e membre</Title>
             <FormMember

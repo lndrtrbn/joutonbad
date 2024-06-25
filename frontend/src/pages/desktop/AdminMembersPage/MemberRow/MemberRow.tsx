@@ -42,12 +42,9 @@ export default function MemberRow({
           ?
         </p>
         <p>
-          Un compte actif ne devrait pas être supprimé, ça risque de
-          poser problème pour l'utilisateur.
-        </p>
-        <p>
-          Si le profil est supprimé, toutes ses inscriptions seront
-          également supprimées en même temps.
+          Un compte actif ne devrait pas être supprimé. S'il est
+          supprimé, toutes ses inscriptions seront également
+          supprimées en même temps.
         </p>
       </ModalConfirm>,
     );

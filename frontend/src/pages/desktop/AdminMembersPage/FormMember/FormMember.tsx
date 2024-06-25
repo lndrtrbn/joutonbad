@@ -39,6 +39,7 @@ export default function FormMember({
     control,
     handleSubmit,
     formState: { isValid },
+    reset,
   } = useForm<FormMemberInputs>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -59,11 +60,16 @@ export default function FormMember({
     }
   }, [error]);
 
+  function submit(data: FormMemberInputs) {
+    onSubmit(data);
+    reset();
+  }
+
   return (
     <>
       <form
         className="flex gap-4 flex-wrap"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(submit)}
       >
         <Controller
           name="name"
