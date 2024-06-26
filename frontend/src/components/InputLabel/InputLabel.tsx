@@ -25,11 +25,13 @@ export default function InputLabel({
         value={value ? value[0] : ""}
         placeholder={namePlaceholder}
         onChange={(val) => onChange([val, value ? value[1] : ""])}
+        width="flex-[1]"
       />
       <InputText
         value={value ? value[1] : ""}
         placeholder={valuePlaceholder}
         onChange={(val) => onChange([value ? value[0] : "", val])}
+        width="flex-[1] sm:flex-[2]"
       />
       <Button
         type="button"

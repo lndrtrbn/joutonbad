@@ -314,7 +314,7 @@ export default function FormTournament({
           au tournois
         </Alert>
 
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2">
           <Button disabled={!isValid || !isDirty} style="w-full">
             {tournament ? "Modifier" : "Ajouter"} le tournoi
           </Button>

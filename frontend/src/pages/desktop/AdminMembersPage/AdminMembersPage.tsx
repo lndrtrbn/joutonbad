@@ -51,26 +51,7 @@ export default function AdminMembersPage() {
       <Separator />
 
       <div className={AdminMembersPageStyle.base}>
-        <div className="w-full sm:w-[380px] flex flex-col gap-12 border border-black/10 p-6 rounded-2xl shrink-0">
-          <section>
-            <Title size="2xl">Ajouter un.e membre</Title>
-            <FormMember
-              onSubmit={callCreate}
-              error={createError}
-              loading={createFetching}
-            />
-          </section>
-
-          <section>
-            <Title size="2xl">Importer des membres</Title>
-            <Title subtitle>
-              Fichier .csv au format NOM,Prénom,licence
-            </Title>
-            <FormMembersUpload onSubmit={onUpload} />
-          </section>
-        </div>
-
-        <section className="flex-1 max-w-full sm:border border-black/10 sm:p-6 rounded-2xl">
+        <section className="flex-1 max-w-full sm:border border-black/10 sm:p-6 rounded-2xl sm:max-w-[700px]">
           <Title size="2xl">
             Membres du club ({filteredPlayers.length})
           </Title>
@@ -106,6 +87,25 @@ export default function AdminMembersPage() {
             )}
           </div>
         </section>
+
+        <div className="w-full sm:w-[380px] flex flex-col gap-8 border border-black/10 p-6 rounded-2xl shrink-0">
+          <section>
+            <Title size="2xl">Ajouter un.e membre</Title>
+            <FormMember
+              onSubmit={callCreate}
+              error={createError}
+              loading={createFetching}
+            />
+          </section>
+
+          <section>
+            <Title size="2xl">Importer des membres</Title>
+            <Title subtitle>
+              Fichier .csv au format NOM,Prénom,licence
+            </Title>
+            <FormMembersUpload onSubmit={onUpload} />
+          </section>
+        </div>
       </div>
     </>
   );

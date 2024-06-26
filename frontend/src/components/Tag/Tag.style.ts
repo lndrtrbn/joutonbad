@@ -1,5 +1,5 @@
 const TagStyle = {
-  base: "bg-black/10 rounded-full flex items-center font-bold text-black",
+  base: "bg-black/10 rounded-full flex items-center font-bold text-black select-none",
   md: "h-10 px-4",
   sm: "h-6 px-2 text-sm",
   active: "bg-main",

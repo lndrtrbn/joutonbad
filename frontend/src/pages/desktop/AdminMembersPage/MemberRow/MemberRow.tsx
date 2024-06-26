@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MemberRowStyle from "./MemberRow.style";
 import { Player } from "../../../../utils/player";
 import useModal from "../../../../hooks/useModal";
+import Button from "../../../../components/Button/Button";
 import ModalConfirm from "../../../../components/ModalConfirm/ModalConfirm";
 
 type MemberRowProps = {
@@ -77,15 +78,9 @@ export default function MemberRow({
           {member.kcId ? "Actif.ve" : "Inactif.ve"}
         </span>
 
-        <FontAwesomeIcon
-          className={MemberRowStyle.action}
-          icon={faPencil}
-        />
-        <FontAwesomeIcon
-          onClick={askDelete}
-          className={MemberRowStyle.action}
-          icon={faTrashCan}
-        />
+        <Button variant="inline" onClick={askDelete}>
+          <FontAwesomeIcon icon={faTrashCan} />
+        </Button>
       </div>
 
       {portal}

@@ -11,6 +11,7 @@ import useHttpPlayer from "../../../http/useHttpPlayer";
 import { useAlertsContext } from "../../../contexts/alerts.context";
 import AdminTournamentPageStyle from "./AdminTournamentPage.style";
 import FormTournament from "../AdminTournamentsPage/FormTournament/FormTournament";
+import Separator from "../../../components/Separator/Separator";
 
 export default function AdminTournamentPage() {
   const { id } = useParams();
@@ -44,16 +45,21 @@ export default function AdminTournamentPage() {
   }
 
   return (
-    <div className={AdminTournamentPageStyle.base}>
-      <section>
-        <Title size="2xl">Edition d'un tournoi</Title>
-        <FormTournament
-          players={admins ?? []}
-          onSubmit={onSubmit}
-          error={submitError}
-          tournament={tournament}
-        />
-      </section>
-    </div>
+    <>
+      <Title size="3xl">Edition d'un tournoi</Title>
+      <Separator />
+
+      <div className={AdminTournamentPageStyle.base}>
+        <section className="border border-black/10 p-6 rounded-2xl max-w-[1040px]">
+          <Title size="2xl">{tournament.name}</Title>
+          <FormTournament
+            players={admins ?? []}
+            onSubmit={onSubmit}
+            error={submitError}
+            tournament={tournament}
+          />
+        </section>
+      </div>
+    </>
   );
 }

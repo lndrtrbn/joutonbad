@@ -14,8 +14,11 @@ export default function FaqPage() {
 
       <div className={FaqPageStyle.base}>
         {FAQ.map((faq, i) => (
-          <section key={i}>
-            <Title size="xl">{faq.question}</Title>
+          <section
+            key={i}
+            className="max-w-full border border-black/10 p-6 rounded-2xl sm:max-w-[1000px]"
+          >
+            <Title size="2xl">{faq.question}</Title>
 
             {faq.answers.map((answer, i) => (
               <Title key={i} subtitle>

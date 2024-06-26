@@ -37,27 +37,32 @@ export default function InputLabels({
         </Button>
       </div>
 
-      <div className={InputLabelsStyle.inputs}>
-        {qty.map((_, i) => (
-          <InputLabel
-            key={i}
-            value={value[i]}
-            namePlaceholder={namePlaceholder}
-            valuePlaceholder={valuePlaceholder}
-            onChange={(val) =>
-              onChange([
-                ...value.slice(0, i),
-                val,
-                ...value.slice(i + 1),
-              ])
-            }
-            onDelete={() => {
-              setQty((val) => val.slice(0, val.length - 1));
-              onChange([...value.slice(0, i), ...value.slice(i + 1)]);
-            }}
-          />
-        ))}
-      </div>
+      {qty.length > 0 && (
+        <div className={InputLabelsStyle.inputs}>
+          {qty.map((_, i) => (
+            <InputLabel
+              key={i}
+              value={value[i]}
+              namePlaceholder={namePlaceholder}
+              valuePlaceholder={valuePlaceholder}
+              onChange={(val) =>
+                onChange([
+                  ...value.slice(0, i),
+                  val,
+                  ...value.slice(i + 1),
+                ])
+              }
+              onDelete={() => {
+                setQty((val) => val.slice(0, val.length - 1));
+                onChange([
+                  ...value.slice(0, i),
+                  ...value.slice(i + 1),
+                ]);
+              }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

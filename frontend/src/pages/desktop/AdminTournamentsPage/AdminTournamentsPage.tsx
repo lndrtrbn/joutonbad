@@ -44,16 +44,7 @@ export default function AdminTournamentsPage() {
       <Separator />
 
       <div className={AdminTournamentsPageStyle.base}>
-        <section className="border border-black/10 p-6 rounded-2xl max-w-[1040px]">
-          <Title size="2xl">Ajouter un tournoi</Title>
-          <FormTournament
-            players={admins ?? []}
-            onSubmit={onSubmit}
-            error={submitError}
-          />
-        </section>
-
-        <section>
+        <section className="flex-1 sm:border border-black/10 sm:p-6 rounded-2xl max-w-[1040px]">
           <Title size="2xl">
             Tournois en ligne ({tournaments.length})
           </Title>
@@ -73,6 +64,15 @@ export default function AdminTournamentsPage() {
                 />
               ))}
           </div>
+        </section>
+
+        <section className="border border-black/10 p-6 rounded-2xl max-w-[1040px]">
+          <Title size="2xl">Ajouter un tournoi</Title>
+          <FormTournament
+            players={admins ?? []}
+            onSubmit={onSubmit}
+            error={submitError}
+          />
         </section>
       </div>
     </>

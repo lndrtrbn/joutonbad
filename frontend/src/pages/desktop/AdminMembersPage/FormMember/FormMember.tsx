@@ -68,7 +68,7 @@ export default function FormMember({
   return (
     <>
       <form
-        className="flex gap-4 flex-wrap"
+        className="flex gap-6 flex-wrap"
         onSubmit={handleSubmit(submit)}
       >
         <Controller
