@@ -1,41 +1,28 @@
-import { useState } from "react";
-
-import useHttpTournament, {
-  TournamentPayload,
-} from "../../../http/useHttpTournament";
 import useFetch from "../../../http/useFetch";
-import { APIError } from "../../../utils/error";
 import Title from "../../../components/Title/Title";
 import useHttpPlayer from "../../../http/useHttpPlayer";
 import TournamentRow from "./TournamentRow/TournamentRow";
 import FormTournament from "./FormTournament/FormTournament";
 import Separator from "../../../components/Separator/Separator";
+import useHttpTournament from "../../../http/useHttpTournament";
 import AdminTournamentsPageStyle from "./AdminTournamentsPage.style";
+import useCreateTournamenent from "../../../hooks/useCreateTournament";
 
 export default function AdminTournamentsPage() {
-  const { getAllTournaments, createTournament, deleteTournament } =
-    useHttpTournament();
+  const { getAllTournaments, deleteTournament } = useHttpTournament();
   const [tournaments, refetch] = useFetch(getAllTournaments);
+
+  const [callCreate, createError, createFetching] =
+    useCreateTournamenent(refetch);
 
   const { getAdminPlayers } = useHttpPlayer();
   const [admins] = useFetch(getAdminPlayers);
 
-  const [submitError, setError] = useState<APIError>();
-
   if (!tournaments) return null;
-
-  async function onSubmit(data: TournamentPayload) {
-    try {
-      await createTournament(data);
-      refetch();
-    } catch (error) {
-      error instanceof APIError && setError(error);
-    }
-  }
 
   async function onDelete(id: string) {
     await deleteTournament(id);
-    refetch();
+    await refetch();
   }
 
   return (
@@ -70,8 +57,9 @@ export default function AdminTournamentsPage() {
           <Title size="2xl">Ajouter un tournoi</Title>
           <FormTournament
             players={admins ?? []}
-            onSubmit={onSubmit}
-            error={submitError}
+            onSubmit={callCreate}
+            error={createError}
+            loading={createFetching}
           />
         </section>
       </div>

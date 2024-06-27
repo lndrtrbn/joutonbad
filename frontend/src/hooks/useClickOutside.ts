@@ -13,6 +13,10 @@ export default function useClickOutside(
   const savedCallback = useRef(callback);
 
   useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       if (ref.current && !ref.current.contains(target)) {

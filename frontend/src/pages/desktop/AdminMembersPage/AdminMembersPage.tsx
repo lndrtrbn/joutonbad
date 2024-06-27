@@ -37,12 +37,12 @@ export default function AdminMembersPage() {
 
   async function onDelete(id: string) {
     await deletePlayer(id);
-    refetchPlayers();
+    await refetchPlayers();
   }
 
   async function onUpload(file: File) {
     await uploadPlayers(file);
-    refetchPlayers();
+    await refetchPlayers();
   }
 
   return (
@@ -101,7 +101,7 @@ export default function AdminMembersPage() {
           <section>
             <Title size="2xl">Importer des membres</Title>
             <Title subtitle>
-              Fichier .csv au format NOM,Prénom,licence
+              Fichier .csv au format NOM;Prénom;licence
             </Title>
             <FormMembersUpload onSubmit={onUpload} />
           </section>

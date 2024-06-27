@@ -1,8 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import {
-  faCircle,
-  faPencil,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -14,7 +11,7 @@ import ModalConfirm from "../../../../components/ModalConfirm/ModalConfirm";
 
 type MemberRowProps = {
   member: Player;
-  onDelete: (id: string) => void;
+  onDelete: (id: string) => Promise<unknown>;
   alt?: boolean;
 };
 
@@ -29,8 +26,8 @@ export default function MemberRow({
     open(
       <ModalConfirm
         onClose={close}
-        onConfirm={() => {
-          onDelete(member.id);
+        onConfirm={async () => {
+          await onDelete(member.id);
           close();
         }}
       >

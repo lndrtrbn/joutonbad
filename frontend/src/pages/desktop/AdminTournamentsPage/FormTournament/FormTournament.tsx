@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { twMerge } from "tailwind-merge";
 import { format, parse } from "date-fns";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,11 +19,11 @@ import InputTag from "../../../../components/InputTag/InputTag";
 import { Link, Tournament } from "../../../../utils/tournament";
 import InputText from "../../../../components/InputText/InputText";
 import InputArray from "../../../../components/InputArray/InputArray";
-import InputLabels from "../../../../components/InputLabels/InputLabels";
 import { TournamentPayload } from "../../../../http/useHttpTournament";
-import InputSelectMembers from "../../../../components/InputSelectMembers/InputSelectMembers";
+import InputLabels from "../../../../components/InputLabels/InputLabels";
 import InputCheckbox from "../../../../components/InputCheckbox/InputCheckbox";
-import { twMerge } from "tailwind-merge";
+import ButtonLoading from "../../../../components/ButtonLoading/ButtonLoading";
+import InputSelectMembers from "../../../../components/InputSelectMembers/InputSelectMembers";
 
 export type FormTournamentInputs = {
   inChargeId: string;
@@ -62,6 +63,7 @@ type Props = {
   onSubmit: (data: TournamentPayload) => void;
   error?: APIError;
   tournament?: Tournament;
+  loading?: boolean;
 };
 
 function shortDate(date?: string): string {
@@ -90,6 +92,7 @@ export default function FormTournament({
   onSubmit,
   error,
   tournament,
+  loading = false,
 }: Props) {
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -130,7 +133,7 @@ export default function FormTournament({
       ).toISOString(),
       prices: data.prices.map((price) => parseFloat(price)),
     });
-    reset();
+    !tournament && reset();
   }
 
   return (
@@ -315,13 +318,17 @@ export default function FormTournament({
         </Alert>
 
         <div className="flex flex-col gap-2">
-          <Button disabled={!isValid || !isDirty} style="w-full">
+          <ButtonLoading
+            disabled={!isValid || !isDirty || loading}
+            loading={loading}
+            style="w-full"
+          >
             {tournament ? "Modifier" : "Ajouter"} le tournoi
-          </Button>
+          </ButtonLoading>
           {tournament && (
             <Button
               onClick={() => reset(defaultValues(tournament))}
-              disabled={!isDirty}
+              disabled={!isDirty || loading}
               variant="light"
               style="w-full"
             >

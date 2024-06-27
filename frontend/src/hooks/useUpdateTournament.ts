@@ -1,20 +1,23 @@
 import { useCallback, useState } from "react";
 
+import useHttpTournament, {
+  TournamentPayload,
+} from "../http/useHttpTournament";
 import useLazyFetch from "../http/useLazyFetch";
-import useHttpPlayer, {
-  CreatePlayerPayload,
-} from "../http/useHttpPlayer";
 
-export default function useCreateMember(
+export default function useUpdateTournamenent(
+  tournamentId: string,
   onFetched: () => Promise<unknown>,
 ) {
   const [fetching, setFetching] = useState(false);
 
-  const { createPlayer } = useHttpPlayer();
-  const [fetch, , error] = useLazyFetch(createPlayer);
+  const { updateTournament } = useHttpTournament();
+  const [fetch, , error] = useLazyFetch((p: TournamentPayload) =>
+    updateTournament(tournamentId, p),
+  );
 
   const call = useCallback(
-    async (p: CreatePlayerPayload) => {
+    async (p: TournamentPayload) => {
       setFetching(true);
       await fetch(p);
       await onFetched();

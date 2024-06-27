@@ -3,7 +3,7 @@ import { useCallback, useRef, useState } from "react";
 import { APIError } from "../utils/error";
 
 type UseLazyFetch<T, Payload> = [
-  (p: Payload) => void,
+  (p: Payload) => Promise<unknown>,
   T | undefined,
   APIError | undefined,
   boolean,
@@ -21,7 +21,7 @@ export default function useLazyFetch<T, Payload>(
   const [error, setError] = useState<APIError>();
 
   const fetch = useCallback(
-    (payload: Payload) => {
+    async (payload: Payload) => {
       async function getData() {
         try {
           setData(await request(payload));
@@ -39,7 +39,7 @@ export default function useLazyFetch<T, Payload>(
         setFetching(true);
         fetchingRef.current = true;
         setError(undefined);
-        getData();
+        await getData();
       }
     },
     [request],

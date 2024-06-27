@@ -27,15 +27,12 @@ export default function Link({
     <NavLink
       to={to}
       target={target}
-      className={({ isActive }) =>
-        twMerge(
-          LinkStyle.base,
-          !inline && LinkStyle.notInline,
-          inline && LinkStyle.inline,
-          isActive && LinkStyle.active,
-          !!style && style,
-        )
-      }
+      className={twMerge(
+        LinkStyle.base,
+        !inline && LinkStyle.notInline,
+        inline && LinkStyle.inline,
+        !!style && style,
+      )}
     >
       {icon && (
         <FontAwesomeIcon className={LinkStyle.icon} icon={icon} />

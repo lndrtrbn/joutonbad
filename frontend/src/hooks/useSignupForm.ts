@@ -42,10 +42,10 @@ export default function useSignupForm(
   const form = useForm<SignupFormInputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      username: "07007922",
-      password: "lndr",
-      passwordConfirm: "lndr",
-      email: "lndr.trbn@gmail.com",
+      username: "",
+      password: "",
+      passwordConfirm: "",
+      email: "",
     },
     mode: "onTouched",
   });

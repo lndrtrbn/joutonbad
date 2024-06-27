@@ -14,7 +14,7 @@ import ModalConfirm from "../../../../components/ModalConfirm/ModalConfirm";
 
 type TournamentRowProps = {
   tournament: Tournament;
-  onDelete: (id: string) => void;
+  onDelete: (id: string) => Promise<unknown>;
   alt?: boolean;
 };
 
@@ -28,8 +28,8 @@ export default function TournamentRow({
   const confirmModal = (
     <ModalConfirm
       onClose={close}
-      onConfirm={() => {
-        onDelete(tournament.id);
+      onConfirm={async () => {
+        await onDelete(tournament.id);
         close();
       }}
     >
