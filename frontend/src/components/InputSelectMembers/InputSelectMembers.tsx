@@ -27,6 +27,7 @@ export default function InputSelectMembers({
       placeholder={placeholder}
       items={sortedPlayers ?? []}
       toLabel={(p) => `${p.lastname} ${p.name} - ${p.license}`}
+      style="w-full sm:w-96"
     />
   );
 }

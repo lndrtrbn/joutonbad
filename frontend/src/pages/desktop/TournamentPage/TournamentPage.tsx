@@ -7,9 +7,9 @@ import useHttpRegistration, {
 } from "../../../http/useHttpRegistration";
 import useFetch from "../../../http/useFetch";
 import { APIError } from "../../../utils/error";
+import Title from "../../../components/Title/Title";
 import MembersList from "./MembersList/MembersList";
 import { Discipline } from "../../../utils/discipline";
-import TournamentPageStyle from "./TournamentPage.style";
 import useHttpTournament from "../../../http/useHttpTournament";
 import { useAuthContext } from "../../../contexts/auth.context";
 import Separator from "../../../components/Separator/Separator";
@@ -58,52 +58,55 @@ export default function TournamentPage() {
   if (!tournament || !user) return null;
 
   return (
-    <div className={TournamentPageStyle.container}>
-      <div className={TournamentPageStyle.tournament}>
-        <TournamentDetails tournament={tournament} />
+    <>
+      <Title size="3xl">{tournament.name}</Title>
+      <Separator />
 
-        <Separator />
+      <TournamentDetails tournament={tournament} />
 
-        {(tournament.disciplines.includes(Discipline.SH) ||
-          tournament.disciplines.includes(Discipline.SD)) && (
-          <TournamentRegistrationSimple
-            tournamentId={id || ""}
-            registrations={tournament.registrations}
-            canRegister={!registrationsDone}
-            playerLicense={user?.license}
-            register={(data) => register(Discipline.SH, data)}
-          />
-        )}
+      <div className="flex flex-wrap gap-8 mt-8 max-w-[1140px]">
+        <section className="flex-1 border border-black/10 p-6 rounded-2xl flex flex-col gap-8">
+          {(tournament.disciplines.includes(Discipline.SH) ||
+            tournament.disciplines.includes(Discipline.SD)) && (
+            <TournamentRegistrationSimple
+              tournamentId={id || ""}
+              registrations={tournament.registrations}
+              canRegister={!registrationsDone}
+              playerLicense={user?.license}
+              register={(data) => register(Discipline.SH, data)}
+            />
+          )}
 
-        {(tournament.disciplines.includes(Discipline.DH) ||
-          tournament.disciplines.includes(Discipline.DD)) && (
-          <RegistrationDouble
-            discipline={Discipline.DH}
-            registrations={tournament.registrations}
-            playerLicense={user?.license}
-            canRegister={!registrationsDone}
-            register={(data) => register(Discipline.DH, data)}
-            tournamentId={id || ""}
-            error={submitError?.[Discipline.DH]}
-          />
-        )}
+          {(tournament.disciplines.includes(Discipline.DH) ||
+            tournament.disciplines.includes(Discipline.DD)) && (
+            <RegistrationDouble
+              discipline={Discipline.DH}
+              registrations={tournament.registrations}
+              playerLicense={user?.license}
+              canRegister={!registrationsDone}
+              register={(data) => register(Discipline.DH, data)}
+              tournamentId={id || ""}
+              error={submitError?.[Discipline.DH]}
+            />
+          )}
 
-        {tournament.disciplines.includes(Discipline.DM) && (
-          <RegistrationDouble
-            discipline={Discipline.DM}
-            registrations={tournament.registrations}
-            playerLicense={user?.license}
-            canRegister={!registrationsDone}
-            register={(data) => register(Discipline.DM, data)}
-            tournamentId={id || ""}
-            error={submitError?.[Discipline.DM]}
-          />
-        )}
+          {tournament.disciplines.includes(Discipline.DM) && (
+            <RegistrationDouble
+              discipline={Discipline.DM}
+              registrations={tournament.registrations}
+              playerLicense={user?.license}
+              canRegister={!registrationsDone}
+              register={(data) => register(Discipline.DM, data)}
+              tournamentId={id || ""}
+              error={submitError?.[Discipline.DM]}
+            />
+          )}
+        </section>
+
+        <section className="border border-black/10 p-6 rounded-2xl w-full sm:w-[300px]">
+          <MembersList registrations={tournament.registrations} />
+        </section>
       </div>
-
-      <div className={TournamentPageStyle.club}>
-        <MembersList registrations={tournament.registrations} />
-      </div>
-    </div>
+    </>
   );
 }

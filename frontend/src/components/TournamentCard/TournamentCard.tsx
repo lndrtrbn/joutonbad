@@ -43,7 +43,7 @@ export default function TournamentCard({ tournament }: Props) {
 
         <TagList>
           {tournament.disciplines.map((discipline) => (
-            <Tag key={discipline} size="sm" inverted={hovered}>
+            <Tag key={discipline} size="sm">
               {discipline}
             </Tag>
           ))}
@@ -51,13 +51,9 @@ export default function TournamentCard({ tournament }: Props) {
 
         <div className={TournamentCardStyle.tags}>
           <TagList>
-            <Tag size="sm" inverted={hovered}>
-              {tournament.minLevel}
-            </Tag>
+            <Tag size="sm">{tournament.minLevel}</Tag>
             <span>à</span>
-            <Tag size="sm" inverted={hovered}>
-              {tournament.maxLevel}
-            </Tag>
+            <Tag size="sm">{tournament.maxLevel}</Tag>
           </TagList>
         </div>
       </Link>

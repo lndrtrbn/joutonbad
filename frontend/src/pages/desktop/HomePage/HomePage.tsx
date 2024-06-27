@@ -1,5 +1,4 @@
 import { compareAsc } from "date-fns";
-import { twMerge } from "tailwind-merge";
 import { useEffect, useState } from "react";
 
 import {
@@ -34,61 +33,70 @@ export default function HomePage() {
 
   return (
     <>
-      <div>
-        <Title size="3xl">Calendrier des tournois</Title>
-        <Title subtitle>
-          Tu trouveras ici les tournois dont les inscriptions sont
-          gérées par le club
-        </Title>
-      </div>
-
+      <Title size="3xl">Calendrier des tournois</Title>
       <Separator />
 
-      <Title size="2xl">Tournois à venir</Title>
+      <div className="flex flex-col gap-10">
+        <section className="flex-1 border border-black/10 p-6 rounded-2xl max-w-[1140px]">
+          <Title size="2xl">Tournois à venir</Title>
 
-      <div className={twMerge(HomePageStyle.list, HomePageStyle.mb)}>
-        {listToCome.length == 0 && (
-          <Title subtitle>Aucun tournoi à venir pour le moment</Title>
-        )}
-        {listToCome.map((monthList) => (
-          <div key={monthList.month} className={HomePageStyle.month}>
-            <Title size="xl">
-              <span className="capitalize">{monthList.month}</span>
-            </Title>
+          <div className={HomePageStyle.list}>
+            {listToCome.length == 0 && (
+              <Title subtitle>
+                Aucun tournoi à venir pour le moment
+              </Title>
+            )}
+            {listToCome.map((monthList) => (
+              <div
+                key={monthList.month}
+                className={HomePageStyle.month}
+              >
+                <Title size="xl" style="capitalize">
+                  {monthList.month}
+                </Title>
 
-            <div className={HomePageStyle.monthList}>
-              {monthList.tournaments.map((tournament) => (
-                <TournamentCard
-                  key={tournament.id}
-                  tournament={tournament}
-                />
-              ))}
-            </div>
+                <div className={HomePageStyle.monthList}>
+                  {monthList.tournaments.map((tournament) => (
+                    <TournamentCard
+                      key={tournament.id}
+                      tournament={tournament}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </section>
 
-      <Title size="2xl">Tournois passés</Title>
-      <div className={HomePageStyle.list}>
-        {listPast.length == 0 && (
-          <Title subtitle>Aucun tournoi passé pour le moment</Title>
-        )}
-        {listPast.map((monthList) => (
-          <div key={monthList.month} className={HomePageStyle.month}>
-            <Title size="xl">
-              <span className="capitalize">{monthList.month}</span>
-            </Title>
+        <section className="flex-1 border border-black/10 p-6 rounded-2xl max-w-[1140px]">
+          <Title size="2xl">Tournois passés</Title>
+          <div className={HomePageStyle.list}>
+            {listPast.length == 0 && (
+              <Title subtitle>
+                Aucun tournoi passé pour le moment
+              </Title>
+            )}
+            {listPast.map((monthList) => (
+              <div
+                key={monthList.month}
+                className={HomePageStyle.month}
+              >
+                <Title size="xl" style="capitalize">
+                  {monthList.month}
+                </Title>
 
-            <div className={HomePageStyle.monthList}>
-              {monthList.tournaments.map((tournament) => (
-                <TournamentCard
-                  key={tournament.id}
-                  tournament={tournament}
-                />
-              ))}
-            </div>
+                <div className={HomePageStyle.monthList}>
+                  {monthList.tournaments.map((tournament) => (
+                    <TournamentCard
+                      key={tournament.id}
+                      tournament={tournament}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </section>
       </div>
     </>
   );

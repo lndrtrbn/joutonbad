@@ -55,7 +55,9 @@ export default function FormRegistrationSingle({ onSubmit }: Props) {
           />
         )}
       />
-      <Button disabled={!isValid}>Envoyer l'inscription</Button>
+      <Button disabled={!isValid} style="w-full sm:w-80">
+        Envoyer l'inscription
+      </Button>
     </form>
   );
 }

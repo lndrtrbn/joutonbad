@@ -18,6 +18,7 @@ import useHttpPlayer from "../../../http/useHttpPlayer";
 import InputCheckbox from "../../InputCheckbox/InputCheckbox";
 import FormRegistrationDoubleStyle from "./FormRegistrationDouble.style";
 import InputSelectMembers from "../../InputSelectMembers/InputSelectMembers";
+import Alert from "../../Alert/Alert";
 
 type Props = {
   isMixte?: boolean;
@@ -135,10 +136,10 @@ export default function FormRegistrationDouble({
                 />
               )}
             />
-            <Title subtitle>
+            <Alert type="info" style="mt-2">
               Coche la case ci-dessus si ton ou ta partenaire a déjà
               réglé son inscription de son côté
-            </Title>
+            </Alert>
           </div>
         </>
       )}
@@ -154,6 +155,7 @@ export default function FormRegistrationDouble({
                   value={value}
                   onChange={onChange}
                   placeholder="Prénom partenaire"
+                  width="sm:flex-1"
                 />
               )}
             />
@@ -165,9 +167,13 @@ export default function FormRegistrationDouble({
                   value={value}
                   onChange={onChange}
                   placeholder="Nom partenaire"
+                  width="sm:flex-1"
                 />
               )}
             />
+          </div>
+
+          <div className={FormRegistrationDoubleStyle.row}>
             <Controller
               name="partnerLicense"
               control={control}
@@ -176,13 +182,10 @@ export default function FormRegistrationDouble({
                   value={value}
                   onChange={onChange}
                   placeholder="Licence partenaire"
-                  style="sm:w-48"
+                  width="sm:flex-1"
                 />
               )}
             />
-          </div>
-
-          <div className={FormRegistrationDoubleStyle.row}>
             <Controller
               name="partnerClub"
               control={control}
@@ -191,6 +194,7 @@ export default function FormRegistrationDouble({
                   value={value}
                   onChange={onChange}
                   placeholder="Club partenaire"
+                  width="sm:flex-1"
                 />
               )}
             />
@@ -198,7 +202,9 @@ export default function FormRegistrationDouble({
         </>
       )}
 
-      <Button disabled={!isValid}>Envoyer l'inscription</Button>
+      <Button disabled={!isValid} style="w-full sm:w-80">
+        Envoyer l'inscription
+      </Button>
     </form>
   );
 }

@@ -8,7 +8,6 @@ import Alert from "../Alert/Alert";
 import Title from "../Title/Title";
 import { Discipline } from "../../utils/discipline";
 import { APIError, APIErrorMessage } from "../../utils/error";
-import RegistrationDoubleStyle from "./RegistrationDouble.style";
 import { CreateRegistrationPayload } from "../../http/useHttpRegistration";
 import FormRegistrationDouble from "./FormRegistrationDouble/FormRegistrationDouble";
 
@@ -88,9 +87,9 @@ export default function RegistrationDouble({
   if (!registration && !canRegister) return null;
 
   return (
-    <div className={RegistrationDoubleStyle.base}>
+    <div>
       <Title size="2xl">
-        Tableau de {isMixte ? "Mixte" : "Double"}
+        Inscription en {isMixte ? "Mixte" : "Double"}
       </Title>
 
       {!registration ? (

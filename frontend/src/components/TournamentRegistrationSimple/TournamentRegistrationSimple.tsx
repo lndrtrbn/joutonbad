@@ -6,7 +6,6 @@ import Title from "../Title/Title";
 import { Discipline } from "../../utils/discipline";
 import { CreateRegistrationPayload } from "../../http/useHttpRegistration";
 import FormRegistrationSingle from "./FormRegistrationSingle/FormRegistrationSingle";
-import TournamentRegistrationSimpleStyle from "./TournamentRegistrationSimple.style";
 
 type Props = {
   tournamentId: string;
@@ -46,8 +45,8 @@ export default function TournamentRegistrationSimple({
   if (!registration && !canRegister) return null;
 
   return (
-    <div className={TournamentRegistrationSimpleStyle.base}>
-      <Title size="2xl">Tableau de Simple</Title>
+    <div>
+      <Title size="2xl">Inscription en simple</Title>
 
       {!registration ? (
         <FormRegistrationSingle onSubmit={registerSimple} />

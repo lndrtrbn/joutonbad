@@ -10,7 +10,7 @@ type Props = {
 export default function MembersList({ registrations }: Props) {
   return (
     <div className={MembersListStyle.base}>
-      <Title size="xl">Membres du club présent.e.s</Title>
+      <Title size="2xl">Membres du club présent.e.s</Title>
 
       <div className={MembersListStyle.registrations}>
         {registrations
