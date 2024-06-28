@@ -17,6 +17,7 @@ type Props = {
   playerLicense: string;
   discipline: Discipline;
   canRegister: boolean;
+  loading?: boolean;
   register: (data: CreateRegistrationPayload) => void;
   error?: APIError;
 };
@@ -27,6 +28,7 @@ export default function RegistrationDouble({
   playerLicense,
   discipline,
   canRegister,
+  loading = false,
   register,
   error,
 }: Props) {
@@ -97,6 +99,7 @@ export default function RegistrationDouble({
           <FormRegistrationDouble
             isMixte={isMixte}
             onSubmit={registerDouble}
+            loading={loading}
           />
           {errorMsg && <Alert type="error">{errorMsg}</Alert>}
         </>

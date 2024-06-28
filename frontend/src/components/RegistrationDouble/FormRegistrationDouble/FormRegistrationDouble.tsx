@@ -6,7 +6,7 @@ import {
   RegistrationDoubleInputs,
   RegistrationDoubleSchema,
 } from "../../../utils/registration";
-import Title from "../../Title/Title";
+import Alert from "../../Alert/Alert";
 import Button from "../.././Button/Button";
 import useFetch from "../../../http/useFetch";
 import { Player } from "../../../utils/player";
@@ -18,15 +18,17 @@ import useHttpPlayer from "../../../http/useHttpPlayer";
 import InputCheckbox from "../../InputCheckbox/InputCheckbox";
 import FormRegistrationDoubleStyle from "./FormRegistrationDouble.style";
 import InputSelectMembers from "../../InputSelectMembers/InputSelectMembers";
-import Alert from "../../Alert/Alert";
+import ButtonLoading from "../../ButtonLoading/ButtonLoading";
 
 type Props = {
   isMixte?: boolean;
+  loading?: boolean;
   onSubmit: (data: RegistrationDoubleInputs) => void;
 };
 
 export default function FormRegistrationDouble({
   isMixte = false,
+  loading = false,
   onSubmit,
 }: Props) {
   const { getAllPlayers } = useHttpPlayer();
@@ -202,9 +204,13 @@ export default function FormRegistrationDouble({
         </>
       )}
 
-      <Button disabled={!isValid} style="w-full sm:w-80">
+      <ButtonLoading
+        loading={loading}
+        disabled={!isValid || loading}
+        style="w-full sm:w-80"
+      >
         Envoyer l'inscription
-      </Button>
+      </ButtonLoading>
     </form>
   );
 }

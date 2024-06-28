@@ -1,12 +1,8 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { compareAsc, startOfDay, subDays } from "date-fns";
 
-import useHttpRegistration, {
-  CreateRegistrationPayload,
-} from "../../../http/useHttpRegistration";
 import useFetch from "../../../http/useFetch";
-import { APIError } from "../../../utils/error";
 import Title from "../../../components/Title/Title";
 import MembersList from "./MembersList/MembersList";
 import { Discipline } from "../../../utils/discipline";
@@ -14,6 +10,7 @@ import useHttpTournament from "../../../http/useHttpTournament";
 import { useAuthContext } from "../../../contexts/auth.context";
 import Separator from "../../../components/Separator/Separator";
 import TournamentDetails from "./TournamentDetails/TournamentDetails";
+import useCreateRegistration from "../../../hooks/useCreateRegistration";
 import RegistrationDouble from "../../../components/RegistrationDouble/RegistrationDouble";
 import TournamentRegistrationSimple from "../../../components/TournamentRegistrationSimple/TournamentRegistrationSimple";
 
@@ -24,14 +21,16 @@ export default function TournamentPage() {
 
   const { id } = useParams();
   const { getTournamentById } = useHttpTournament();
-  const { createRegistration } = useHttpRegistration();
   const [tournament, refetchTournament] = useFetch(() =>
     getTournamentById(id || ""),
   );
 
-  const [submitError, setError] = useState<{
-    [key: string]: APIError;
-  }>();
+  const [callCreateSimple, , createSimpleFetching] =
+    useCreateRegistration(refetchTournament);
+  const [callCreateDouble, createDoubleError, createDoubleFetching] =
+    useCreateRegistration(refetchTournament);
+  const [callCreateMixte, createMixteError, createMixteFetching] =
+    useCreateRegistration(refetchTournament);
 
   const registrationsDone = useMemo(() => {
     if (!tournament) return false;
@@ -42,19 +41,6 @@ export default function TournamentPage() {
     return compareAsc(today, twoWeeksAgo) > 0;
   }, [tournament]);
 
-  async function register(
-    discipline: Discipline,
-    payload: CreateRegistrationPayload,
-  ) {
-    try {
-      setError(undefined);
-      await createRegistration(payload);
-      refetchTournament();
-    } catch (error) {
-      error instanceof APIError && setError({ [discipline]: error });
-    }
-  }
-
   if (!tournament || !user) return null;
 
   return (
@@ -64,7 +50,7 @@ export default function TournamentPage() {
 
       <TournamentDetails tournament={tournament} />
 
-      <div className="flex flex-wrap gap-8 mt-8 max-w-[1140px]">
+      <div className="flex flex-wrap items-start gap-8 mt-8 max-w-[1140px]">
         <section className="flex-1 border border-black/10 p-6 rounded-2xl flex flex-col gap-8">
           {(tournament.disciplines.includes(Discipline.SH) ||
             tournament.disciplines.includes(Discipline.SD)) && (
@@ -73,7 +59,8 @@ export default function TournamentPage() {
               registrations={tournament.registrations}
               canRegister={!registrationsDone}
               playerLicense={user?.license}
-              register={(data) => register(Discipline.SH, data)}
+              register={callCreateSimple}
+              loading={createSimpleFetching}
             />
           )}
 
@@ -84,9 +71,10 @@ export default function TournamentPage() {
               registrations={tournament.registrations}
               playerLicense={user?.license}
               canRegister={!registrationsDone}
-              register={(data) => register(Discipline.DH, data)}
+              register={callCreateDouble}
+              loading={createDoubleFetching}
               tournamentId={id || ""}
-              error={submitError?.[Discipline.DH]}
+              error={createDoubleError}
             />
           )}
 
@@ -96,9 +84,10 @@ export default function TournamentPage() {
               registrations={tournament.registrations}
               playerLicense={user?.license}
               canRegister={!registrationsDone}
-              register={(data) => register(Discipline.DM, data)}
+              register={callCreateMixte}
+              loading={createMixteFetching}
               tournamentId={id || ""}
-              error={submitError?.[Discipline.DM]}
+              error={createMixteError}
             />
           )}
         </section>

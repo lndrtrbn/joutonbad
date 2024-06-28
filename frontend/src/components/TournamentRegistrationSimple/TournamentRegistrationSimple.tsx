@@ -12,6 +12,7 @@ type Props = {
   registrations: Registration[];
   playerLicense: string;
   canRegister: boolean;
+  loading?: boolean;
   register: (data: CreateRegistrationPayload) => void;
 };
 
@@ -20,6 +21,7 @@ export default function TournamentRegistrationSimple({
   registrations = [],
   canRegister,
   playerLicense,
+  loading = false,
   register,
 }: Props) {
   const registration = registrations.find(
@@ -49,7 +51,10 @@ export default function TournamentRegistrationSimple({
       <Title size="2xl">Inscription en simple</Title>
 
       {!registration ? (
-        <FormRegistrationSingle onSubmit={registerSimple} />
+        <FormRegistrationSingle
+          onSubmit={registerSimple}
+          loading={loading}
+        />
       ) : (
         <Title subtitle>Inscrit.e</Title>
       )}
