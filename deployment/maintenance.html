@@ -17,7 +17,7 @@
       display: flex;
       align-items: center;
       flex-flow: column;
-      justify-content: center;
+      justify-content: space-around;
       width: 100vw;
       height: 100vh;
       margin: 0;
@@ -28,6 +28,11 @@
       fill: #da3124;
       width: 50px;
     }
+    .flex {
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+    }
     h2 {
       margin-top: 24px;
     }
@@ -36,16 +41,21 @@
     }
   </style>
   <body>
-    <svg class="logo" viewBox="0 0 23 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-      <g transform="matrix(1,0,0,1,-4.96,-2.00596)">
-        <path d="M26.71,4.29C26.467,4.032 26.105,3.922 25.76,4L18.54,5.84L16.89,2.55C16.719,2.217 16.375,2.006 16,2.006C15.625,2.006 15.281,2.217 15.11,2.55L13.46,5.84L6.24,4C6.149,3.973 6.055,3.96 5.96,3.96C5.411,3.96 4.96,4.411 4.96,4.96C4.96,5.055 4.973,5.149 5,5.24L9,21.14C9.06,28.84 13.4,30 16,30C18.6,30 22.94,28.84 23,21.14L27,5.24C27.078,4.895 26.968,4.533 26.71,4.29ZM16,5.24L17,7.24L17,20L15,20L15,7.24L16,5.24ZM13,7.78L13,20L10.78,20L7.37,6.37L13,7.78ZM16,28C12.93,28 11.26,26 11,22L21,22C20.74,26 19.07,28 16,28ZM21.22,20L19,20L19,7.78L24.63,6.37L21.22,20Z" style="fill-rule:nonzero;"/>
-      </g>
-    </svg>
-    <h1>REC</h1>
-    <p>Gestion tournois</p>
-
-    <h2>Maintenance en cours</h2>
-    <p>Promis on revient vite</p>
-    <div></div>
+    <div class="flex">
+      <svg class="logo" viewBox="0 0 23 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+        <g transform="matrix(1,0,0,1,-4.96,-2.00596)">
+          <path d="M26.71,4.29C26.467,4.032 26.105,3.922 25.76,4L18.54,5.84L16.89,2.55C16.719,2.217 16.375,2.006 16,2.006C15.625,2.006 15.281,2.217 15.11,2.55L13.46,5.84L6.24,4C6.149,3.973 6.055,3.96 5.96,3.96C5.411,3.96 4.96,4.411 4.96,4.96C4.96,5.055 4.973,5.149 5,5.24L9,21.14C9.06,28.84 13.4,30 16,30C18.6,30 22.94,28.84 23,21.14L27,5.24C27.078,4.895 26.968,4.533 26.71,4.29ZM16,5.24L17,7.24L17,20L15,20L15,7.24L16,5.24ZM13,7.78L13,20L10.78,20L7.37,6.37L13,7.78ZM16,28C12.93,28 11.26,26 11,22L21,22C20.74,26 19.07,28 16,28ZM21.22,20L19,20L19,7.78L24.63,6.37L21.22,20Z" style="fill-rule:nonzero;"/>
+        </g>
+      </svg>
+      <h1>Joutonbad</h1>
+      <p>Inscription tournois</p>
+    </div>
+    
+    <div class="flex">
+      <h2>Maintenance en cours</h2>
+      <p>Promis on revient vite</p>
+    </div>
+    
+    <h2>REC Badminton</h2>
   </body>
 </html>
