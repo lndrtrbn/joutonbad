@@ -1,11 +1,12 @@
 import { twMerge } from "tailwind-merge";
+import { useRouteError } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFaceDizzy } from "@fortawesome/free-regular-svg-icons";
 
-import { useRouteError } from "react-router-dom";
+import Link from "../../components/Link/Link";
+import Alert from "../../components/Alert/Alert";
 import ErrorBoundaryStyle from "./ErrorBoundary.style";
-import MText from "../../components/mobile/MText/MText";
-import MLink from "../../components/mobile/MLink/MLink";
+import AuthLayout from "../../components/AuthLayout/AuthLayout";
 
 export default function ErrorBoundary() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,32 +20,19 @@ export default function ErrorBoundary() {
   }
 
   return (
-    <div
-      className={twMerge(
-        ErrorBoundaryStyle.base,
-        ErrorBoundaryStyle.colors,
-      )}
-    >
-      <FontAwesomeIcon
-        size="4x"
-        icon={faFaceDizzy}
-        className={ErrorBoundaryStyle.icon}
-      />
-      <div>
-        {error.status && (
-          <MText
-            type="accent"
-            color="text-m-white"
-            style="text-center mb-4"
-          >
-            {error.status}
-          </MText>
-        )}
-        <MText type="text" color="text-m-white" style="text-center">
-          {errorMessage}
-        </MText>
+    <AuthLayout>
+      <div className={ErrorBoundaryStyle.content}>
+        <FontAwesomeIcon size="2x" icon={faFaceDizzy} />
+
+        <Alert type="error">
+          {error.status}
+          <p>{errorMessage}</p>
+        </Alert>
+
+        <Link to="/" inline>
+          Page d'accueil
+        </Link>
       </div>
-      <MLink to="/">Ramène moi en lieu sûr</MLink>
-    </div>
+    </AuthLayout>
   );
 }
