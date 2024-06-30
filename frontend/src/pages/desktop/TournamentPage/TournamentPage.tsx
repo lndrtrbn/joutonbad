@@ -1,8 +1,11 @@
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { compareAsc, startOfDay, subDays } from "date-fns";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 import useFetch from "../../../http/useFetch";
+import Link from "../../../components/Link/Link";
 import Title from "../../../components/Title/Title";
 import MembersList from "./MembersList/MembersList";
 import { Discipline } from "../../../utils/discipline";
@@ -47,6 +50,11 @@ export default function TournamentPage() {
     <>
       <Title size="3xl">{tournament.name}</Title>
       <Separator />
+
+      <Link inline to="/" style="flex items-center gap-2 mb-4">
+        <FontAwesomeIcon icon={faChevronLeft} />
+        Calendrier
+      </Link>
 
       <TournamentDetails tournament={tournament} />
 
