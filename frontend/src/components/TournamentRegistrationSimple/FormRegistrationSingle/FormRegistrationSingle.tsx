@@ -5,17 +5,23 @@ import {
   RegistrationSingleInputs,
   RegistrationSingleSchema,
 } from "../../../utils/registration";
-import Button from "../../Button/Button";
 import InputTag from "../../InputTag/InputTag";
 import { LEVELS, Level } from "../../../utils/level";
 import { Discipline } from "../../../utils/discipline";
+import ButtonLoading from "../../ButtonLoading/ButtonLoading";
 import FormRegistrationSingleStyle from "./FormRegistrationSingle.style";
 
 type Props = {
+  loading?: boolean;
+  disciplines: Discipline[];
   onSubmit: (data: RegistrationSingleInputs) => void;
 };
 
-export default function FormRegistrationSingle({ onSubmit }: Props) {
+export default function FormRegistrationSingle({
+  loading = false,
+  disciplines,
+  onSubmit,
+}: Props) {
   const {
     control,
     handleSubmit,
@@ -36,7 +42,7 @@ export default function FormRegistrationSingle({ onSubmit }: Props) {
           <InputTag
             value={value ? [value] : []}
             onChange={(val) => onChange(val[0] as Discipline)}
-            list={[Discipline.SH, Discipline.SD]}
+            list={disciplines}
             label="Tableau"
             unique
           />
@@ -55,7 +61,13 @@ export default function FormRegistrationSingle({ onSubmit }: Props) {
           />
         )}
       />
-      <Button disabled={!isValid}>Envoyer l'inscription</Button>
+      <ButtonLoading
+        loading={loading}
+        disabled={!isValid || loading}
+        style="w-full sm:w-80"
+      >
+        Envoyer l'inscription
+      </ButtonLoading>
     </form>
   );
 }

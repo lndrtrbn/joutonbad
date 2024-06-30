@@ -6,6 +6,7 @@ import useHttpRegistration, {
 import { Player } from "../../../../utils/player";
 import { APIError } from "../../../../utils/error";
 import Title from "../../../../components/Title/Title";
+import Alert from "../../../../components/Alert/Alert";
 import { Tournament } from "../../../../utils/tournament";
 import { Discipline } from "../../../../utils/discipline";
 import RegistrationAdminFormStyle from "./RegistrationAdminForm.style";
@@ -66,28 +67,34 @@ export default function RegistrationAdminForm({
         />
       </div>
 
-      <Title subtitle>
+      <Alert type="info">
         Les formulaires d'inscriptions s'afficheront une fois membre
         et tournoi choisis
-      </Title>
+      </Alert>
 
       {selectedPlayer && selectedTournament && (
-        <>
-          {selectedTournament.disciplines.includes(Discipline.SH) && (
+        <div className="flex flex-col gap-8 mt-8">
+          {(selectedTournament.disciplines.includes(Discipline.SH) ||
+            selectedTournament.disciplines.includes(
+              Discipline.SD,
+            )) && (
             <TournamentRegistrationSimple
-              canRegister={!selectedTournament.freezed}
-              tournamentId={selectedTournament.id}
+              canRegister
+              tournament={selectedTournament}
               registrations={selectedTournament.registrations}
               playerLicense={selectedPlayer.license}
               register={(data) => register(Discipline.SH, data)}
             />
           )}
 
-          {selectedTournament.disciplines.includes(Discipline.DH) && (
+          {(selectedTournament.disciplines.includes(Discipline.DH) ||
+            selectedTournament.disciplines.includes(
+              Discipline.DD,
+            )) && (
             <RegistrationDouble
-              canRegister={!selectedTournament.freezed}
+              canRegister
               discipline={Discipline.DH}
-              tournamentId={selectedTournament.id}
+              tournament={selectedTournament}
               registrations={selectedTournament.registrations}
               playerLicense={selectedPlayer.license}
               register={(data) => register(Discipline.DH, data)}
@@ -97,16 +104,16 @@ export default function RegistrationAdminForm({
 
           {selectedTournament.disciplines.includes(Discipline.DM) && (
             <RegistrationDouble
-              canRegister={!selectedTournament.freezed}
+              canRegister
               discipline={Discipline.DM}
-              tournamentId={selectedTournament.id}
+              tournament={selectedTournament}
               registrations={selectedTournament.registrations}
               playerLicense={selectedPlayer.license}
               register={(data) => register(Discipline.DM, data)}
               error={submitError?.[Discipline.DM]}
             />
           )}
-        </>
+        </div>
       )}
     </section>
   );

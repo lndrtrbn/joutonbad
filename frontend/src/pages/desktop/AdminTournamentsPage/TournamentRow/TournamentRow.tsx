@@ -8,12 +8,13 @@ import useModal from "../../../../hooks/useModal";
 import Link from "../../../../components/Link/Link";
 import TournamentRowStyle from "./TournamentRow.style";
 import { Tournament } from "../../../../utils/tournament";
+import Button from "../../../../components/Button/Button";
 import ModalInfo from "../../../../components/ModalInfo/ModalInfo";
 import ModalConfirm from "../../../../components/ModalConfirm/ModalConfirm";
 
 type TournamentRowProps = {
   tournament: Tournament;
-  onDelete: (id: string) => void;
+  onDelete: (id: string) => Promise<unknown>;
   alt?: boolean;
 };
 
@@ -27,8 +28,8 @@ export default function TournamentRow({
   const confirmModal = (
     <ModalConfirm
       onClose={close}
-      onConfirm={() => {
-        onDelete(tournament.id);
+      onConfirm={async () => {
+        await onDelete(tournament.id);
         close();
       }}
     >
@@ -71,32 +72,26 @@ export default function TournamentRow({
           au
           {format(new Date(tournament.endDate), " dd/MM/yyyy")}
         </span>
-        <span className={TournamentRowStyle.name}>
-          <Link to={`/tournoi/${tournament.id}`}>
-            {tournament.name}
-          </Link>
-        </span>
-        <span className={TournamentRowStyle.location}>
-          {tournament.location}
-        </span>
+        <Link
+          to={`/tournoi/${tournament.id}`}
+          inline
+          style={TournamentRowStyle.name}
+        >
+          {tournament.name}
+        </Link>
         <span className={TournamentRowStyle.disciplines}>
-          {tournament.disciplines.join(",")}
+          {tournament.disciplines.join(" ")}
         </span>
         <span className={TournamentRowStyle.levels}>
           {tournament.minLevel} à {tournament.maxLevel}
         </span>
 
-        <Link to={tournament.id}>
-          <FontAwesomeIcon
-            className={TournamentRowStyle.action}
-            icon={faPencil}
-          />
+        <Link inline to={tournament.id}>
+          <FontAwesomeIcon icon={faPencil} />
         </Link>
-        <FontAwesomeIcon
-          onClick={askDelete}
-          className={TournamentRowStyle.action}
-          icon={faTrashCan}
-        />
+        <Button variant="inline" onClick={askDelete}>
+          <FontAwesomeIcon icon={faTrashCan} />
+        </Button>
       </div>
 
       {portal}

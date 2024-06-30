@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
+import { MouseEventHandler, ReactNode } from "react";
 
 import ButtonStyle from "./Button.style";
 
@@ -8,7 +8,7 @@ export type ButtonProps = {
   active?: boolean;
   disabled?: boolean;
   variant?: "solid" | "light" | "link" | "inline" | "icon";
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   type?: "button" | "submit" | "reset";
   style?: string;
 };

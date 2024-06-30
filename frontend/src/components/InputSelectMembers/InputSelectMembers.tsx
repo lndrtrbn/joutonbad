@@ -24,10 +24,10 @@ export default function InputSelectMembers({
     <InputSelect
       value={value}
       onChange={onChange}
-      style="w-full sm:w-[380px]"
       placeholder={placeholder}
       items={sortedPlayers ?? []}
       toLabel={(p) => `${p.lastname} ${p.name} - ${p.license}`}
+      style="w-full sm:w-96"
     />
   );
 }

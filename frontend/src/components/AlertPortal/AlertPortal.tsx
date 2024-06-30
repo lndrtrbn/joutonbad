@@ -2,13 +2,10 @@ import { createPortal } from "react-dom";
 import { twMerge } from "tailwind-merge";
 
 import Alert from "../Alert/Alert";
-import MAlert from "../mobile/MAlert/MAlert";
-import useDevice from "../../hooks/useDevice";
 import AlertPortalStyle from "./AlertPortal.style";
 import { useAlertsContext } from "../../contexts/alerts.context";
 
 export default function AlertPortal() {
-  const device = useDevice();
   const { alerts, removeAlert } = useAlertsContext();
 
   return (
@@ -21,21 +18,13 @@ export default function AlertPortal() {
           )}
         >
           {alerts.map((alert, i) => (
-            <>
-              {device === "desktop" ? (
-                <Alert
-                  key={i}
-                  type={alert.type}
-                  onClose={() => removeAlert(alert)}
-                >
-                  {alert.message}
-                </Alert>
-              ) : (
-                <MAlert key={i} type={alert.type}>
-                  {alert.message}
-                </MAlert>
-              )}
-            </>
+            <Alert
+              key={i}
+              type={alert.type}
+              onClose={() => removeAlert(alert)}
+            >
+              {alert.message}
+            </Alert>
           ))}
         </div>,
         document.body,

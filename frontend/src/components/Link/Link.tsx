@@ -12,6 +12,7 @@ export type LinkProps = {
   icon?: IconDefinition;
   inline?: boolean;
   target?: NavLinkProps["target"];
+  style?: string;
 };
 
 export default function Link({
@@ -20,6 +21,7 @@ export default function Link({
   icon,
   inline = false,
   target,
+  style,
 }: LinkProps) {
   return (
     <NavLink
@@ -28,10 +30,10 @@ export default function Link({
       className={({ isActive }) =>
         twMerge(
           LinkStyle.base,
-          LinkStyle.hover,
           !inline && LinkStyle.notInline,
           inline && LinkStyle.inline,
-          isActive && LinkStyle.active,
+          isActive && !inline && LinkStyle.active,
+          !!style && style,
         )
       }
     >

@@ -1,32 +1,47 @@
+import { useLocation } from "react-router-dom";
+
 import FormLogin from "./FormLogin/FormLogin";
 import useLogin from "../../../hooks/useLogin";
-import LoginPageStyle from "./LoginPage.style";
 import Link from "../../../components/Link/Link";
 import Title from "../../../components/Title/Title";
-import Version from "../../../components/Version/Version";
-import LogoVertical from "../../../components/LogoVertical/LogoVertical";
+import Alert from "../../../components/Alert/Alert";
+import AuthLayout from "../../../components/AuthLayout/AuthLayout";
 
 export default function LoginPage() {
   const [callLogin, error, fetching] = useLogin();
+  const { state } = useLocation();
 
   return (
-    <div className={LoginPageStyle.base}>
-      <LogoVertical />
+    <AuthLayout>
       <Title size="3xl">Connexion</Title>
 
-      <div className={LoginPageStyle.container}>
-        <FormLogin
-          onSubmit={callLogin}
-          error={error}
-          loading={fetching}
-        />
-      </div>
+      {state === "from-signup" && (
+        <Alert type="success">
+          <p>Ton compte a bien été créé.</p>
+          <p>Un email t'a été envoyé pour le valider.</p>
+        </Alert>
+      )}
+      {state === "from-forgotpwd" && (
+        <Alert type="info">
+          <p>
+            Un email a été envoyé à ton adresse. Tu y trouveras un
+            lien pour changer ton mot de passe.
+          </p>
+        </Alert>
+      )}
 
-      <Link to="/signup">Créer mon compte</Link>
-      <Link to="/forgotpwd">Mot de passe oublié</Link>
-      <div className={LoginPageStyle.botton} />
+      <FormLogin
+        onSubmit={callLogin}
+        error={error}
+        loading={fetching}
+      />
 
-      <Version />
-    </div>
+      <Link to="/signup" inline>
+        Créer mon compte
+      </Link>
+      <Link to="/forgotpwd" inline>
+        Mot de passe oublié
+      </Link>
+    </AuthLayout>
   );
 }

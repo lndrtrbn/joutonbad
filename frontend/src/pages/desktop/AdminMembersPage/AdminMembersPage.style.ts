@@ -1,6 +1,6 @@
 const AdminMembersPageStyle = {
-  base: "flex flex-col gap-10",
-  list: "overflow-auto",
+  base: "flex flex-row flex-wrap gap-10 items-start",
+  list: "overflow-x-auto",
   filters: "flex gap-8 mb-4",
 };
 

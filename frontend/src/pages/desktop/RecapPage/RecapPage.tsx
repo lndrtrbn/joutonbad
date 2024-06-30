@@ -1,11 +1,16 @@
 import { compareAsc } from "date-fns";
 import { useEffect, useState } from "react";
 
+import {
+  Registration,
+  filterByDiscipline,
+} from "../../../utils/registration";
 import useFetch from "../../../http/useFetch";
 import RecapPageStyle from "./RecapPage.style";
 import Link from "../../../components/Link/Link";
 import Title from "../../../components/Title/Title";
 import { Tournament } from "../../../utils/tournament";
+import { Discipline } from "../../../utils/discipline";
 import useHttpTournament from "../../../http/useHttpTournament";
 import { useAuthContext } from "../../../contexts/auth.context";
 import Separator from "../../../components/Separator/Separator";
@@ -17,24 +22,26 @@ export default function RecapPage() {
   } = useAuthContext();
 
   const { getTournamentsByPlayer } = useHttpTournament();
-  const [tournaments] = useFetch(getTournamentsByPlayer);
+  const [myTournaments] = useFetch(getTournamentsByPlayer);
 
   const [toCome, setToCome] = useState<Tournament[]>([]);
   const [past, setPast] = useState<Tournament[]>([]);
 
-  const [nbParticipations, setParticipations] = useState(0);
+  const [myRegistrations, setMyregistrations] = useState<
+    Registration[]
+  >([]);
   const [cost, setCost] = useState(0);
 
   useEffect(() => {
     if (user) {
       setCost(0);
-      setParticipations(0);
+      setMyregistrations([]);
 
       const now = new Date().setHours(0, 0, 0, 0);
       const newToCome: Tournament[] = [];
       const newPast: Tournament[] = [];
 
-      tournaments
+      myTournaments
         ?.sort(
           (a, b) =>
             new Date(a.startDate).getTime() -
@@ -50,16 +57,16 @@ export default function RecapPage() {
           const registrations = tournament.registrations.filter(
             (reg) =>
               reg.player.license == user.license && !reg.cancelled,
-          ).length;
-          setParticipations((val) => val + registrations);
-          if (registrations == 1)
+          );
+          setMyregistrations((regs) => [...regs, ...registrations]);
+          if (registrations.length == 1)
             setCost((c) => c + tournament.prices[0]);
-          if (registrations == 2)
+          if (registrations.length == 2)
             setCost(
               (c) =>
                 c + (tournament.prices[1] ?? tournament.prices[0]),
             );
-          if (registrations == 3)
+          if (registrations.length == 3)
             setCost(
               (c) =>
                 c +
@@ -72,34 +79,50 @@ export default function RecapPage() {
       setToCome(newToCome);
       setPast(newPast);
     }
-  }, [tournaments, user]);
+  }, [myTournaments, user]);
 
-  if (!tournaments) {
+  const regSH = filterByDiscipline(myRegistrations, [Discipline.SH]);
+  const regSD = filterByDiscipline(myRegistrations, [Discipline.SD]);
+  const regDH = filterByDiscipline(myRegistrations, [Discipline.DH]);
+  const regDD = filterByDiscipline(myRegistrations, [Discipline.DD]);
+  const regDM = filterByDiscipline(myRegistrations, [Discipline.DM]);
+
+  if (!myTournaments) {
     return null;
   }
 
   return (
     <>
       <Title size="3xl">Recap de mes inscriptions</Title>
-      <Title subtitle>
-        Tu trouveras ici tes tournois à venir et la liste de tes
-        tournois joués
-      </Title>
-
       <Separator />
 
       <div className={RecapPageStyle.base}>
-        <section>
-          <Title size="2xl">
-            {nbParticipations} Tableau
-            {nbParticipations > 1 ? "x" : ""} au total
-          </Title>
-          <Title subtitle>
-            Pour un coût total d'inscriptions de {cost}€
-          </Title>
+        <section className="border border-black/10 p-6 rounded-2xl max-w-[640px]">
+          <Title size="2xl">Statistiques</Title>
+
+          <div className="flex flex-wrap gap-4">
+            <div className={RecapPageStyle.stat}>
+              {myTournaments.length} Tournois |{" "}
+              {myRegistrations.length} Tableaux
+            </div>
+            <div className={RecapPageStyle.stat}>
+              {[
+                !!regSH.length && regSH.length + " SH",
+                !!regSD.length && regSD.length + " SD",
+                !!regDH.length && regDH.length + " DH",
+                !!regDD.length && regDD.length + " DD",
+                !!regDM.length && regDM.length + " DM",
+              ]
+                .filter((a) => !!a)
+                .join(" | ")}
+            </div>
+            <div className={RecapPageStyle.stat}>
+              {cost}€ payé par le club
+            </div>
+          </div>
         </section>
 
-        <section>
+        <section className="border border-black/10 p-6 rounded-2xl max-w-[1140px]">
           <Title size="2xl">
             Mes tournois à venir ({toCome.length})
           </Title>
@@ -123,7 +146,7 @@ export default function RecapPage() {
           </div>
         </section>
 
-        <section>
+        <section className="border border-black/10 p-6 rounded-2xl max-w-[1140px]">
           <Title size="2xl">
             Mes tournois déjà joués ({past.length})
           </Title>

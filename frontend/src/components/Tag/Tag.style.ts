@@ -1,9 +1,9 @@
 const TagStyle = {
-  base: "bg-black-a rounded flex items-center font-bold text-black-d",
+  base: "bg-black/10 rounded-full flex items-center font-bold text-black select-none",
   md: "h-10 px-4",
   sm: "h-6 px-2 text-sm",
-  active: "bg-green",
-  inverted: "bg-white-a text-white-l",
+  active: "bg-main",
+  inverted: "bg-white/10 text-white",
   clickable: "cursor-pointer",
 };
 

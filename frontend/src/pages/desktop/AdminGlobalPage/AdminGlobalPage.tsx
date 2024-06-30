@@ -7,7 +7,7 @@ import useLazyFetch from "../../../http/useLazyFetch";
 import Button from "../../../components/Button/Button";
 import { APIErrorMessage } from "../../../utils/error";
 import useHttpGoogle from "../../../http/useHttpGoogle";
-import AdminGlobalPageStyle from "./AdminGlobalPage.style";
+import Separator from "../../../components/Separator/Separator";
 
 export default function AdminGlobalPage() {
   const { exportData } = useHttpGoogle();
@@ -48,27 +48,32 @@ export default function AdminGlobalPage() {
   }, [error]);
 
   return (
-    <div className={AdminGlobalPageStyle.base}>
-      <Title size="2xl">Export de données</Title>
-      <Title subtitle>
-        Exporter les données des membres, tournois et inscriptions
-        vers Google Sheet
-      </Title>
+    <>
+      <Title size="3xl">Paramètres globaux</Title>
+      <Separator />
 
-      <Button onClick={onExport} disabled={fetching}>
-        Exporter
-      </Button>
+      <div className="max-w-full border border-black/10 p-6 rounded-2xl sm:max-w-[500px]">
+        <Title size="2xl">Export de données</Title>
+        <Title subtitle>
+          Exporter les données des membres, tournois et inscriptions
+          vers Google Sheet
+        </Title>
 
-      {showFeedback && (
-        <div className={AdminGlobalPageStyle.alert}>
-          {errorMsg && <Alert type="error">{errorMsg}</Alert>}
-          {fetched && (
-            <Alert type="success">
-              L'export de données a bien été effectué
-            </Alert>
-          )}
-        </div>
-      )}
-    </div>
+        <Button onClick={onExport} disabled={fetching} style="w-full">
+          Exporter
+        </Button>
+
+        {showFeedback && (
+          <div className="mt-4 w-96">
+            {errorMsg && <Alert type="error">{errorMsg}</Alert>}
+            {fetched && (
+              <Alert type="success">
+                L'export de données a bien été effectué
+              </Alert>
+            )}
+          </div>
+        )}
+      </div>
+    </>
   );
 }

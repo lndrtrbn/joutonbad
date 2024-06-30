@@ -1,6 +1,7 @@
 const FormTournamentStyle = {
-  base: "flex flex-col gap-4",
-  row: "flex flex-wrap gap-4",
+  base: "flex gap-8 flex-wrap",
+  row: "flex flex-wrap gap-6",
+  col: "flex flex-col gap-6",
   error: "self-start",
 };
 

@@ -1,19 +1,19 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { compareAsc, startOfDay, subDays } from "date-fns";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
-import useHttpRegistration, {
-  CreateRegistrationPayload,
-} from "../../../http/useHttpRegistration";
 import useFetch from "../../../http/useFetch";
-import { APIError } from "../../../utils/error";
+import Link from "../../../components/Link/Link";
+import Title from "../../../components/Title/Title";
 import MembersList from "./MembersList/MembersList";
 import { Discipline } from "../../../utils/discipline";
-import TournamentPageStyle from "./TournamentPage.style";
 import useHttpTournament from "../../../http/useHttpTournament";
 import { useAuthContext } from "../../../contexts/auth.context";
 import Separator from "../../../components/Separator/Separator";
 import TournamentDetails from "./TournamentDetails/TournamentDetails";
+import useCreateRegistration from "../../../hooks/useCreateRegistration";
 import RegistrationDouble from "../../../components/RegistrationDouble/RegistrationDouble";
 import TournamentRegistrationSimple from "../../../components/TournamentRegistrationSimple/TournamentRegistrationSimple";
 
@@ -24,14 +24,16 @@ export default function TournamentPage() {
 
   const { id } = useParams();
   const { getTournamentById } = useHttpTournament();
-  const { createRegistration } = useHttpRegistration();
   const [tournament, refetchTournament] = useFetch(() =>
     getTournamentById(id || ""),
   );
 
-  const [submitError, setError] = useState<{
-    [key: string]: APIError;
-  }>();
+  const [callCreateSimple, , createSimpleFetching] =
+    useCreateRegistration(refetchTournament);
+  const [callCreateDouble, createDoubleError, createDoubleFetching] =
+    useCreateRegistration(refetchTournament);
+  const [callCreateMixte, createMixteError, createMixteFetching] =
+    useCreateRegistration(refetchTournament);
 
   const registrationsDone = useMemo(() => {
     if (!tournament) return false;
@@ -42,68 +44,68 @@ export default function TournamentPage() {
     return compareAsc(today, twoWeeksAgo) > 0;
   }, [tournament]);
 
-  async function register(
-    discipline: Discipline,
-    payload: CreateRegistrationPayload,
-  ) {
-    try {
-      setError(undefined);
-      await createRegistration(payload);
-      refetchTournament();
-    } catch (error) {
-      error instanceof APIError && setError({ [discipline]: error });
-    }
-  }
-
   if (!tournament || !user) return null;
 
   return (
-    <div className={TournamentPageStyle.container}>
-      <div className={TournamentPageStyle.tournament}>
-        <TournamentDetails tournament={tournament} />
+    <>
+      <Title size="3xl">{tournament.name}</Title>
+      <Separator />
 
-        <Separator />
+      <Link inline to="/" style="flex items-center gap-2 mb-4">
+        <FontAwesomeIcon icon={faChevronLeft} />
+        Calendrier
+      </Link>
 
-        {(tournament.disciplines.includes(Discipline.SH) ||
-          tournament.disciplines.includes(Discipline.SD)) && (
-          <TournamentRegistrationSimple
-            tournamentId={id || ""}
-            registrations={tournament.registrations}
-            canRegister={!registrationsDone}
-            playerLicense={user?.license}
-            register={(data) => register(Discipline.SH, data)}
-          />
-        )}
+      <TournamentDetails tournament={tournament} />
 
-        {(tournament.disciplines.includes(Discipline.DH) ||
-          tournament.disciplines.includes(Discipline.DD)) && (
-          <RegistrationDouble
-            discipline={Discipline.DH}
-            registrations={tournament.registrations}
-            playerLicense={user?.license}
-            canRegister={!registrationsDone}
-            register={(data) => register(Discipline.DH, data)}
-            tournamentId={id || ""}
-            error={submitError?.[Discipline.DH]}
-          />
-        )}
+      <div className="flex flex-wrap items-start gap-8 mt-8 max-w-[1140px]">
+        <section className="flex-1 border border-black/10 p-6 rounded-2xl flex flex-col gap-8">
+          {registrationsDone && <p>Aucune inscription possible</p>}
 
-        {tournament.disciplines.includes(Discipline.DM) && (
-          <RegistrationDouble
-            discipline={Discipline.DM}
-            registrations={tournament.registrations}
-            playerLicense={user?.license}
-            canRegister={!registrationsDone}
-            register={(data) => register(Discipline.DM, data)}
-            tournamentId={id || ""}
-            error={submitError?.[Discipline.DM]}
-          />
-        )}
+          {(tournament.disciplines.includes(Discipline.SH) ||
+            tournament.disciplines.includes(Discipline.SD)) && (
+            <TournamentRegistrationSimple
+              tournament={tournament}
+              registrations={tournament.registrations}
+              canRegister={!registrationsDone}
+              playerLicense={user?.license}
+              register={callCreateSimple}
+              loading={createSimpleFetching}
+            />
+          )}
+
+          {(tournament.disciplines.includes(Discipline.DH) ||
+            tournament.disciplines.includes(Discipline.DD)) && (
+            <RegistrationDouble
+              discipline={Discipline.DH}
+              registrations={tournament.registrations}
+              playerLicense={user?.license}
+              canRegister={!registrationsDone}
+              register={callCreateDouble}
+              loading={createDoubleFetching}
+              tournament={tournament}
+              error={createDoubleError}
+            />
+          )}
+
+          {tournament.disciplines.includes(Discipline.DM) && (
+            <RegistrationDouble
+              discipline={Discipline.DM}
+              registrations={tournament.registrations}
+              playerLicense={user?.license}
+              canRegister={!registrationsDone}
+              register={callCreateMixte}
+              loading={createMixteFetching}
+              tournament={tournament}
+              error={createMixteError}
+            />
+          )}
+        </section>
+
+        <section className="border border-black/10 p-6 rounded-2xl w-full sm:w-[300px]">
+          <MembersList registrations={tournament.registrations} />
+        </section>
       </div>
-
-      <div className={TournamentPageStyle.club}>
-        <MembersList registrations={tournament.registrations} />
-      </div>
-    </div>
+    </>
   );
 }

@@ -3,24 +3,26 @@ import {
   Registration,
 } from "../../utils/registration";
 import Title from "../Title/Title";
+import { Tournament } from "../../utils/tournament";
 import { Discipline } from "../../utils/discipline";
 import { CreateRegistrationPayload } from "../../http/useHttpRegistration";
 import FormRegistrationSingle from "./FormRegistrationSingle/FormRegistrationSingle";
-import TournamentRegistrationSimpleStyle from "./TournamentRegistrationSimple.style";
 
 type Props = {
-  tournamentId: string;
+  tournament: Tournament;
   registrations: Registration[];
   playerLicense: string;
   canRegister: boolean;
+  loading?: boolean;
   register: (data: CreateRegistrationPayload) => void;
 };
 
 export default function TournamentRegistrationSimple({
-  tournamentId,
+  tournament,
   registrations = [],
   canRegister,
   playerLicense,
+  loading = false,
   register,
 }: Props) {
   const registration = registrations.find(
@@ -36,7 +38,7 @@ export default function TournamentRegistrationSimple({
       const payload: CreateRegistrationPayload = {
         discipline: data.discipline,
         level: data.rank,
-        tournamentId,
+        tournamentId: tournament.id,
         playerLicense,
       };
       register(payload);
@@ -45,12 +47,20 @@ export default function TournamentRegistrationSimple({
 
   if (!registration && !canRegister) return null;
 
+  const disciplines = tournament.disciplines.filter(
+    (d) => d === Discipline.SD || d === Discipline.SH,
+  );
+
   return (
-    <div className={TournamentRegistrationSimpleStyle.base}>
-      <Title size="2xl">Tableau de Simple</Title>
+    <div>
+      <Title size="2xl">Inscription en simple</Title>
 
       {!registration ? (
-        <FormRegistrationSingle onSubmit={registerSimple} />
+        <FormRegistrationSingle
+          onSubmit={registerSimple}
+          loading={loading}
+          disciplines={disciplines}
+        />
       ) : (
         <Title subtitle>Inscrit.e</Title>
       )}

@@ -26,8 +26,8 @@ export const FAQ: Faq = [
     answers: [
       "Sur le calendrier tu trouveras les tournois dont les inscriptions sont gérées par les bénévoles du club.",
       "En te rendant sur la page d'un tournoi tu pourras remplir les formulaires d'inscription pour chaque catégorie disponible (simple, double, mixte).",
-      "Rien d'autre à faire, les bénévoles prennnent le relais pour t'inscrire au tournoi via badnet ou directement avec le club organisateur.",
-      "Sur la page 'Mon récap' tu trouveras la liste des tournois où tu vas jouer.",
+      "Rien d'autre à faire, les bénévoles prennent le relais pour t'inscrire au tournoi via badnet ou directement avec le club organisateur.",
+      "Sur la page 'Mon récap' tu trouveras la liste des tournois où tu as été inscrit.e, cependant seul Badnet fait foi pour savoir si ton inscription est validée par les organisateurs.",
     ],
   },
   {
@@ -43,7 +43,7 @@ export const FAQ: Faq = [
     answers: [
       "Plusieurs cas sont possibles. Si le tournoi est dans longtemps, il n'a peut-être juste pas encore été ajouté, patience.",
       "Sinon c'est sûrement que le tournoi est loin de Rennes et dans ce cas le club ne prend pas en charge les inscriptions.",
-      "Si jamais plusieurs personnes sont intéressées par ce tournoi vous pouvez demander à ce que les responsables l'ajoute. Sinon il faudra s'inscrire par vous même.",
+      "Si jamais plusieurs personnes sont intéressées par ce tournoi vous pouvez demander à ce que les responsables l'ajoute. Sinon il faudra s'inscrire par vous même, le plus souvent avec Badnet.",
     ],
   },
   {

@@ -1,14 +1,13 @@
-const InputTextStyle = {
-  base: "w-full sm:w-64",
+export default {
+  base: "w-full",
   input:
-    "w-full h-10 px-4 rounded font-medium outline-0 border-2 block placeholder:text-black-l",
-  colors:
-    "bg-white border-white focus:border-black-d focus:bg-white-l",
-  error: "border-accent",
-  errorText: "text-accent",
-  disabled: "bg-black-l pointer-events-none",
+    "w-full h-10 px-4 rounded-full border font-medium outline-0 block",
+  colors: "bg-bg border-black/10",
+  error: "border-error",
+  errorText: "mt-1 pl-2 block",
+  disabled: "pointer-events-none bg-black/30 placeholder-white",
   container: "relative",
-  resetBtn: "absolute top-[8px] right-3",
+  resetBtn: "absolute top-[8px] right-4 text-black/30",
+  label: "absolute top-[-16px] left-4 text-sm text-black/50",
+  withLabel: "mt-4",
 };
-
-export default InputTextStyle;

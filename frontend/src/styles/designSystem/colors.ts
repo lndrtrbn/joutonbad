@@ -3,40 +3,7 @@
  * Look at tailwind.config.ts.
  */
 
-type Color = {
-  DEFAULT: string;
-  l: string;
-  d: string;
-  a: string;
-};
-
-const accent: Color = {
-  DEFAULT: "#da3124",
-  l: "#e15a50",
-  d: "#ae271d",
-  a: "#da312450",
-};
-
-const white: Color = {
-  DEFAULT: "#f7f7f7",
-  l: "#ffffff",
-  d: "#f0f0f0",
-  a: "#f7f7f740",
-};
-
-const black: Color = {
-  DEFAULT: "#595959",
-  l: "#919191",
-  d: "#000000",
-  a: "#59595940",
-};
-
-const green = "#80ed99";
-const red = "#e63946";
-const yellow = "#f6bd60";
-const blue = "#3a86ff";
-
-export const DEFAULT_MAIN_COLOR = "#80ED99";
+export const DEFAULT_MAIN_COLOR = "#da3124";
 
 const m = {
   moon: "rgb(166 188 224)",
@@ -47,17 +14,16 @@ const m = {
 };
 
 const colors = {
-  accent,
-  white,
-  black,
-  green,
-  red,
-  yellow,
-  blue,
+  main: "rgb(var(--color-main))",
+  white: "rgb(255 255 255)",
+  black: "rgb(29 32 37)",
+  error: "rgb(239 35 60)",
+  success: "rgb(64 165 120)",
+  bg: "rgb(247 249 250)",
   m,
 };
 
-type AllColors = keyof typeof colors.m;
+type AllColors = keyof typeof colors.m | keyof typeof colors;
 type Opacity = "" | `/${number}`;
 export type TextColor = `text-m-${AllColors}${Opacity}`;
 export type BgColor = `bg-m-${AllColors}${Opacity}`;

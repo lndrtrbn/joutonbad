@@ -29,9 +29,13 @@ export default function InputUpload({
         hidden
         accept={accept}
         onChange={change}
+        className="w-0 h-0 opacity-0"
       />
 
-      <Button onClick={() => inputRef.current?.click()}>
+      <Button
+        onClick={() => inputRef.current?.click()}
+        style="w-full"
+      >
         {label}
       </Button>
     </div>

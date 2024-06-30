@@ -1,12 +1,10 @@
-import { format, subDays } from "date-fns";
 import { fr } from "date-fns/locale";
+import { format, subDays } from "date-fns";
 
-import Tag from "../../../../components/Tag/Tag";
 import Link from "../../../../components/Link/Link";
 import Alert from "../../../../components/Alert/Alert";
 import Title from "../../../../components/Title/Title";
 import { Tournament } from "../../../../utils/tournament";
-import TagList from "../../../../components/TagList/TagList";
 import TournamentDetailsStyle from "./TournamentDetails.style";
 
 type Props = {
@@ -21,93 +19,88 @@ export default function TournamentDetails({ tournament }: Props) {
   }
 
   return (
-    <>
-      <div className={TournamentDetailsStyle.base}>
-        <Title size="3xl">{tournament.name}</Title>
+    <section className="border border-black/10 p-6 rounded-2xl max-w-[1140px]">
+      <Title size="2xl">Détails du tournoi</Title>
 
-        <div className={TournamentDetailsStyle.subtitle}>
-          <Title subtitle>À {tournament.location}</Title>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col sm:flex-row sm:gap-8">
           <Title subtitle>
             Début {strDate(tournament.startDate)}
           </Title>
           <Title subtitle>Fin {strDate(tournament.endDate)}</Title>
         </div>
-      </div>
 
-      <div className={TournamentDetailsStyle.details}>
-        {tournament.inCharge && (
-          <div>
-            <Title>Responsable REC</Title>
-            <p>
+        <div className="bg-bg px-6 py-4 rounded-2xl flex flex-wrap gap-8 gap-y-4">
+          <section>
+            <p>Lieu</p>
+            <Title style="mb-0">{tournament.location}</Title>
+          </section>
+
+          <section>
+            <p>Prix / nb tableaux</p>
+            <Title style="mb-0">
+              {tournament.prices.map((p) => `${p}€`).join(" | ")}
+            </Title>
+          </section>
+
+          <section>
+            <p>Tableaux</p>
+            <Title style="mb-0">
+              {tournament.disciplines.join(" ")}
+            </Title>
+          </section>
+
+          <section>
+            <p>Classements</p>
+            <Title style="mb-0">
+              {tournament.minLevel} à {tournament.maxLevel}
+            </Title>
+          </section>
+
+          <section>
+            <p>Responsable REC</p>
+            <Title style="mb-0">
               {tournament.inCharge.lastname}{" "}
               {tournament.inCharge.name}
-            </p>
-          </div>
-        )}
+            </Title>
+          </section>
 
-        <div>
-          <Title>Tableaux joués</Title>
-          <TagList>
-            {tournament.disciplines.map((discipline) => (
-              <Tag key={discipline} size="sm">
-                {discipline}
-              </Tag>
-            ))}
-          </TagList>
-        </div>
-
-        <div>
-          <Title>Classements autorisés</Title>
-          <TagList>
-            <Tag size="sm">{tournament.minLevel}</Tag>
-            <span>à</span>
-            <Tag size="sm">{tournament.maxLevel}</Tag>
-          </TagList>
-        </div>
-      </div>
-
-      <div>
-        <Title>Prix des tableaux</Title>
-        <div className={TournamentDetailsStyle.list}>
-          {tournament.prices.map((price, i) => (
-            <span key={i} className={TournamentDetailsStyle.price}>
-              {i + 1} tableaux <Tag size="sm">{price}€</Tag>
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {tournament.links.length > 0 && (
-        <div>
-          <Title>Liens</Title>
-          <div className={TournamentDetailsStyle.list}>
-            {tournament.links.map((link) => (
-              <Link
-                key={link.name}
-                to={link.url}
-                inline
-                target="_blank"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {!tournament.freezed ? (
-        <Alert type="info">
-          Fin des inscriptions le{" "}
-          {strDate(
-            subDays(new Date(tournament.startDate), 14).toISOString(),
+          {tournament.links.length > 0 && (
+            <section>
+              <p>Liens</p>
+              <div className={TournamentDetailsStyle.list}>
+                {tournament.links.map((link) => (
+                  <Link
+                    key={link.name}
+                    to={link.url}
+                    inline
+                    target="_blank"
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+            </section>
           )}
-        </Alert>
-      ) : (
-        <Alert type="info">
-          Les inscriptions ont été clôturées. Ceci peut être dû au
-          fait que le tournoi soit complet.
-        </Alert>
-      )}
-    </>
+        </div>
+
+        {!tournament.freezed ? (
+          <Alert type="info">
+            Fin des inscriptions le{" "}
+            {strDate(
+              subDays(
+                new Date(tournament.startDate),
+                14,
+              ).toISOString(),
+            )}
+          </Alert>
+        ) : (
+          <Alert type="info">
+            Les inscriptions ont été clôturées. Ceci peut être dû au
+            fait que le tournoi soit complet.
+          </Alert>
+        )}
+      </div>
+    </section>
   );
 }

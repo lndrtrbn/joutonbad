@@ -6,17 +6,16 @@ import Separator from "../../../components/Separator/Separator";
 export default function FaqPage() {
   return (
     <div>
-      <div>
-        <Title size="3xl">Foire aux questions</Title>
-      </div>
-
+      <Title size="3xl">Foire aux questions</Title>
       <Separator />
 
       <div className={FaqPageStyle.base}>
         {FAQ.map((faq, i) => (
-          <section key={i}>
-            <Title size="xl">{faq.question}</Title>
-
+          <section
+            key={i}
+            className="max-w-full border border-black/10 p-6 rounded-2xl sm:max-w-[1000px]"
+          >
+            <Title size="2xl">{faq.question}</Title>
             {faq.answers.map((answer, i) => (
               <Title key={i} subtitle>
                 {answer}

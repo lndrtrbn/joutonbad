@@ -30,11 +30,17 @@ export default function useAxios() {
               message: "Tu sembles ne pas être connecté.e",
             });
             setUser(undefined);
+          } else if (apiError.statusCode === 500) {
+            addAlert({
+              type: "error",
+              message:
+                "Une erreur inconnue est survenue. Si elle t'empêche d'utiliser l'application correctement contacte un.e responsable",
+            });
           }
           throw apiError;
         } else {
           addAlert({
-            type: "warning",
+            type: "error",
             message:
               "Une erreur inconnue est survenue. Si elle t'empêche d'utiliser l'application correctement contacte un.e responsable",
           });

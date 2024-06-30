@@ -1,7 +1,8 @@
+import { Outlet } from "react-router-dom";
+
 import AuthGuard from "./auth.guard";
 import EditorGuard from "./editor.guard";
 import UnauthGuard from "./unauth.guard";
-import AdminPage from "../pages/desktop/AdminPage/AdminPage";
 import AdminGlobalPage from "../pages/desktop/AdminGlobalPage/AdminGlobalPage";
 import AdminMembersPage from "../pages/desktop/AdminMembersPage/AdminMembersPage";
 import AdminTournamentsPage from "../pages/desktop/AdminTournamentsPage/AdminTournamentsPage";
@@ -80,7 +81,7 @@ export const MOBILE_ROUTES = [
             path: "admin",
             element: (
               <EditorGuard>
-                <AdminPage />
+                <Outlet />
               </EditorGuard>
             ),
             children: [

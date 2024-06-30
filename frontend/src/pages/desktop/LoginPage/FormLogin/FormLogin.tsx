@@ -1,14 +1,11 @@
 import { Controller } from "react-hook-form";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import useLoginForm, {
   LoginFormProps,
 } from "../../../../hooks/useLoginForm";
-import FormLoginStyle from "./FormLogin.style";
 import Alert from "../../../../components/Alert/Alert";
-import Button from "../../../../components/Button/Button";
 import InputText from "../../../../components/InputText/InputText";
+import ButtonLoading from "../../../../components/ButtonLoading/ButtonLoading";
 
 export default function FormLogin({
   onSubmit,
@@ -26,7 +23,7 @@ export default function FormLogin({
 
   return (
     <form
-      className={FormLoginStyle.base}
+      className="flex flex-col gap-4 w-full"
       onSubmit={handleSubmit(onSubmit)}
     >
       <Controller
@@ -55,15 +52,9 @@ export default function FormLogin({
         )}
       />
       {globalError && <Alert type="error">{globalError}</Alert>}
-      <Button disabled={!isValid || loading}>
-        {loading ? (
-          <span>
-            <FontAwesomeIcon icon={faSpinner} spin />
-          </span>
-        ) : (
-          <span>Me connecter</span>
-        )}
-      </Button>
+      <ButtonLoading disabled={!isValid || loading} loading={loading}>
+        Me connecter
+      </ButtonLoading>
     </form>
   );
 }

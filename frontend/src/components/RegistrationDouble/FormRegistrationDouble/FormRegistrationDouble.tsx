@@ -6,8 +6,7 @@ import {
   RegistrationDoubleInputs,
   RegistrationDoubleSchema,
 } from "../../../utils/registration";
-import Title from "../../Title/Title";
-import Button from "../.././Button/Button";
+import Alert from "../../Alert/Alert";
 import useFetch from "../../../http/useFetch";
 import { Player } from "../../../utils/player";
 import InputTag from "../.././InputTag/InputTag";
@@ -16,16 +15,19 @@ import { LEVELS, Level } from "../../../utils/level";
 import { Discipline } from "../../../utils/discipline";
 import useHttpPlayer from "../../../http/useHttpPlayer";
 import InputCheckbox from "../../InputCheckbox/InputCheckbox";
+import ButtonLoading from "../../ButtonLoading/ButtonLoading";
 import FormRegistrationDoubleStyle from "./FormRegistrationDouble.style";
 import InputSelectMembers from "../../InputSelectMembers/InputSelectMembers";
 
 type Props = {
-  isMixte?: boolean;
+  loading?: boolean;
+  disciplines: Discipline[];
   onSubmit: (data: RegistrationDoubleInputs) => void;
 };
 
 export default function FormRegistrationDouble({
-  isMixte = false,
+  loading = false,
+  disciplines,
   onSubmit,
 }: Props) {
   const { getAllPlayers } = useHttpPlayer();
@@ -63,11 +65,7 @@ export default function FormRegistrationDouble({
           <InputTag
             value={[value]}
             onChange={(val) => onChange(val[0] as Discipline)}
-            list={
-              isMixte
-                ? [Discipline.DM]
-                : [Discipline.DH, Discipline.DD]
-            }
+            list={disciplines}
             label="Tableau"
             unique
           />
@@ -135,10 +133,10 @@ export default function FormRegistrationDouble({
                 />
               )}
             />
-            <Title subtitle>
+            <Alert type="info" style="mt-2">
               Coche la case ci-dessus si ton ou ta partenaire a déjà
               réglé son inscription de son côté
-            </Title>
+            </Alert>
           </div>
         </>
       )}
@@ -154,6 +152,7 @@ export default function FormRegistrationDouble({
                   value={value}
                   onChange={onChange}
                   placeholder="Prénom partenaire"
+                  width="sm:flex-1"
                 />
               )}
             />
@@ -165,9 +164,13 @@ export default function FormRegistrationDouble({
                   value={value}
                   onChange={onChange}
                   placeholder="Nom partenaire"
+                  width="sm:flex-1"
                 />
               )}
             />
+          </div>
+
+          <div className={FormRegistrationDoubleStyle.row}>
             <Controller
               name="partnerLicense"
               control={control}
@@ -176,13 +179,10 @@ export default function FormRegistrationDouble({
                   value={value}
                   onChange={onChange}
                   placeholder="Licence partenaire"
-                  style="sm:w-48"
+                  width="sm:flex-1"
                 />
               )}
             />
-          </div>
-
-          <div className={FormRegistrationDoubleStyle.row}>
             <Controller
               name="partnerClub"
               control={control}
@@ -191,6 +191,7 @@ export default function FormRegistrationDouble({
                   value={value}
                   onChange={onChange}
                   placeholder="Club partenaire"
+                  width="sm:flex-1"
                 />
               )}
             />
@@ -198,7 +199,13 @@ export default function FormRegistrationDouble({
         </>
       )}
 
-      <Button disabled={!isValid}>Envoyer l'inscription</Button>
+      <ButtonLoading
+        loading={loading}
+        disabled={!isValid || loading}
+        style="w-full sm:w-80"
+      >
+        Envoyer l'inscription
+      </ButtonLoading>
     </form>
   );
 }

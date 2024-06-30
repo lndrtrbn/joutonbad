@@ -1,14 +1,11 @@
 import { Controller } from "react-hook-form";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import useSignupForm, {
   SignupFormProps,
 } from "../../../../hooks/useSignupForm";
-import FormSignupStyle from "./FormSignup.style";
 import Alert from "../../../../components/Alert/Alert";
-import Button from "../../../../components/Button/Button";
 import InputText from "../../../../components/InputText/InputText";
+import ButtonLoading from "../../../../components/ButtonLoading/ButtonLoading";
 
 export default function FormSignup({
   onSubmit,
@@ -20,35 +17,46 @@ export default function FormSignup({
     {
       control,
       handleSubmit,
-      formState: { isValid },
+      formState: { isValid, errors },
     },
     globalError,
+    clearGlobalError,
   ] = useSignupForm(canReset, error);
 
   return (
     <form
-      className={FormSignupStyle.base}
+      className="flex flex-col gap-4 w-full"
       onSubmit={handleSubmit(onSubmit)}
     >
+      {globalError && (
+        <Alert type="error" onClose={clearGlobalError}>
+          {globalError}
+        </Alert>
+      )}
+
       <Controller
         name="email"
         control={control}
-        render={({ field: { value, onChange } }) => (
+        render={({ field: { value, onChange, onBlur } }) => (
           <InputText
             value={value}
             onChange={onChange}
+            onBlur={onBlur}
             placeholder="Email"
             width="sm:w-full"
+            inError={!!errors.email}
+            error={errors.email?.message}
           />
         )}
       />
       <Controller
         name="username"
         control={control}
-        render={({ field: { value, onChange } }) => (
+        render={({ field: { value, onChange, onBlur } }) => (
           <InputText
             value={value}
             onChange={onChange}
+            onBlur={onBlur}
             placeholder="Licence"
             width="sm:w-full"
           />
@@ -57,11 +65,12 @@ export default function FormSignup({
       <Controller
         name="password"
         control={control}
-        render={({ field: { value, onChange } }) => (
+        render={({ field: { value, onChange, onBlur } }) => (
           <InputText
             type="password"
             value={value}
             onChange={onChange}
+            onBlur={onBlur}
             placeholder="Mot de passe"
             width="sm:w-full"
           />
@@ -70,24 +79,22 @@ export default function FormSignup({
       <Controller
         name="passwordConfirm"
         control={control}
-        render={({ field: { value, onChange } }) => (
+        render={({ field: { value, onChange, onBlur } }) => (
           <InputText
             type="password"
             value={value}
             onChange={onChange}
+            onBlur={onBlur}
             placeholder="Confirmation mdp"
             width="sm:w-full"
+            inError={!!errors.passwordConfirm}
+            error={errors.passwordConfirm?.message}
           />
         )}
       />
-      {globalError && <Alert type="error">{globalError}</Alert>}
-      <Button disabled={!isValid || loading}>
-        {loading ? (
-          <FontAwesomeIcon icon={faSpinner} spin />
-        ) : (
-          <>Créer mon compte</>
-        )}
-      </Button>
+      <ButtonLoading disabled={!isValid || loading} loading={loading}>
+        Créer mon compte
+      </ButtonLoading>
     </form>
   );
 }

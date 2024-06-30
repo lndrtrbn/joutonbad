@@ -1,12 +1,11 @@
 const MemberRowStyle = {
-  base: "flex gap-8 h-10 px-4 items-center rounded min-w-[700px]",
-  alt: "bg-white",
-  name: "flex-1",
-  license: "w-32",
-  status: "flex items-center gap-2 w-32",
-  active: "text-green",
-  inactive: "text-yellow",
-  action: "cursor-pointer hover:text-red text-black-l",
+  base: "flex gap-8 h-10 px-4 items-center rounded-2xl min-w-[450px]",
+  alt: "bg-bg",
+  name: "flex-1 whitespace-nowrap overflow-hidden text-ellipsis",
+  license: "w-20",
+  status: "flex items-center gap-2 w-24",
+  active: "text-success",
+  inactive: "text-error",
 };
 
 export default MemberRowStyle;

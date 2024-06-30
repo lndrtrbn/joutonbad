@@ -1,3 +1,5 @@
+import { Outlet } from "react-router-dom";
+
 import AuthGuard from "./auth.guard";
 import EditorGuard from "./editor.guard";
 import UnauthGuard from "./unauth.guard";
@@ -6,7 +8,6 @@ import FaqPage from "../pages/desktop/FaqPage/FaqPage";
 import HomePage from "../pages/desktop/HomePage/HomePage";
 import RecapPage from "../pages/desktop/RecapPage/RecapPage";
 import LoginPage from "../pages/desktop/LoginPage/LoginPage";
-import AdminPage from "../pages/desktop/AdminPage/AdminPage";
 import SignupPage from "../pages/desktop/SignupPage/SignupPage";
 import ProfilPage from "../pages/desktop/ProfilPage/ProfilPage";
 import ForgotPwdPage from "../pages/desktop/ForgotPwdPage/ForgotPwdPage";
@@ -77,7 +78,7 @@ export const DESKTOP_ROUTES = [
         path: "/admin",
         element: (
           <EditorGuard>
-            <AdminPage />
+            <Outlet />
           </EditorGuard>
         ),
         children: [

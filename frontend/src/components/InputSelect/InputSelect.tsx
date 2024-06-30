@@ -1,7 +1,5 @@
 import { twMerge } from "tailwind-merge";
 import { useMemo, useState } from "react";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Button from "../Button/Button";
 import InputText from "../InputText/InputText";
@@ -61,19 +59,9 @@ export default function InputSelect<T>({
           disabled={disabled}
           readonly
           width="sm:w-full"
+          onReset={() => onChange(undefined)}
         />
       </div>
-
-      {value && (
-        <div className={InputSelectStyle.closeBtn}>
-          <Button
-            variant="inline"
-            onClick={() => onChange(undefined)}
-          >
-            <FontAwesomeIcon icon={faClose} size="lg" />
-          </Button>
-        </div>
-      )}
 
       {opened && (
         <div className={InputSelectStyle.list}>

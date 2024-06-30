@@ -1,39 +1,33 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Link from "../../../components/Link/Link";
-import Alert from "../../../components/Alert/Alert";
 import Title from "../../../components/Title/Title";
 import useForgotPwd from "../../../hooks/useForgotPwd";
-import ForgotPwdPageStyle from "./ForgotPwdPage.style";
-import Version from "../../../components/Version/Version";
 import FormForgotPwd from "./FormForgotPwd/FormForgotPwd";
-import LogoVertical from "../../../components/LogoVertical/LogoVertical";
+import AuthLayout from "../../../components/AuthLayout/AuthLayout";
 
 export default function ForgotPwdPage() {
   const [call, fetching, fetched] = useForgotPwd();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (fetched) navigate("/login", { state: "from-forgotpwd" });
+  }, [fetched, navigate]);
 
   return (
-    <div className={ForgotPwdPageStyle.base}>
-      <LogoVertical />
+    <AuthLayout>
       <Title size="3xl">Mot de passe oublié</Title>
 
-      <div className={ForgotPwdPageStyle.container}>
-        <FormForgotPwd
-          onSubmit={(inputs) => call(inputs.email)}
-          loading={fetching}
-          canReset={fetched}
-        />
-        {fetched && (
-          <Alert type="success">
-            <p>Un email a été envoyé à ton adresse.</p>
-            <p>
-              Tu y trouveras un lien pour changer ton mot de passe.
-            </p>
-          </Alert>
-        )}
-      </div>
+      <FormForgotPwd
+        onSubmit={(inputs) => call(inputs.email)}
+        loading={fetching}
+        canReset={fetched}
+      />
 
-      <Link to="/login">J'ai déjà un compte</Link>
-      <div className={ForgotPwdPageStyle.botton} />
-      <Version />
-    </div>
+      <Link to="/login" inline>
+        J'ai déjà un compte
+      </Link>
+    </AuthLayout>
   );
 }

@@ -3,7 +3,7 @@ const InputCheckboxStyle = {
   checked: "",
   input: "absolute h-0 w-0",
   label: "font-medium text-black-l cursor-pointer",
-  checkmark: "flex items-center w-4 h-4 border-2",
+  checkmark: "flex items-center w-4 h-4 border-2 shrink-0",
 };
 
 export default InputCheckboxStyle;
