@@ -22,6 +22,7 @@ export type Tournament = {
   registrations: Registration[];
   inCharge: Player;
   freezed?: boolean;
+  nocturne?: boolean;
 };
 
 export type Link = {

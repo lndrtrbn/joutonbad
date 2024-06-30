@@ -27,6 +27,7 @@ model Tournament {
   inChargeId    String         @db.ObjectId
   inCharge      Player         @relation(fields: [inChargeId], references: [id])
   freezed       Boolean?       @default(false)
+  nocturne      Boolean?       @default(false)
 }
 
 type Link {

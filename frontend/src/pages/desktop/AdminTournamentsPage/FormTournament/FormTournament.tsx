@@ -36,7 +36,8 @@ export type FormTournamentInputs = {
   disciplines: Discipline[];
   prices: string[];
   links: Link[];
-  freezed?: boolean;
+  freezed: boolean;
+  nocturne: boolean;
 };
 
 const schema = z.object({
@@ -56,6 +57,7 @@ const schema = z.object({
     }),
   ),
   freezed: z.boolean(),
+  nocturne: z.boolean(),
 });
 
 type Props = {
@@ -84,6 +86,7 @@ function defaultValues(t?: Tournament) {
     prices: t?.prices.map((p) => `${p}`) ?? [],
     links: t?.links ?? [],
     freezed: t?.freezed ?? false,
+    nocturne: t?.nocturne ?? false,
   };
 }
 
@@ -297,6 +300,18 @@ export default function FormTournament({
               list={LEVELS}
               label="Niveau maximum"
               unique
+            />
+          )}
+        />
+
+        <Controller
+          name="nocturne"
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <InputCheckbox
+              checked={!!value}
+              onChange={onChange}
+              children="Tournoi nocturne"
             />
           )}
         />

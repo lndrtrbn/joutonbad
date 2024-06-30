@@ -55,6 +55,7 @@ export default function TournamentCard({ tournament }: Props) {
             <span>à</span>
             <Tag size="sm">{tournament.maxLevel}</Tag>
           </TagList>
+          {tournament.nocturne && <Tag size="sm">Nocturne</Tag>}
         </div>
       </Link>
     </div>

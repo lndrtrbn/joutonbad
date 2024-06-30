@@ -17,6 +17,7 @@ export type TournamentPayload = {
   maxLevel?: Level;
   disciplines?: Discipline[];
   freezed?: boolean;
+  nocturne?: boolean;
 };
 
 export default function useHttpTournament() {

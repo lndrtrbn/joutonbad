@@ -18,6 +18,7 @@ export type TournamentCreatePayload = Pick<
   | "links"
   | "inCharge"
   | "freezed"
+  | "nocturne"
 >;
 
 export type TournamentUpdatePayload = Pick<
@@ -33,6 +34,7 @@ export type TournamentUpdatePayload = Pick<
   | "links"
   | "inCharge"
   | "freezed"
+  | "nocturne"
 >;
 
 export type FullTournament = Tournament & {

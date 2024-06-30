@@ -153,7 +153,7 @@ docker compose up -d
 Go to the migration folder (`backend/prisma/migrations`) and run this command:
 
 ```sh
-node <filename>
+node <filename> --db=<DB_URL>
 ```
 
 Where `filename` is s Javascript file containing the migration.

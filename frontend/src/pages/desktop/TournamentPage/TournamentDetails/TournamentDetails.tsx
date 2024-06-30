@@ -65,6 +65,13 @@ export default function TournamentDetails({ tournament }: Props) {
             </Title>
           </section>
 
+          <section>
+            <p>Nocturne</p>
+            <Title style="mb-0">
+              {tournament.nocturne ? "Oui" : "Non"}
+            </Title>
+          </section>
+
           {tournament.links.length > 0 && (
             <section>
               <p>Liens</p>
