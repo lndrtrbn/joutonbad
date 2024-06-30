@@ -16,9 +16,9 @@ import ModalCancelRegistration from "./ModalCancelRegistration/ModalCancelRegist
 
 type Props = {
   registration: Registration;
-  onSend?: (id: string) => void;
-  onDelete: (id: string) => void;
-  onCancel?: (id: string, reason: string) => void;
+  onSend?: (id: string) => Promise<unknown>;
+  onDelete: (id: string) => Promise<unknown>;
+  onCancel?: (id: string, reason: string) => Promise<unknown>;
   canSend?: boolean;
   canCancel?: boolean;
   alt?: boolean;
@@ -40,8 +40,8 @@ export default function RegistrationRow({
       <ModalCancelRegistration
         registration={registration}
         onClose={close}
-        onConfirm={(reason: string) => {
-          onCancel?.(registration.id, reason);
+        onConfirm={async (reason: string) => {
+          await onCancel?.(registration.id, reason);
           close();
         }}
       />,
@@ -52,8 +52,8 @@ export default function RegistrationRow({
     open(
       <ModalConfirm
         onClose={close}
-        onConfirm={() => {
-          onSend?.(registration.id);
+        onConfirm={async () => {
+          await onSend?.(registration.id);
           close();
         }}
       >
@@ -74,8 +74,8 @@ export default function RegistrationRow({
     open(
       <ModalConfirm
         onClose={close}
-        onConfirm={() => {
-          onDelete(registration.id);
+        onConfirm={async () => {
+          await onDelete(registration.id);
           close();
         }}
       >
@@ -100,24 +100,29 @@ export default function RegistrationRow({
           alt && RegistrationRowStyle.alt,
           (registration.partner || registration.cancelled) &&
             RegistrationRowStyle.double,
-          registration.partner &&
-            registration.cancelled &&
-            RegistrationRowStyle.triple,
         )}
       >
-        <span className="w-32">
+        <span className="w-[80px]">
           {format(new Date(registration.createdAt), "dd/MM/yyyy")}
         </span>
 
-        <span className="w-72">
-          <Link to={`/tournoi/${registration.tournament?.id}`}>
+        <div className={RegistrationRowStyle.link}>
+          <Link to={`/tournoi/${registration.tournament?.id}`} inline>
             {registration.tournament?.name}
           </Link>
-        </span>
+          {registration.cancelled && (
+            <>
+              <br />
+              <span className={RegistrationRowStyle.cancelled}>
+                {registration.cancelled}
+              </span>
+            </>
+          )}
+        </div>
 
-        <span className="w-10">{registration.discipline}</span>
+        <span className="w-[25px]">{registration.discipline}</span>
 
-        <span className="w-10">
+        <span className="w-[25px]">
           {registration.level}
           {registration.partner && (
             <>
@@ -129,7 +134,7 @@ export default function RegistrationRow({
           )}
         </span>
 
-        <span className="w-28">
+        <span className="w-[65px]">
           {registration.player.license}
           {registration.partner && (
             <>
@@ -141,7 +146,7 @@ export default function RegistrationRow({
           )}
         </span>
 
-        <span className="w-16">
+        <span className="w-[50px] whitespace-nowrap overflow-hidden text-ellipsis">
           {registration.player.club}
           {registration.partner && (
             <>
@@ -153,7 +158,7 @@ export default function RegistrationRow({
           )}
         </span>
 
-        <span className="w-60 flex-1">
+        <span className="min-w-[180px] flex-1 whitespace-nowrap overflow-hidden text-ellipsis">
           {registration.player.name} {registration.player.lastname}
           {registration.partner && (
             <>
@@ -161,14 +166,6 @@ export default function RegistrationRow({
               <span className={RegistrationRowStyle.partner}>
                 {registration.partner.name}{" "}
                 {registration.partner.lastname}
-              </span>
-            </>
-          )}
-          {registration.cancelled && (
-            <>
-              <br />
-              <span className={RegistrationRowStyle.cancelled}>
-                {registration.cancelled}
               </span>
             </>
           )}

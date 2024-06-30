@@ -7,12 +7,13 @@ import {
 import Alert from "../Alert/Alert";
 import Title from "../Title/Title";
 import { Discipline } from "../../utils/discipline";
+import { Tournament } from "../../utils/tournament";
 import { APIError, APIErrorMessage } from "../../utils/error";
 import { CreateRegistrationPayload } from "../../http/useHttpRegistration";
 import FormRegistrationDouble from "./FormRegistrationDouble/FormRegistrationDouble";
 
 type Props = {
-  tournamentId: string;
+  tournament: Tournament;
   registrations: Registration[];
   playerLicense: string;
   discipline: Discipline;
@@ -23,7 +24,7 @@ type Props = {
 };
 
 export default function RegistrationDouble({
-  tournamentId,
+  tournament,
   registrations = [],
   playerLicense,
   discipline,
@@ -50,7 +51,7 @@ export default function RegistrationDouble({
     const payload: CreateRegistrationPayload = {
       discipline: data.discipline,
       level: data.rank,
-      tournamentId,
+      tournamentId: tournament.id,
       playerLicense,
       registerPartner: data.registerPartner,
       partner: {
@@ -88,6 +89,12 @@ export default function RegistrationDouble({
 
   if (!registration && !canRegister) return null;
 
+  const disciplines = isMixte
+    ? [Discipline.DM]
+    : tournament.disciplines.filter(
+        (d) => d === Discipline.DD || d === Discipline.DH,
+      );
+
   return (
     <div>
       <Title size="2xl">
@@ -97,9 +104,9 @@ export default function RegistrationDouble({
       {!registration ? (
         <>
           <FormRegistrationDouble
-            isMixte={isMixte}
             onSubmit={registerDouble}
             loading={loading}
+            disciplines={disciplines}
           />
           {errorMsg && <Alert type="error">{errorMsg}</Alert>}
         </>

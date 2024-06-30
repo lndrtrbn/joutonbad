@@ -7,7 +7,6 @@ import {
   RegistrationDoubleSchema,
 } from "../../../utils/registration";
 import Alert from "../../Alert/Alert";
-import Button from "../.././Button/Button";
 import useFetch from "../../../http/useFetch";
 import { Player } from "../../../utils/player";
 import InputTag from "../.././InputTag/InputTag";
@@ -16,19 +15,19 @@ import { LEVELS, Level } from "../../../utils/level";
 import { Discipline } from "../../../utils/discipline";
 import useHttpPlayer from "../../../http/useHttpPlayer";
 import InputCheckbox from "../../InputCheckbox/InputCheckbox";
+import ButtonLoading from "../../ButtonLoading/ButtonLoading";
 import FormRegistrationDoubleStyle from "./FormRegistrationDouble.style";
 import InputSelectMembers from "../../InputSelectMembers/InputSelectMembers";
-import ButtonLoading from "../../ButtonLoading/ButtonLoading";
 
 type Props = {
-  isMixte?: boolean;
   loading?: boolean;
+  disciplines: Discipline[];
   onSubmit: (data: RegistrationDoubleInputs) => void;
 };
 
 export default function FormRegistrationDouble({
-  isMixte = false,
   loading = false,
+  disciplines,
   onSubmit,
 }: Props) {
   const { getAllPlayers } = useHttpPlayer();
@@ -66,11 +65,7 @@ export default function FormRegistrationDouble({
           <InputTag
             value={[value]}
             onChange={(val) => onChange(val[0] as Discipline)}
-            list={
-              isMixte
-                ? [Discipline.DM]
-                : [Discipline.DH, Discipline.DD]
-            }
+            list={disciplines}
             label="Tableau"
             unique
           />

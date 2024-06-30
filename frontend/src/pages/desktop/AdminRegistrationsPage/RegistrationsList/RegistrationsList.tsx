@@ -11,12 +11,11 @@ import InputSelectTournaments from "../../../../components/InputSelectTournament
 
 type Props = {
   title: string;
-  subtitle: string;
   noResultLabel: string;
   registrations: Registration[];
-  onDelete: (id: string) => void;
-  onCancel?: (id: string, reason: string) => void;
-  onSend?: (id: string) => void;
+  onDelete: (id: string) => Promise<unknown>;
+  onCancel?: (id: string, reason: string) => Promise<unknown>;
+  onSend?: (id: string) => Promise<unknown>;
 };
 
 export default function RegistrationsList({
@@ -25,7 +24,6 @@ export default function RegistrationsList({
   onDelete,
   onCancel,
   title,
-  subtitle,
   noResultLabel,
 }: Props) {
   const [selectedPlayer, setPlayer] = useState<Player>();
@@ -80,7 +78,6 @@ export default function RegistrationsList({
       <Title size="2xl">
         {title} ({filtered.length})
       </Title>
-      <Title subtitle>{subtitle}</Title>
 
       {registrations.length > 0 && (
         <div className={RegistrationsListStyle.header}>

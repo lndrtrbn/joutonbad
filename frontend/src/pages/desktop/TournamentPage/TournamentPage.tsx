@@ -60,10 +60,12 @@ export default function TournamentPage() {
 
       <div className="flex flex-wrap items-start gap-8 mt-8 max-w-[1140px]">
         <section className="flex-1 border border-black/10 p-6 rounded-2xl flex flex-col gap-8">
+          {registrationsDone && <p>Aucune inscription possible</p>}
+
           {(tournament.disciplines.includes(Discipline.SH) ||
             tournament.disciplines.includes(Discipline.SD)) && (
             <TournamentRegistrationSimple
-              tournamentId={id || ""}
+              tournament={tournament}
               registrations={tournament.registrations}
               canRegister={!registrationsDone}
               playerLicense={user?.license}
@@ -81,7 +83,7 @@ export default function TournamentPage() {
               canRegister={!registrationsDone}
               register={callCreateDouble}
               loading={createDoubleFetching}
-              tournamentId={id || ""}
+              tournament={tournament}
               error={createDoubleError}
             />
           )}
@@ -94,7 +96,7 @@ export default function TournamentPage() {
               canRegister={!registrationsDone}
               register={callCreateMixte}
               loading={createMixteFetching}
-              tournamentId={id || ""}
+              tournament={tournament}
               error={createMixteError}
             />
           )}

@@ -10,12 +10,14 @@ export type ModalConfirmProps = {
   children: ReactNode;
   onClose: () => void;
   onConfirm: () => Promise<unknown>;
+  disabled?: boolean;
 };
 
 export default function ModalConfirm({
   children,
   onClose,
   onConfirm,
+  disabled = false,
 }: ModalConfirmProps) {
   const [confirming, setConfirming] = useState(false);
 
@@ -42,7 +44,7 @@ export default function ModalConfirm({
       <div className={ModalConfirmStyle.actions}>
         <ButtonLoading
           loading={confirming}
-          disabled={confirming}
+          disabled={confirming || disabled}
           onClick={confirm}
           style="w-36"
         >

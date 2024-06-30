@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 
 import useFetch from "../../../http/useFetch";
+import Title from "../../../components/Title/Title";
 import useHttpPlayer from "../../../http/useHttpPlayer";
 import { Registration } from "../../../utils/registration";
+import Separator from "../../../components/Separator/Separator";
 import useHttpTournament from "../../../http/useHttpTournament";
 import useHttpRegistration from "../../../http/useHttpRegistration";
 import RegistrationsList from "./RegistrationsList/RegistrationsList";
@@ -42,58 +44,68 @@ export default function AdminRegistrationsPage() {
 
   async function onSend(id: string) {
     await updateRegistration(id, { sent: true });
-    refetch();
+    await refetch();
   }
 
   async function onDelete(id: string) {
     await deleteRegistration(id);
-    refetch();
+    await refetch();
   }
 
   async function onCancel(id: string, reason: string) {
     await updateRegistration(id, { cancelled: reason });
-    refetch();
+    await refetch();
   }
 
-  function refetch() {
-    refetchRegistrations();
-    refetchTournaments();
+  async function refetch() {
+    await refetchRegistrations();
+    await refetchTournaments();
   }
 
   return (
-    <div className={AdminRegistrationsPageStyle.base}>
-      <RegistrationAdminForm
-        players={players ?? []}
-        tournaments={tournaments ?? []}
-        onRegistration={refetch}
-      />
+    <>
+      <Title size="3xl">Gestion des inscriptions</Title>
+      <Separator />
 
-      <RegistrationsList
-        registrations={registrationsToDo}
-        onDelete={onDelete}
-        onSend={onSend}
-        onCancel={onCancel}
-        title="Inscriptions à faire"
-        subtitle="Ci-dessous se trouvent les inscriptions demandées par les membres et qui n'ont pas encore été envoyées"
-        noResultLabel="Aucune inscription à gérer, tu peux te reposer"
-      />
+      <div className={AdminRegistrationsPageStyle.base}>
+        <section className="flex-1 max-w-full sm:border border-black/10 sm:p-6 rounded-2xl sm:max-w-[780px]">
+          <RegistrationAdminForm
+            players={players ?? []}
+            tournaments={tournaments ?? []}
+            onRegistration={refetch}
+          />
+        </section>
 
-      <RegistrationsList
-        registrations={registrationsDone}
-        onDelete={onDelete}
-        onCancel={onCancel}
-        title="Inscriptions validées"
-        subtitle="Ci-dessous se trouvent les inscriptions déjà envoyées"
-        noResultLabel="Pas encore d'inscriptions validées"
-      />
+        <section className="flex-1 max-w-full sm:border border-black/10 sm:p-6 rounded-2xl sm:max-w-[1140px]">
+          <RegistrationsList
+            registrations={registrationsToDo}
+            onDelete={onDelete}
+            onSend={onSend}
+            onCancel={onCancel}
+            title="Inscriptions à faire"
+            noResultLabel="Aucune inscription à gérer, tu peux te reposer"
+          />
+        </section>
 
-      <RegistrationsList
-        registrations={registrationsCancelled}
-        onDelete={onDelete}
-        title="Inscriptions annulées"
-        subtitle="Ci-dessous se trouvent les inscriptions annulées"
-        noResultLabel="Pas encore d'inscriptions annulées"
-      />
-    </div>
+        <section className="flex-1 max-w-full sm:border border-black/10 sm:p-6 rounded-2xl sm:max-w-[1140px]">
+          <RegistrationsList
+            registrations={registrationsDone}
+            onDelete={onDelete}
+            onCancel={onCancel}
+            title="Inscriptions validées"
+            noResultLabel="Pas encore d'inscriptions validées"
+          />
+        </section>
+
+        <section className="flex-1 max-w-full sm:border border-black/10 sm:p-6 rounded-2xl sm:max-w-[1140px]">
+          <RegistrationsList
+            registrations={registrationsCancelled}
+            onDelete={onDelete}
+            title="Inscriptions annulées"
+            noResultLabel="Pas encore d'inscriptions annulées"
+          />
+        </section>
+      </div>
+    </>
   );
 }

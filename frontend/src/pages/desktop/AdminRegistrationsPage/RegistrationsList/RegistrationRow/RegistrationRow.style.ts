@@ -1,11 +1,11 @@
 const RegistrationRowStyle = {
-  base: "flex gap-8 h-10 items-center px-4 rounded min-w-[1100px]",
+  base: "flex gap-8 h-10 items-center px-4 rounded-2xl min-w-[880px]",
   double: "h-16",
-  triple: "h-24",
-  alt: "bg-white",
-  partner: "font-normal text-black-l",
-  cancelled: "font-normal text-red",
-  action: "cursor-pointer hover:text-red text-black-l",
+  alt: "bg-bg",
+  partner: "font-normal text-black/50",
+  cancelled: "font-normal text-error",
+  action: "cursor-pointer hover:text-main",
+  link: "w-[200px] whitespace-nowrap overflow-hidden text-ellipsis",
 };
 
 export default RegistrationRowStyle;

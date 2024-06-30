@@ -3,12 +3,13 @@ import {
   Registration,
 } from "../../utils/registration";
 import Title from "../Title/Title";
+import { Tournament } from "../../utils/tournament";
 import { Discipline } from "../../utils/discipline";
 import { CreateRegistrationPayload } from "../../http/useHttpRegistration";
 import FormRegistrationSingle from "./FormRegistrationSingle/FormRegistrationSingle";
 
 type Props = {
-  tournamentId: string;
+  tournament: Tournament;
   registrations: Registration[];
   playerLicense: string;
   canRegister: boolean;
@@ -17,7 +18,7 @@ type Props = {
 };
 
 export default function TournamentRegistrationSimple({
-  tournamentId,
+  tournament,
   registrations = [],
   canRegister,
   playerLicense,
@@ -37,7 +38,7 @@ export default function TournamentRegistrationSimple({
       const payload: CreateRegistrationPayload = {
         discipline: data.discipline,
         level: data.rank,
-        tournamentId,
+        tournamentId: tournament.id,
         playerLicense,
       };
       register(payload);
@@ -45,6 +46,10 @@ export default function TournamentRegistrationSimple({
   }
 
   if (!registration && !canRegister) return null;
+
+  const disciplines = tournament.disciplines.filter(
+    (d) => d === Discipline.SD || d === Discipline.SH,
+  );
 
   return (
     <div>
@@ -54,6 +59,7 @@ export default function TournamentRegistrationSimple({
         <FormRegistrationSingle
           onSubmit={registerSimple}
           loading={loading}
+          disciplines={disciplines}
         />
       ) : (
         <Title subtitle>Inscrit.e</Title>

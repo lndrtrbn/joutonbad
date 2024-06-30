@@ -13,11 +13,13 @@ import FormRegistrationSingleStyle from "./FormRegistrationSingle.style";
 
 type Props = {
   loading?: boolean;
+  disciplines: Discipline[];
   onSubmit: (data: RegistrationSingleInputs) => void;
 };
 
 export default function FormRegistrationSingle({
   loading = false,
+  disciplines,
   onSubmit,
 }: Props) {
   const {
@@ -40,7 +42,7 @@ export default function FormRegistrationSingle({
           <InputTag
             value={value ? [value] : []}
             onChange={(val) => onChange(val[0] as Discipline)}
-            list={[Discipline.SH, Discipline.SD]}
+            list={disciplines}
             label="Tableau"
             unique
           />
