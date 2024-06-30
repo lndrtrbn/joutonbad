@@ -2,6 +2,7 @@ import { compareAsc } from "date-fns";
 import { useEffect, useState } from "react";
 
 import {
+  Tournament,
   TournamentList,
   groupByMonth,
 } from "../../../utils/tournament";
@@ -10,9 +11,14 @@ import useFetch from "../../../http/useFetch";
 import Title from "../../../components/Title/Title";
 import useHttpTournament from "../../../http/useHttpTournament";
 import Separator from "../../../components/Separator/Separator";
+import { useAuthContext } from "../../../contexts/auth.context";
 import TournamentCard from "../../../components/TournamentCard/TournamentCard";
 
 export default function HomePage() {
+  const {
+    user: [user],
+  } = useAuthContext();
+
   const { getAllTournaments } = useHttpTournament();
   const [tournaments] = useFetch(getAllTournaments);
 
@@ -30,6 +36,17 @@ export default function HomePage() {
     setToCome(groupByMonth(toCome ?? []));
     setPast(groupByMonth(past ?? []));
   }, [tournaments]);
+
+  function getRegisteredDisciplines(tournament: Tournament) {
+    return tournament.registrations
+      .filter(
+        (reg) =>
+          !reg.cancelled &&
+          (reg.player.license === user?.license ||
+            reg.partner?.license === user?.license),
+      )
+      .map((reg) => reg.discipline);
+  }
 
   return (
     <>
@@ -60,6 +77,9 @@ export default function HomePage() {
                     <TournamentCard
                       key={tournament.id}
                       tournament={tournament}
+                      registeredDisciplines={getRegisteredDisciplines(
+                        tournament,
+                      )}
                     />
                   ))}
                 </div>
@@ -90,6 +110,9 @@ export default function HomePage() {
                     <TournamentCard
                       key={tournament.id}
                       tournament={tournament}
+                      registeredDisciplines={getRegisteredDisciplines(
+                        tournament,
+                      )}
                     />
                   ))}
                 </div>

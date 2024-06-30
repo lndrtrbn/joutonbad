@@ -6,13 +6,18 @@ import { twMerge } from "tailwind-merge";
 import Tag from "../Tag/Tag";
 import TagList from "../TagList/TagList";
 import { Tournament } from "../../utils/tournament";
+import { Discipline } from "../../utils/discipline";
 import TournamentCardStyle from "./TournamentCard.style";
 
 type Props = {
   tournament: Tournament;
+  registeredDisciplines?: Discipline[];
 };
 
-export default function TournamentCard({ tournament }: Props) {
+export default function TournamentCard({
+  tournament,
+  registeredDisciplines = [],
+}: Props) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -43,7 +48,11 @@ export default function TournamentCard({ tournament }: Props) {
 
         <TagList>
           {tournament.disciplines.map((discipline) => (
-            <Tag key={discipline} size="sm">
+            <Tag
+              key={discipline}
+              size="sm"
+              active={registeredDisciplines.includes(discipline)}
+            >
               {discipline}
             </Tag>
           ))}

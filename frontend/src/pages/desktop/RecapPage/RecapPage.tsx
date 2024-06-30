@@ -87,6 +87,17 @@ export default function RecapPage() {
   const regDD = filterByDiscipline(myRegistrations, [Discipline.DD]);
   const regDM = filterByDiscipline(myRegistrations, [Discipline.DM]);
 
+  function getRegisteredDisciplines(tournament: Tournament) {
+    return tournament.registrations
+      .filter(
+        (reg) =>
+          !reg.cancelled &&
+          (reg.player.license === user?.license ||
+            reg.partner?.license === user?.license),
+      )
+      .map((reg) => reg.discipline);
+  }
+
   if (!myTournaments) {
     return null;
   }
@@ -132,6 +143,9 @@ export default function RecapPage() {
               <TournamentCard
                 key={tournament.id}
                 tournament={tournament}
+                registeredDisciplines={getRegisteredDisciplines(
+                  tournament,
+                )}
               />
             ))}
             {toCome.length == 0 && (
@@ -156,6 +170,9 @@ export default function RecapPage() {
               <TournamentCard
                 key={tournament.id}
                 tournament={tournament}
+                registeredDisciplines={getRegisteredDisciplines(
+                  tournament,
+                )}
               />
             ))}
             {past.length == 0 && (
