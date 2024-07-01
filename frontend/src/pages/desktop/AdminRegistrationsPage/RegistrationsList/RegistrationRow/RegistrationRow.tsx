@@ -98,8 +98,6 @@ export default function RegistrationRow({
         className={twMerge(
           RegistrationRowStyle.base,
           alt && RegistrationRowStyle.alt,
-          (registration.partner || registration.cancelled) &&
-            RegistrationRowStyle.double,
         )}
       >
         <span className="w-[80px]">

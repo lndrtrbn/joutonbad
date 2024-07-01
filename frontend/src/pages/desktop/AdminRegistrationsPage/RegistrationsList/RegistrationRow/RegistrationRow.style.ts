@@ -1,6 +1,5 @@
 const RegistrationRowStyle = {
-  base: "flex gap-8 h-10 items-center px-4 rounded-2xl min-w-[880px]",
-  double: "h-16",
+  base: "flex gap-8 h-16 items-center px-4 rounded-2xl min-w-[880px]",
   alt: "bg-bg",
   partner: "font-normal text-black/50",
   cancelled: "font-normal text-error",
