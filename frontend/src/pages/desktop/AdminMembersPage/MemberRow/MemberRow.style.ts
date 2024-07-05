@@ -1,5 +1,5 @@
 const MemberRowStyle = {
-  base: "flex gap-8 h-10 px-4 items-center rounded-2xl min-w-[450px]",
+  base: "flex gap-8 h-10 px-4 items-center rounded-2xl min-w-[520px]",
   alt: "bg-bg",
   name: "flex-1 whitespace-nowrap overflow-hidden text-ellipsis",
   license: "w-20",

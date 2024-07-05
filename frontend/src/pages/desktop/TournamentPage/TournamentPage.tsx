@@ -51,7 +51,11 @@ export default function TournamentPage() {
       <Title size="3xl">{tournament.name}</Title>
       <Separator />
 
-      <Link inline to="/" style="flex items-center gap-2 mb-4">
+      <Link
+        inline
+        to="/"
+        style="flex items-center gap-2 mb-4 w-[100px]"
+      >
         <FontAwesomeIcon icon={faChevronLeft} />
         Calendrier
       </Link>

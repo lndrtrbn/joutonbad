@@ -36,7 +36,7 @@ export default function AdminTournamentPage() {
       <Link
         inline
         to="/admin/tournois"
-        style="flex items-center gap-2 mb-4"
+        style="flex items-center gap-2 mb-4 w-[80px]"
       >
         <FontAwesomeIcon icon={faChevronLeft} />
         Tournois

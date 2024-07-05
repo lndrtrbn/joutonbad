@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import Box from "../../../components/Box/Box";
 import useFetch from "../../../http/useFetch";
 import Title from "../../../components/Title/Title";
 import useHttpPlayer from "../../../http/useHttpPlayer";
@@ -68,43 +69,52 @@ export default function AdminRegistrationsPage() {
       <Separator />
 
       <div className={AdminRegistrationsPageStyle.base}>
-        <section className="flex-1 max-w-full sm:border border-black/10 sm:p-6 rounded-2xl sm:max-w-[780px]">
+        <Box title="Inscrire un.e membre" style="max-w-[780px]">
           <RegistrationAdminForm
             players={players ?? []}
             tournaments={tournaments ?? []}
             onRegistration={refetch}
           />
-        </section>
+        </Box>
 
-        <section className="flex-1 max-w-full sm:border border-black/10 sm:p-6 rounded-2xl sm:max-w-[1140px]">
+        <Box
+          title={`Inscriptions à faire (${registrationsToDo.length})`}
+          mobileFull
+          style="max-w-[1100px]"
+        >
           <RegistrationsList
             registrations={registrationsToDo}
             onDelete={onDelete}
             onSend={onSend}
             onCancel={onCancel}
-            title="Inscriptions à faire"
             noResultLabel="Aucune inscription à gérer, tu peux te reposer"
           />
-        </section>
+        </Box>
 
-        <section className="flex-1 max-w-full sm:border border-black/10 sm:p-6 rounded-2xl sm:max-w-[1140px]">
+        <Box
+          title={`Inscriptions validées (${registrationsDone.length})`}
+          mobileFull
+          style="max-w-[1100px]"
+        >
           <RegistrationsList
             registrations={registrationsDone}
             onDelete={onDelete}
             onCancel={onCancel}
-            title="Inscriptions validées"
             noResultLabel="Pas encore d'inscriptions validées"
           />
-        </section>
+        </Box>
 
-        <section className="flex-1 max-w-full sm:border border-black/10 sm:p-6 rounded-2xl sm:max-w-[1140px]">
+        <Box
+          title={`Inscriptions annulées (${registrationsCancelled.length})`}
+          mobileFull
+          style="max-w-[1100px]"
+        >
           <RegistrationsList
             registrations={registrationsCancelled}
             onDelete={onDelete}
-            title="Inscriptions annulées"
             noResultLabel="Pas encore d'inscriptions annulées"
           />
-        </section>
+        </Box>
       </div>
     </>
   );

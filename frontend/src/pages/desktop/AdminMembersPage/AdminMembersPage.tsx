@@ -1,13 +1,16 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
+import Box from "../../../components/Box/Box";
 import useFetch from "../../../http/useFetch";
 import MemberRow from "./MemberRow/MemberRow";
 import FormMember from "./FormMember/FormMember";
 import Title from "../../../components/Title/Title";
 import useHttpPlayer from "../../../http/useHttpPlayer";
+import usePagination from "../../../hooks/usePagination";
 import useCreateMember from "../../../hooks/useCreateMember";
 import AdminMembersPageStyle from "./AdminMembersPage.style";
 import Separator from "../../../components/Separator/Separator";
+import Pagination from "../../../components/Pagination/Pagination";
 import FormMembersUpload from "./FormMembersUpload/FormMembersUpload";
 import InputCheckbox from "../../../components/InputCheckbox/InputCheckbox";
 
@@ -22,16 +25,16 @@ export default function AdminMembersPage() {
   const [inactive, setInactive] = useState(true);
   const [active, setActive] = useState(true);
 
-  const filteredPlayers = useMemo(() => {
-    return (players ?? [])
+  const [paginatedPlayers, pagination] = usePagination(
+    (players ?? [])
       .filter((player) => inactive || player.kcId)
       .filter((player) => active || !player.kcId)
       .sort((a, b) =>
         `${a.lastname} ${a.name}`.localeCompare(
           `${b.lastname} ${b.name}`,
         ),
-      );
-  }, [players, inactive, active]);
+      ),
+  );
 
   if (!players) return null;
 
@@ -51,44 +54,48 @@ export default function AdminMembersPage() {
       <Separator />
 
       <div className={AdminMembersPageStyle.base}>
-        <section className="flex-1 max-w-full sm:border border-black/10 sm:p-6 rounded-2xl sm:max-w-[700px]">
-          <Title size="2xl">
-            Membres du club ({filteredPlayers.length})
-          </Title>
-
-          <div className={AdminMembersPageStyle.filters}>
-            <InputCheckbox
-              checked={inactive}
-              onChange={setInactive}
-              children="Inactif.ve"
-            />
-
-            <InputCheckbox
-              checked={active}
-              onChange={setActive}
-              children="Actif.ve"
-            />
-          </div>
-
-          <div className={AdminMembersPageStyle.list}>
-            {filteredPlayers.map((player, i) => (
-              <MemberRow
-                onDelete={onDelete}
-                key={i}
-                member={player}
-                alt={i % 2 == 0}
+        <Box
+          title={`Membres du club (${players.length})`}
+          mobileFull
+          style="max-w-[580px] mb-10 sm:mb-0"
+        >
+          <section className="flex flex-col gap-4">
+            <div className={AdminMembersPageStyle.filters}>
+              <InputCheckbox
+                checked={inactive}
+                onChange={setInactive}
+                children="Inactif.ve"
               />
-            ))}
 
-            {filteredPlayers.length === 0 && (
-              <Title subtitle>
-                Aucun membre ne correspond aux critères de recherche
-              </Title>
-            )}
-          </div>
-        </section>
+              <InputCheckbox
+                checked={active}
+                onChange={setActive}
+                children="Actif.ve"
+              />
+            </div>
 
-        <div className="w-full sm:w-[380px] flex flex-col gap-8 border border-black/10 p-6 rounded-2xl shrink-0">
+            <div className={AdminMembersPageStyle.list}>
+              {paginatedPlayers.map((player, i) => (
+                <MemberRow
+                  onDelete={onDelete}
+                  key={i}
+                  member={player}
+                  alt={i % 2 == 0}
+                />
+              ))}
+
+              {paginatedPlayers.length === 0 && (
+                <Title subtitle>
+                  Aucun membre ne correspond aux critères de recherche
+                </Title>
+              )}
+            </div>
+
+            <Pagination {...pagination} />
+          </section>
+        </Box>
+
+        <Box style="max-w-[380px]">
           <section>
             <Title size="2xl">Ajouter un.e membre</Title>
             <FormMember
@@ -98,14 +105,14 @@ export default function AdminMembersPage() {
             />
           </section>
 
-          <section>
+          <section className="mt-8">
             <Title size="2xl">Importer des membres</Title>
             <Title subtitle>
               Fichier .csv au format NOM;Prénom;licence
             </Title>
             <FormMembersUpload onSubmit={onUpload} />
           </section>
-        </div>
+        </Box>
       </div>
     </>
   );

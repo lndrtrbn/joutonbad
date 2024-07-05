@@ -5,7 +5,6 @@ import useHttpRegistration, {
 } from "../../../../http/useHttpRegistration";
 import { Player } from "../../../../utils/player";
 import { APIError } from "../../../../utils/error";
-import Title from "../../../../components/Title/Title";
 import Alert from "../../../../components/Alert/Alert";
 import { Tournament } from "../../../../utils/tournament";
 import { Discipline } from "../../../../utils/discipline";
@@ -51,9 +50,7 @@ export default function RegistrationAdminForm({
   }
 
   return (
-    <section>
-      <Title size="2xl">Inscrire un.e membre</Title>
-
+    <>
       <div className={RegistrationAdminFormStyle.header}>
         <InputSelectMembers
           onChange={setPlayer}
@@ -115,6 +112,6 @@ export default function RegistrationAdminForm({
           )}
         </div>
       )}
-    </section>
+    </>
   );
 }
