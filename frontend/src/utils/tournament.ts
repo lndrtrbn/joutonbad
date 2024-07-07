@@ -1,8 +1,8 @@
 import { fr } from "date-fns/locale";
 import { compareAsc, format } from "date-fns";
 
-import { LEVELS, Level } from "./level";
 import { Player } from "./player";
+import { LEVELS, Level } from "./level";
 import { Discipline } from "./discipline";
 import { Registration } from "./registration";
 

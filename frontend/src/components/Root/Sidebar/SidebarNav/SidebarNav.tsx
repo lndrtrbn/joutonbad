@@ -2,7 +2,6 @@ import {
   faQuestion,
   faGear,
   faFire,
-  faUser,
   faUserGroup,
   faMedal,
   faAddressCard,
@@ -27,11 +26,6 @@ export default function SidebarNav() {
       <Link to="/recap" icon={faFire}>
         Mon récap
       </Link>
-      {user && isEditor(user) && (
-        <Link to="/profil" icon={faUser}>
-          Mon profil
-        </Link>
-      )}
 
       {user && isEditor(user) && (
         <>

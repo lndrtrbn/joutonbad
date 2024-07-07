@@ -1,4 +1,3 @@
-import { twMerge } from "tailwind-merge";
 import { useRouteError } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFaceDizzy } from "@fortawesome/free-regular-svg-icons";
