@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import {
   TournamentList,
-  filterDiscipline,
+  filterDisciplines,
   filterLevel,
   filterPast,
   filterToCome,
@@ -42,7 +42,7 @@ export default function CalendarPage() {
         filterLevel(
           levelRange[0],
           levelRange[1],
-          filterDiscipline(discipline, filterToCome(tournaments)),
+          filterDisciplines([], filterToCome(tournaments)),
         ),
       ),
     );

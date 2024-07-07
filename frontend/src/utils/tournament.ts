@@ -61,12 +61,15 @@ export function groupByMonth(
   return newList;
 }
 
-export function filterDiscipline(
-  discipline?: Discipline,
+export function filterDisciplines(
+  disciplines?: Discipline[],
   tournaments?: Tournament[],
 ) {
   return (tournaments ?? []).filter((tournament) => {
-    return !discipline || tournament.disciplines.includes(discipline);
+    return (
+      !disciplines ||
+      disciplines.every((d) => tournament.disciplines.includes(d))
+    );
   });
 }
 

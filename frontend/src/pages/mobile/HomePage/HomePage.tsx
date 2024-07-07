@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   byCreatedDate,
   byStartDate,
-  filterDiscipline,
+  filterDisciplines,
   filterLevel,
   filterToCome,
 } from "../../../utils/tournament";
@@ -83,7 +83,7 @@ export default function HomePage() {
       filterLevel(
         levelRange[0],
         levelRange[1],
-        filterDiscipline(discipline, tournaments?.slice(0, 10)),
+        filterDisciplines([], tournaments?.slice(0, 10)),
       ),
     );
   }, [tournaments, discipline, levelRange]);
