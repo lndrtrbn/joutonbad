@@ -5,16 +5,16 @@ import {
   Registration,
   filterByDiscipline,
 } from "../../../utils/registration";
+import Box from "../../../components/Box/Box";
 import useFetch from "../../../http/useFetch";
 import RecapPageStyle from "./RecapPage.style";
-import Link from "../../../components/Link/Link";
 import Title from "../../../components/Title/Title";
 import { Tournament } from "../../../utils/tournament";
 import { Discipline } from "../../../utils/discipline";
 import useHttpTournament from "../../../http/useHttpTournament";
 import { useAuthContext } from "../../../contexts/auth.context";
 import Separator from "../../../components/Separator/Separator";
-import TournamentCard from "../../../components/TournamentCard/TournamentCard";
+import CalendarList from "../HomePage/CalendarList/CalendarList";
 
 export default function RecapPage() {
   const {
@@ -87,17 +87,6 @@ export default function RecapPage() {
   const regDD = filterByDiscipline(myRegistrations, [Discipline.DD]);
   const regDM = filterByDiscipline(myRegistrations, [Discipline.DM]);
 
-  function getRegisteredDisciplines(tournament: Tournament) {
-    return tournament.registrations
-      .filter(
-        (reg) =>
-          !reg.cancelled &&
-          (reg.player.license === user?.license ||
-            reg.partner?.license === user?.license),
-      )
-      .map((reg) => reg.discipline);
-  }
-
   if (!myTournaments) {
     return null;
   }
@@ -107,10 +96,8 @@ export default function RecapPage() {
       <Title size="3xl">Recap de mes inscriptions</Title>
       <Separator />
 
-      <div className={RecapPageStyle.base}>
-        <section className="border border-black/10 p-6 rounded-2xl max-w-[640px]">
-          <Title size="2xl">Statistiques</Title>
-
+      <div className="flex flex-col gap-10">
+        <Box title="Statistiques" style="max-w-[640px]">
           <div className="flex flex-wrap gap-4">
             <div className={RecapPageStyle.stat}>
               {myTournaments.length} Tournois |{" "}
@@ -131,57 +118,17 @@ export default function RecapPage() {
               {cost}€ payé par le club
             </div>
           </div>
-        </section>
+        </Box>
 
-        <section className="border border-black/10 p-6 rounded-2xl max-w-[1140px]">
-          <Title size="2xl">
-            Mes tournois à venir ({toCome.length})
-          </Title>
+        <CalendarList
+          title={`Mes tournois à venir (${toCome.length})`}
+          tournaments={toCome}
+        />
 
-          <div className={RecapPageStyle.list}>
-            {toCome.map((tournament) => (
-              <TournamentCard
-                key={tournament.id}
-                tournament={tournament}
-                registeredDisciplines={getRegisteredDisciplines(
-                  tournament,
-                )}
-              />
-            ))}
-            {toCome.length == 0 && (
-              <Title subtitle>
-                Aucun tournoi à venir, tu peux aller voir le{" "}
-                <Link inline to="/">
-                  calendrier
-                </Link>{" "}
-                pour t'inscrire
-              </Title>
-            )}
-          </div>
-        </section>
-
-        <section className="border border-black/10 p-6 rounded-2xl max-w-[1140px]">
-          <Title size="2xl">
-            Mes tournois déjà joués ({past.length})
-          </Title>
-
-          <div className={RecapPageStyle.list}>
-            {past.map((tournament) => (
-              <TournamentCard
-                key={tournament.id}
-                tournament={tournament}
-                registeredDisciplines={getRegisteredDisciplines(
-                  tournament,
-                )}
-              />
-            ))}
-            {past.length == 0 && (
-              <Title subtitle>
-                Aucun tournoi joué jusqu'à présent
-              </Title>
-            )}
-          </div>
-        </section>
+        <CalendarList
+          title={`Mes tournois déjà joués (${past.length})`}
+          tournaments={past}
+        />
       </div>
     </>
   );
