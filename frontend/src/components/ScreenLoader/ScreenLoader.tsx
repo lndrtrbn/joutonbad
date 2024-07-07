@@ -10,7 +10,7 @@ export default function ScreenLoader() {
         icon={faCircleNotch}
         spin
         size="6x"
-        className="text-m-moon/20"
+        className="text-black/20"
       />
     </div>
   );
