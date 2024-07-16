@@ -1,6 +1,6 @@
 const AlertStyle = {
-  base: "rounded-2xl p-3 px-4 flex gap-4",
-  container: "inline-block w-full bg-white rounded-2xl",
+  base: "rounded-xl p-3 px-4 flex gap-4",
+  container: "inline-block w-full bg-white rounded-xl",
   msg: "flex-1",
   info: "bg-bg text-black/60",
   error: "bg-error/20 text-error",

@@ -13,7 +13,7 @@ export default function FaqPage() {
         {FAQ.map((faq, i) => (
           <section
             key={i}
-            className="max-w-full border border-black/10 p-6 rounded-2xl sm:max-w-[1000px]"
+            className="max-w-full border border-black/10 p-6 rounded-xl sm:max-w-[1000px]"
           >
             <Title size="2xl">{faq.question}</Title>
             {faq.answers.map((answer, i) => (

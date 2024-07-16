@@ -12,6 +12,7 @@ export enum APIErrorMessage {
   PLAYER_ALREADY_LINKED = "PLAYER_ALREADY_LINKED",
   UNAUTHORIZED = "Unauthorized",
   WHO_ARE_YOU = "WHO_ARE_YOU",
+  INVALID_PAYLOAD = "INVALID_PAYLOAD",
 }
 
 type IAPIError = {

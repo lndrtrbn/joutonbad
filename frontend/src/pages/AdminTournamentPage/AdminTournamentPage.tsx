@@ -43,7 +43,7 @@ export default function AdminTournamentPage() {
       </Link>
 
       <div className={AdminTournamentPageStyle.base}>
-        <section className="border border-black/10 p-6 rounded-2xl max-w-[1040px]">
+        <section className="border border-black/10 p-6 rounded-xl max-w-[1040px]">
           <Title size="2xl">{tournament.name}</Title>
           <FormTournament
             players={admins ?? []}

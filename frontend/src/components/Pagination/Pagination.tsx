@@ -51,7 +51,7 @@ export default function Pagination({
           {pageStart}-{pageEnd} / {total}
         </Button>
         {open && (
-          <div className="absolute top-[40px] z-10 bg-white border border-black/20 rounded-2xl p-4">
+          <div className="absolute top-[40px] z-10 bg-white border border-black/20 rounded-xl p-4">
             <p className="text-center">Taille des pages</p>
             <div className="flex gap-4 mt-4">
               <Button

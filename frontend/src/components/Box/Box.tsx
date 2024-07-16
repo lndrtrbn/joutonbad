@@ -22,7 +22,7 @@ export default function Box({
   return (
     <section
       className={twMerge(
-        "border-black/10 rounded-2xl",
+        "border-black/10 rounded-xl",
         mobileFull ? mobileStyle : normalStyle,
         style,
       )}

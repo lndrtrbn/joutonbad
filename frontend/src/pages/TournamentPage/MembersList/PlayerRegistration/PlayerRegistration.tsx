@@ -24,7 +24,7 @@ export default function PlayerRegistration({
   return (
     <div
       className={twMerge(
-        "flex text-black gap-4 items-center p-2 px-4 rounded-2xl",
+        "flex text-black gap-4 items-center p-2 px-4 rounded-xl",
         style,
       )}
       title={

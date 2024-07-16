@@ -10,6 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+type History {
+  by            String
+  at            DateTime
+  attribute     String
+  oldValue      String
+  newValue      String
+}
+
+model PlateformSettings {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  clubPart      Int            @default(72)
+  history       History[]
+}
+
 model Tournament {
   id            String         @id @default(auto()) @map("_id") @db.ObjectId
   createdAt     DateTime       @default(now())

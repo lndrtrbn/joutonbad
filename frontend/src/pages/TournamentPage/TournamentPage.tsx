@@ -63,7 +63,7 @@ export default function TournamentPage() {
       <TournamentDetails tournament={tournament} />
 
       <div className="flex flex-wrap items-start gap-8 mt-8 max-w-[1140px]">
-        <section className="flex-1 border border-black/10 p-6 rounded-2xl flex flex-col gap-8">
+        <section className="flex-1 border border-black/10 p-6 rounded-xl flex flex-col gap-8">
           {registrationsDone && <p>Aucune inscription possible</p>}
 
           {(tournament.disciplines.includes(Discipline.SH) ||
@@ -106,7 +106,7 @@ export default function TournamentPage() {
           )}
         </section>
 
-        <section className="border border-black/10 p-6 rounded-2xl w-full sm:w-[300px]">
+        <section className="border border-black/10 p-6 rounded-xl w-full sm:w-[300px]">
           <MembersList registrations={tournament.registrations} />
         </section>
       </div>

@@ -19,7 +19,7 @@ export default function TournamentDetails({ tournament }: Props) {
   }
 
   return (
-    <section className="border border-black/10 p-6 rounded-2xl max-w-[1140px]">
+    <section className="border border-black/10 p-6 rounded-xl max-w-[1140px]">
       <Title size="2xl">Détails du tournoi</Title>
 
       <div className="flex flex-col gap-4">
@@ -30,7 +30,7 @@ export default function TournamentDetails({ tournament }: Props) {
           <Title subtitle>Fin {strDate(tournament.endDate)}</Title>
         </div>
 
-        <div className="bg-bg px-6 py-4 rounded-2xl flex flex-wrap gap-8 gap-y-4">
+        <div className="bg-bg px-6 py-4 rounded-xl flex flex-wrap gap-8 gap-y-4">
           <section>
             <p>Lieu</p>
             <Title style="mb-0">{tournament.location}</Title>
