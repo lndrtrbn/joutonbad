@@ -14,9 +14,7 @@ import { isEditor } from "../../../../utils/user";
 import { useAuthContext } from "../../../../contexts/auth.context";
 
 export default function SidebarNav() {
-  const {
-    user: [user],
-  } = useAuthContext();
+  const { user } = useAuthContext();
 
   return (
     <div className={SidebarNavStyle.base}>

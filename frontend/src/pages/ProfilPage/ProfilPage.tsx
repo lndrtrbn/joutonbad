@@ -19,9 +19,7 @@ const schema = z.object({
 type Inputs = z.infer<typeof schema>;
 
 export default function ProfilPage() {
-  const {
-    profil: [profil],
-  } = useAuthContext();
+  const { profil } = useAuthContext();
   const { mutateAsync, isPending } = useUpdateProfil();
 
   const {

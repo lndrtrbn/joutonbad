@@ -6,9 +6,7 @@ import { useAuthContext } from "../contexts/auth.context";
 
 export default function useHttpGoogle() {
   const { postAxios } = useAxios();
-  const {
-    user: [user],
-  } = useAuthContext();
+  const { user } = useAuthContext();
 
   const exportData = useCallback(async () => {
     const endpoint = `${API_URL}/google/export`;

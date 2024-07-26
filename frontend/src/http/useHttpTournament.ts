@@ -22,9 +22,7 @@ export type TournamentPayload = {
 
 export default function useHttpTournament() {
   const { getAxios, postAxios, deleteAxios, patchAxios } = useAxios();
-  const {
-    user: [user],
-  } = useAuthContext();
+  const { user } = useAuthContext();
   const headers = useMemo(
     () => ({
       Authorization: `Bearer ${user?.accessToken}`,

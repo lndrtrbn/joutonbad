@@ -28,10 +28,8 @@ export type UpdateRegistrationPayload = {
 };
 
 export default function useHttpRegistration() {
+  const { user } = useAuthContext();
   const { getAxios, postAxios, patchAxios, deleteAxios } = useAxios();
-  const {
-    user: [user],
-  } = useAuthContext();
   const headers = useMemo(
     () => ({
       Authorization: `Bearer ${user?.accessToken}`,

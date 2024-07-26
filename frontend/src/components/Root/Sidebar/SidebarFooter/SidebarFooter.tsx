@@ -3,9 +3,7 @@ import SidebarFooterStyle from "./SidebarFooter.style";
 import { useAuthContext } from "../../../../contexts/auth.context";
 
 export default function SidebarFooter() {
-  const {
-    user: [user, setUser],
-  } = useAuthContext();
+  const { user, setUser } = useAuthContext();
 
   function logout() {
     setUser(undefined);

@@ -8,10 +8,8 @@ import useInterval from "../../hooks/useInterval";
 import { useAuthContext } from "../../contexts/auth.context";
 
 export default function Root() {
+  const { setUser } = useAuthContext();
   const { refreshToken } = useHttpAuth();
-  const {
-    user: [, setUser],
-  } = useAuthContext();
 
   useInterval(async () => {
     const kcUser = await refreshToken();

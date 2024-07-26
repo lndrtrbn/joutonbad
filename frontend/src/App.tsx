@@ -7,10 +7,7 @@ import { useAuthContext } from "./contexts/auth.context";
 import AlertPortal from "./components/AlertPortal/AlertPortal";
 
 export default function App() {
-  const {
-    user: [user],
-    profil: [, setProfil],
-  } = useAuthContext();
+  const { user, setProfil } = useAuthContext();
 
   const { data: player } = useQueryPlayer(user?.license);
 

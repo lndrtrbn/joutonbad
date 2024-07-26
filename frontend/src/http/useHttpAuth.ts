@@ -18,9 +18,7 @@ export type SignupPayload = {
 
 export default function useHttpAuth() {
   const { postAxios } = useAxios();
-  const {
-    user: [user],
-  } = useAuthContext();
+  const { user } = useAuthContext();
 
   const login = useCallback(
     async (payload: LoginPayload) => {

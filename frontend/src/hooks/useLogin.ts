@@ -7,10 +7,8 @@ import { useAuthContext } from "../contexts/auth.context";
 
 export default function useLogin() {
   const { login } = useHttpAuth();
+  const { setUser } = useAuthContext();
   const [call, data, error, fetching] = useLazyFetch(login);
-  const {
-    user: [, setUser],
-  } = useAuthContext();
 
   useEffect(() => {
     if (data) {

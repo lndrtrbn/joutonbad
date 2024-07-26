@@ -18,9 +18,7 @@ type Props = {
 };
 
 export default function CalendarList({ title, tournaments }: Props) {
-  const {
-    user: [user],
-  } = useAuthContext();
+  const { user } = useAuthContext();
 
   const [disciplines, setDisciplines] = useState<Discipline[]>([]);
 

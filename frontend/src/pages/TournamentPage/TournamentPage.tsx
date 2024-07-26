@@ -18,9 +18,7 @@ import RegistrationDouble from "../../components/RegistrationDouble/Registration
 import TournamentRegistrationSimple from "../../components/TournamentRegistrationSimple/TournamentRegistrationSimple";
 
 export default function TournamentPage() {
-  const {
-    user: [user],
-  } = useAuthContext();
+  const { user } = useAuthContext();
 
   const { id } = useParams();
   const { getTournamentById } = useHttpTournament();

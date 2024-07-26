@@ -16,9 +16,7 @@ type Props = {
  */
 export default function EditorGuard({ children }: Props) {
   const navigate = useNavigate();
-  const {
-    user: [user],
-  } = useAuthContext();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     if (!user || !isEditor(user)) {

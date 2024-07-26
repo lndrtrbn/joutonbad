@@ -8,10 +8,8 @@ import { useAlertsContext } from "../contexts/alerts.context";
 type AxiosRequest<T> = () => Promise<AxiosResponse<T, unknown>>;
 
 export default function useAxios() {
-  const {
-    user: [user, setUser],
-  } = useAuthContext();
-  const { addAlert, addUnknownErrorAlert } = useAlertsContext();
+  const { user, setUser } = useAuthContext();
+  const { addUnknownErrorAlert } = useAlertsContext();
 
   const headers = useMemo(
     () =>

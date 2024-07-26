@@ -17,9 +17,7 @@ import Separator from "../../components/Separator/Separator";
 import CalendarList from "../HomePage/CalendarList/CalendarList";
 
 export default function RecapPage() {
-  const {
-    user: [user],
-  } = useAuthContext();
+  const { user } = useAuthContext();
 
   const { getTournamentsByPlayer } = useHttpTournament();
   const [myTournaments] = useFetch(getTournamentsByPlayer);

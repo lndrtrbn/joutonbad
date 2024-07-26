@@ -68,8 +68,7 @@ export type UpdateProfilPayload = {
 export function useUpdateProfil() {
   const { patchAxios } = useAxios();
   const queryClient = useQueryClient();
-  const { profil } = useAuthContext();
-  const [, setProfil] = profil;
+  const { setProfil } = useAuthContext();
 
   return useMutation({
     mutationFn: (payload: UpdateProfilPayload) =>

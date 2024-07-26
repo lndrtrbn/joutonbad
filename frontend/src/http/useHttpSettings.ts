@@ -11,9 +11,7 @@ export type UpdateSettingsPayload = {
 
 export default function useHttpSettings() {
   const { getAxios, patchAxios } = useAxios();
-  const {
-    user: [user],
-  } = useAuthContext();
+  const { user } = useAuthContext();
 
   const headers = useMemo(
     () => ({
