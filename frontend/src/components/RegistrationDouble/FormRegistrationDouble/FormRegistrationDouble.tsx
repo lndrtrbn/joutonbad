@@ -1,22 +1,33 @@
+import * as z from "zod";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 
-import {
-  RegistrationDoubleInputs,
-  RegistrationDoubleSchema,
-} from "../../../utils/registration";
 import Alert from "../../Alert/Alert";
 import { Player } from "../../../utils/player";
 import InputTag from "../.././InputTag/InputTag";
 import InputText from "../.././InputText/InputText";
 import { LEVELS, Level } from "../../../utils/level";
-import { Discipline } from "../../../utils/discipline";
 import { useQueryPlayers } from "../../../http/useHttpPlayer";
 import InputCheckbox from "../../InputCheckbox/InputCheckbox";
 import ButtonLoading from "../../ButtonLoading/ButtonLoading";
+import { Discipline, DISCIPLINES } from "../../../utils/discipline";
 import FormRegistrationDoubleStyle from "./FormRegistrationDouble.style";
+
 import InputSelectMembers from "../../InputSelectMembers/InputSelectMembers";
+
+const schema = z.object({
+  discipline: z.enum(DISCIPLINES),
+  rank: z.enum(LEVELS),
+  partnerName: z.string().min(1),
+  partnerLastname: z.string().min(1),
+  partnerLicense: z.string().min(1),
+  partnerClub: z.string().min(1),
+  partnerRank: z.enum(LEVELS),
+  registerPartner: z.boolean(),
+});
+
+export type RegistrationDoubleInputs = z.infer<typeof schema>;
 
 type Props = {
   loading?: boolean;
@@ -25,9 +36,9 @@ type Props = {
 };
 
 export default function FormRegistrationDouble({
-  loading = false,
   disciplines,
   onSubmit,
+  loading = false,
 }: Props) {
   const { data: players } = useQueryPlayers();
 
@@ -41,7 +52,7 @@ export default function FormRegistrationDouble({
     trigger,
     formState: { isValid },
   } = useForm<RegistrationDoubleInputs>({
-    resolver: zodResolver(RegistrationDoubleSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       partnerName: "",
       partnerLastname: "",
@@ -132,8 +143,8 @@ export default function FormRegistrationDouble({
               )}
             />
             <Alert type="info" style="mt-2">
-              Coche la case ci-dessus si ton ou ta partenaire a déjà
-              réglé son inscription de son côté
+              Coche la case ci-dessus si ton ou ta partenaire a déjà réglé son
+              inscription de son côté
             </Alert>
           </div>
         </>

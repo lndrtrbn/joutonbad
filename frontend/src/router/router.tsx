@@ -100,7 +100,7 @@ export const router = createBrowserRouter([
                 element: <AdminRegistrationsPage />,
               },
               {
-                path: "global",
+                path: "settings",
                 element: <AdminGlobalPage />,
               },
             ],

@@ -1,12 +1,9 @@
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import useAxios from "./useAxios";
 import { API_URL } from "./config";
 import { Settings } from "../utils/settings";
+import { useAlertsContext } from "../contexts/alerts.context";
 
 const KEY = "settings";
 const ENDPOINT = `${API_URL}/settings`;
@@ -27,11 +24,14 @@ export type UpdateSettingsPayload = {
 export function useUpdateSettings() {
   const { patchAxios } = useAxios();
   const queryClient = useQueryClient();
+  const { addSuccessAlert } = useAlertsContext();
 
   return useMutation({
     mutationFn: (payload: UpdateSettingsPayload) =>
       patchAxios<Settings>(ENDPOINT, payload),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: [KEY] }),
+    onSuccess: () => {
+      addSuccessAlert("Paramètres mis à jour");
+      queryClient.invalidateQueries({ queryKey: [KEY] });
+    },
   });
 }

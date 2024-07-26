@@ -1,15 +1,19 @@
+import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 
-import {
-  RegistrationSingleInputs,
-  RegistrationSingleSchema,
-} from "../../../utils/registration";
 import InputTag from "../../InputTag/InputTag";
 import { LEVELS, Level } from "../../../utils/level";
-import { Discipline } from "../../../utils/discipline";
 import ButtonLoading from "../../ButtonLoading/ButtonLoading";
+import { Discipline, DISCIPLINES } from "../../../utils/discipline";
 import FormRegistrationSingleStyle from "./FormRegistrationSingle.style";
+
+const schema = z.object({
+  discipline: z.enum(DISCIPLINES),
+  rank: z.enum(LEVELS),
+});
+
+export type RegistrationSingleInputs = z.infer<typeof schema>;
 
 type Props = {
   loading?: boolean;
@@ -27,7 +31,7 @@ export default function FormRegistrationSingle({
     handleSubmit,
     formState: { isValid },
   } = useForm<RegistrationSingleInputs>({
-    resolver: zodResolver(RegistrationSingleSchema),
+    resolver: zodResolver(schema),
   });
 
   return (

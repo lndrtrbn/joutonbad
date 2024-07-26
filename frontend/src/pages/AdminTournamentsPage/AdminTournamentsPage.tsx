@@ -1,29 +1,23 @@
-import useFetch from "../../http/useFetch";
+import {
+  useCreateTournament,
+  useDeleteTournament,
+  useQueryTournaments,
+} from "../../http/useHttpTournament";
 import Box from "../../components/Box/Box";
 import Title from "../../components/Title/Title";
-import { useQueryAdminPlayers } from "../../http/useHttpPlayer";
 import FormTournament from "./FormTournament/FormTournament";
 import Separator from "../../components/Separator/Separator";
-import useHttpTournament from "../../http/useHttpTournament";
 import TournamentsList from "./TournamentsList/TournamentsList";
+import { useQueryAdminPlayers } from "../../http/useHttpPlayer";
 import AdminTournamentsPageStyle from "./AdminTournamentsPage.style";
-import useCreateTournamenent from "../../hooks/useCreateTournament";
 
 export default function AdminTournamentsPage() {
-  const { getAllTournaments, deleteTournament } = useHttpTournament();
-  const [tournaments, refetch] = useFetch(getAllTournaments);
-
-  const [callCreate, createError, createFetching] =
-    useCreateTournamenent(refetch);
-
   const { data: admins } = useQueryAdminPlayers();
+  const { data: tournaments } = useQueryTournaments();
+  const { mutateAsync: deleteTournament } = useDeleteTournament();
+  const { mutateAsync, error, isPending } = useCreateTournament();
 
   if (!tournaments) return null;
-
-  async function onDelete(id: string) {
-    await deleteTournament(id);
-    await refetch();
-  }
 
   return (
     <>
@@ -38,16 +32,16 @@ export default function AdminTournamentsPage() {
         >
           <TournamentsList
             tournaments={tournaments}
-            onDelete={onDelete}
+            onDelete={deleteTournament}
           />
         </Box>
 
         <Box title="Ajouter un tournoi" style="max-w-[1100px]">
           <FormTournament
             players={admins ?? []}
-            onSubmit={callCreate}
-            error={createError}
-            loading={createFetching}
+            onSubmit={mutateAsync}
+            error={error}
+            loading={isPending}
           />
         </Box>
       </div>

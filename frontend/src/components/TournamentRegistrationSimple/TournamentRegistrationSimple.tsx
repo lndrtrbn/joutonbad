@@ -1,36 +1,34 @@
 import {
+  CreateRegistrationPayload,
+  useCreateRegistration,
+} from "../../http/useHttpRegistration";
+import FormRegistrationSingle, {
   RegistrationSingleInputs,
-  Registration,
-} from "../../utils/registration";
+} from "./FormRegistrationSingle/FormRegistrationSingle";
 import Title from "../Title/Title";
 import { Tournament } from "../../utils/tournament";
 import { Discipline } from "../../utils/discipline";
-import { CreateRegistrationPayload } from "../../http/useHttpRegistration";
-import FormRegistrationSingle from "./FormRegistrationSingle/FormRegistrationSingle";
 
 type Props = {
   tournament: Tournament;
-  registrations: Registration[];
   playerLicense: string;
   canRegister: boolean;
-  loading?: boolean;
-  register: (data: CreateRegistrationPayload) => void;
+  onSuccess?: () => void;
 };
 
 export default function TournamentRegistrationSimple({
   tournament,
-  registrations = [],
   canRegister,
   playerLicense,
-  loading = false,
-  register,
+  onSuccess,
 }: Props) {
-  const registration = registrations.find(
+  const { mutateAsync, isPending } = useCreateRegistration();
+
+  const registration = tournament.registrations.find(
     (reg) =>
       reg.player.license == playerLicense &&
       !reg.cancelled &&
-      (reg.discipline == Discipline.SD ||
-        reg.discipline == Discipline.SH),
+      (reg.discipline == Discipline.SD || reg.discipline == Discipline.SH),
   );
 
   function registerSimple(data: RegistrationSingleInputs) {
@@ -41,7 +39,7 @@ export default function TournamentRegistrationSimple({
         tournamentId: tournament.id,
         playerLicense,
       };
-      register(payload);
+      mutateAsync(payload, { onSuccess });
     }
   }
 
@@ -58,7 +56,7 @@ export default function TournamentRegistrationSimple({
       {!registration ? (
         <FormRegistrationSingle
           onSubmit={registerSimple}
-          loading={loading}
+          loading={isPending}
           disciplines={disciplines}
         />
       ) : (

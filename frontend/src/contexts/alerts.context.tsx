@@ -1,9 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useState,
-} from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 
 import { Alert } from "../utils/alert";
 import { ContextData, ProviderProps } from "./context.type";
@@ -16,9 +11,7 @@ export function AlertsProvider({ children }: ProviderProps) {
   const alertsState = useState<Alert[]>([]);
 
   return (
-    <AlertsContext.Provider value={alertsState}>
-      {children}
-    </AlertsContext.Provider>
+    <AlertsContext.Provider value={alertsState}>{children}</AlertsContext.Provider>
   );
 }
 
@@ -26,9 +19,7 @@ export function AlertsProvider({ children }: ProviderProps) {
 export function useAlertsContext() {
   const context = useContext(AlertsContext);
   if (!context) {
-    throw new Error(
-      "useAlertsContext must be used within a AlertsProvider",
-    );
+    throw new Error("useAlertsContext must be used within a AlertsProvider");
   }
 
   const [alerts, setAlerts] = context;
@@ -56,5 +47,12 @@ export function useAlertsContext() {
     });
   }, [addAlert]);
 
-  return { alerts, addAlert, removeAlert, addUnknownErrorAlert };
+  const addSuccessAlert = useCallback(
+    (message: string) => {
+      addAlert({ type: "success", message });
+    },
+    [addAlert],
+  );
+
+  return { alerts, addAlert, removeAlert, addUnknownErrorAlert, addSuccessAlert };
 }

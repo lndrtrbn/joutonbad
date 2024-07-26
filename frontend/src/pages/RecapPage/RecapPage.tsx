@@ -6,21 +6,18 @@ import {
   filterByDiscipline,
 } from "../../utils/registration";
 import Box from "../../components/Box/Box";
-import useFetch from "../../http/useFetch";
 import RecapPageStyle from "./RecapPage.style";
 import Title from "../../components/Title/Title";
 import { Tournament } from "../../utils/tournament";
 import { Discipline } from "../../utils/discipline";
-import useHttpTournament from "../../http/useHttpTournament";
 import { useAuthContext } from "../../contexts/auth.context";
 import Separator from "../../components/Separator/Separator";
 import CalendarList from "../HomePage/CalendarList/CalendarList";
+import { useQueryTournamentsByPlayer } from "../../http/useHttpTournament";
 
 export default function RecapPage() {
   const { user } = useAuthContext();
-
-  const { getTournamentsByPlayer } = useHttpTournament();
-  const [myTournaments] = useFetch(getTournamentsByPlayer);
+  const { data: myTournaments } = useQueryTournamentsByPlayer();
 
   const [toCome, setToCome] = useState<Tournament[]>([]);
   const [past, setPast] = useState<Tournament[]>([]);

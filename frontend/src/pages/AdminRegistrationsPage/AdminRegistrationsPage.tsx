@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
 
+import {
+  useDeleteRegistration,
+  useQueryRegistrations,
+  useUpdateRegistration,
+} from "../../http/useHttpRegistration";
 import Box from "../../components/Box/Box";
-import useFetch from "../../http/useFetch";
 import Title from "../../components/Title/Title";
-import { useQueryPlayers } from "../../http/useHttpPlayer";
 import { Registration } from "../../utils/registration";
+import { useQueryPlayers } from "../../http/useHttpPlayer";
 import Separator from "../../components/Separator/Separator";
-import useHttpTournament from "../../http/useHttpTournament";
-import useHttpRegistration from "../../http/useHttpRegistration";
+import { useQueryTournaments } from "../../http/useHttpTournament";
 import RegistrationsList from "./RegistrationsList/RegistrationsList";
 import AdminRegistrationsPageStyle from "./AdminRegistrationsPage.style";
 import RegistrationAdminForm from "./RegistrationAdminForm/RegistrationAdminForm";
 
 export default function AdminRegistrationsPage() {
-  const {
-    getAllRegistrations,
-    updateRegistration,
-    deleteRegistration,
-  } = useHttpRegistration();
-  const [registrations, refetchRegistrations] = useFetch(
-    getAllRegistrations,
-  );
+  const { data: players } = useQueryPlayers();
+  const { data: tournaments } = useQueryTournaments();
+  const { data: registrations } = useQueryRegistrations();
+  const { mutateAsync: deleteRegistration } = useDeleteRegistration();
+  const { mutateAsync: updateRegistration } = useUpdateRegistration();
 
   const [registrationsToDo, setTodo] = useState<Registration[]>([]);
   const [registrationsDone, setDone] = useState<Registration[]>([]);
@@ -36,30 +36,14 @@ export default function AdminRegistrationsPage() {
     }
   }, [registrations]);
 
-  const { data: players } = useQueryPlayers();
-
-  const { getAllTournaments } = useHttpTournament();
-  const [tournaments, refetchTournaments] =
-    useFetch(getAllTournaments);
-
   async function onSend(id: string) {
-    await updateRegistration(id, { sent: true });
-    await refetch();
-  }
-
-  async function onDelete(id: string) {
-    await deleteRegistration(id);
-    await refetch();
+    const payload = { sent: true };
+    await updateRegistration({ id, payload });
   }
 
   async function onCancel(id: string, reason: string) {
-    await updateRegistration(id, { cancelled: reason });
-    await refetch();
-  }
-
-  async function refetch() {
-    await refetchRegistrations();
-    await refetchTournaments();
+    const payload = { cancelled: reason };
+    await updateRegistration({ id, payload });
   }
 
   return (
@@ -72,7 +56,6 @@ export default function AdminRegistrationsPage() {
           <RegistrationAdminForm
             players={players ?? []}
             tournaments={tournaments ?? []}
-            onRegistration={refetch}
           />
         </Box>
 
@@ -83,7 +66,7 @@ export default function AdminRegistrationsPage() {
         >
           <RegistrationsList
             registrations={registrationsToDo}
-            onDelete={onDelete}
+            onDelete={deleteRegistration}
             onSend={onSend}
             onCancel={onCancel}
             noResultLabel="Aucune inscription à gérer, tu peux te reposer"
@@ -97,7 +80,7 @@ export default function AdminRegistrationsPage() {
         >
           <RegistrationsList
             registrations={registrationsDone}
-            onDelete={onDelete}
+            onDelete={deleteRegistration}
             onCancel={onCancel}
             noResultLabel="Pas encore d'inscriptions validées"
           />
@@ -110,7 +93,7 @@ export default function AdminRegistrationsPage() {
         >
           <RegistrationsList
             registrations={registrationsCancelled}
-            onDelete={onDelete}
+            onDelete={deleteRegistration}
             noResultLabel="Pas encore d'inscriptions annulées"
           />
         </Box>
