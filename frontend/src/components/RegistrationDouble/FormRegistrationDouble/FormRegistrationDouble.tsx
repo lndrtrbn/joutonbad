@@ -7,13 +7,12 @@ import {
   RegistrationDoubleSchema,
 } from "../../../utils/registration";
 import Alert from "../../Alert/Alert";
-import useFetch from "../../../http/useFetch";
 import { Player } from "../../../utils/player";
 import InputTag from "../.././InputTag/InputTag";
 import InputText from "../.././InputText/InputText";
 import { LEVELS, Level } from "../../../utils/level";
 import { Discipline } from "../../../utils/discipline";
-import useHttpPlayer from "../../../http/useHttpPlayer";
+import { useQueryPlayers } from "../../../http/useHttpPlayer";
 import InputCheckbox from "../../InputCheckbox/InputCheckbox";
 import ButtonLoading from "../../ButtonLoading/ButtonLoading";
 import FormRegistrationDoubleStyle from "./FormRegistrationDouble.style";
@@ -30,8 +29,7 @@ export default function FormRegistrationDouble({
   disciplines,
   onSubmit,
 }: Props) {
-  const { getAllPlayers } = useHttpPlayer();
-  const [players] = useFetch(getAllPlayers);
+  const { data: players } = useQueryPlayers();
 
   const [partnerClub, setPartnerClub] = useState(true);
   const [partner, setPartner] = useState<Player>();

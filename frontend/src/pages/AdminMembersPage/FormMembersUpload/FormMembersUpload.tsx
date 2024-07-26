@@ -1,20 +1,28 @@
 import { ChangeEvent } from "react";
 
+import Title from "../../../components/Title/Title";
+import { useUploadPlayers } from "../../../http/useHttpPlayer";
 import InputUpload from "../../../components/InputUpload/InputUpload";
 
-type Props = {
-  onSubmit: (file: File) => void;
-};
+export default function FormMembersUpload() {
+  const { mutateAsync, isPending } = useUploadPlayers();
 
-export default function FormMembersUpload({ onSubmit }: Props) {
   function onUpload(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.item(0);
-    if (file) {
-      onSubmit(file);
-    }
+    if (file) mutateAsync(file);
   }
 
   return (
-    <InputUpload label="Importer" accept=".csv" onChange={onUpload} />
+    <>
+      <Title subtitle>
+        Fichier .csv au format NOM;Prénom;licence
+      </Title>
+      <InputUpload
+        label="Importer"
+        accept=".csv"
+        onChange={onUpload}
+        disabled={isPending}
+      />
+    </>
   );
 }

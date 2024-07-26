@@ -5,7 +5,7 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import useFetch from "../../http/useFetch";
 import Link from "../../components/Link/Link";
 import Title from "../../components/Title/Title";
-import useHttpPlayer from "../../http/useHttpPlayer";
+import { useQueryAdminPlayers } from "../../http/useHttpPlayer";
 import Separator from "../../components/Separator/Separator";
 import useHttpTournament from "../../http/useHttpTournament";
 import AdminTournamentPageStyle from "./AdminTournamentPage.style";
@@ -23,8 +23,7 @@ export default function AdminTournamentPage() {
   const [callUpdate, updateError, updateFetching] =
     useUpdateTournamenent(id || "", refetchTournament);
 
-  const { getAdminPlayers } = useHttpPlayer();
-  const [admins] = useFetch(getAdminPlayers);
+  const { data: admins } = useQueryAdminPlayers();
 
   if (!tournament) return null;
 

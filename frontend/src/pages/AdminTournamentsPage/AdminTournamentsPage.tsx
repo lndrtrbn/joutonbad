@@ -1,7 +1,7 @@
 import useFetch from "../../http/useFetch";
 import Box from "../../components/Box/Box";
 import Title from "../../components/Title/Title";
-import useHttpPlayer from "../../http/useHttpPlayer";
+import { useQueryAdminPlayers } from "../../http/useHttpPlayer";
 import FormTournament from "./FormTournament/FormTournament";
 import Separator from "../../components/Separator/Separator";
 import useHttpTournament from "../../http/useHttpTournament";
@@ -16,8 +16,7 @@ export default function AdminTournamentsPage() {
   const [callCreate, createError, createFetching] =
     useCreateTournamenent(refetch);
 
-  const { getAdminPlayers } = useHttpPlayer();
-  const [admins] = useFetch(getAdminPlayers);
+  const { data: admins } = useQueryAdminPlayers();
 
   if (!tournaments) return null;
 

@@ -1,9 +1,5 @@
-import axios, {
-  RawAxiosRequestHeaders,
-  AxiosResponse,
-  isAxiosError,
-} from "axios";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
+import axios, { AxiosResponse, isAxiosError } from "axios";
 
 import { useAuthContext } from "../contexts/auth.context";
 import { APIError, APIErrorMessage } from "../utils/error";
@@ -13,9 +9,19 @@ type AxiosRequest<T> = () => Promise<AxiosResponse<T, unknown>>;
 
 export default function useAxios() {
   const {
-    user: [, setUser],
+    user: [user, setUser],
   } = useAuthContext();
-  const { addAlert } = useAlertsContext();
+  const { addAlert, addUnknownErrorAlert } = useAlertsContext();
+
+  const headers = useMemo(
+    () =>
+      user && user.accessToken
+        ? {
+            Authorization: `Bearer ${user.accessToken}`,
+          }
+        : {},
+    [user],
+  );
 
   const call = useCallback(
     async <T>(request: AxiosRequest<T>) => {
@@ -25,69 +31,48 @@ export default function useAxios() {
         if (isAxiosError(error) && error.response) {
           const apiError = new APIError(error.response.data);
           if (apiError.message === APIErrorMessage.UNAUTHORIZED) {
-            addAlert({
-              type: "error",
-              message: "Tu sembles ne pas être connecté.e",
-            });
             setUser(undefined);
           } else if (apiError.statusCode === 500) {
-            addAlert({
-              type: "error",
-              message:
-                "Une erreur inconnue est survenue. Si elle t'empêche d'utiliser l'application correctement contacte un.e responsable",
-            });
+            addUnknownErrorAlert();
           }
           throw apiError;
         } else {
-          addAlert({
-            type: "error",
-            message:
-              "Une erreur inconnue est survenue. Si elle t'empêche d'utiliser l'application correctement contacte un.e responsable",
-          });
+          addUnknownErrorAlert();
           throw error;
         }
       }
     },
-    [setUser, addAlert],
+    [setUser, addUnknownErrorAlert],
   );
 
   const getAxios = useCallback(
-    <T>(endpoint: string, headers?: RawAxiosRequestHeaders) =>
+    <T>(endpoint: string) =>
       call(() => axios.get<T>(endpoint, { headers })),
-    [call],
+    [call, headers],
   );
 
   const postAxios = useCallback(
-    <T>(
-      endpoint: string,
-      data: unknown,
-      headers?: RawAxiosRequestHeaders,
-    ) => call(() => axios.post<T>(endpoint, data, { headers })),
-    [call],
+    <T>(endpoint: string, data: unknown) =>
+      call(() => axios.post<T>(endpoint, data, { headers })),
+    [call, headers],
   );
 
   const postFormAxios = useCallback(
-    <T>(
-      endpoint: string,
-      data: unknown,
-      headers?: RawAxiosRequestHeaders,
-    ) => call(() => axios.postForm<T>(endpoint, data, { headers })),
-    [call],
+    <T>(endpoint: string, data: unknown) =>
+      call(() => axios.postForm<T>(endpoint, data, { headers })),
+    [call, headers],
   );
 
   const patchAxios = useCallback(
-    <T>(
-      endpoint: string,
-      data: unknown,
-      headers?: RawAxiosRequestHeaders,
-    ) => call(() => axios.patch<T>(endpoint, data, { headers })),
-    [call],
+    <T>(endpoint: string, data: unknown) =>
+      call(() => axios.patch<T>(endpoint, data, { headers })),
+    [call, headers],
   );
 
   const deleteAxios = useCallback(
-    <T>(endpoint: string, headers?: RawAxiosRequestHeaders) =>
+    <T>(endpoint: string) =>
       call(() => axios.delete<T>(endpoint, { headers })),
-    [call],
+    [call, headers],
   );
 
   return {

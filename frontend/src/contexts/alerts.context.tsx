@@ -48,5 +48,13 @@ export function useAlertsContext() {
     [setAlerts, removeAlert],
   );
 
-  return { alerts, addAlert, removeAlert };
+  const addUnknownErrorAlert = useCallback(() => {
+    addAlert({
+      type: "error",
+      message:
+        "Une erreur inconnue est survenue. Si elle t'empêche d'utiliser l'application correctement contacte un.e responsable",
+    });
+  }, [addAlert]);
+
+  return { alerts, addAlert, removeAlert, addUnknownErrorAlert };
 }

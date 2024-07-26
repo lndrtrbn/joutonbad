@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Box from "../../components/Box/Box";
 import useFetch from "../../http/useFetch";
 import Title from "../../components/Title/Title";
-import useHttpPlayer from "../../http/useHttpPlayer";
+import { useQueryPlayers } from "../../http/useHttpPlayer";
 import { Registration } from "../../utils/registration";
 import Separator from "../../components/Separator/Separator";
 import useHttpTournament from "../../http/useHttpTournament";
@@ -36,8 +36,7 @@ export default function AdminRegistrationsPage() {
     }
   }, [registrations]);
 
-  const { getAllPlayers } = useHttpPlayer();
-  const [players] = useFetch(getAllPlayers);
+  const { data: players } = useQueryPlayers();
 
   const { getAllTournaments } = useHttpTournament();
   const [tournaments, refetchTournaments] =
