@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useMutation } from "@tanstack/react-query";
 
 import useAxios from "./useAxios";
 import { API_URL } from "./config";
@@ -10,53 +10,55 @@ export type LoginPayload = {
   password: string;
 };
 
+export function useSignin() {
+  const { postAxios } = useAxios();
+
+  return useMutation({
+    mutationFn: (payload: LoginPayload) =>
+      postAxios<KcUser>(`${API_URL}/signin`, payload),
+  });
+}
+
 export type SignupPayload = {
   email: string;
   username: string;
   password: string;
 };
 
-export default function useHttpAuth() {
+export function useSignup() {
+  const { postAxios } = useAxios();
+
+  return useMutation({
+    mutationFn: (payload: SignupPayload) =>
+      postAxios<void>(`${API_URL}/signup`, payload),
+  });
+}
+
+export function useVerifyEmail() {
+  const { postAxios } = useAxios();
+
+  return useMutation({
+    mutationFn: (email: string) =>
+      postAxios<void>(`${API_URL}/verifyemail`, { email }),
+  });
+}
+
+export function useForgotPwd() {
+  const { postAxios } = useAxios();
+
+  return useMutation({
+    mutationFn: (email: string) =>
+      postAxios<void>(`${API_URL}/forgotpwd`, { email }),
+  });
+}
+
+export function useRefreshToken() {
   const { postAxios } = useAxios();
   const { user } = useAuthContext();
+  const token = user?.refreshToken;
 
-  const login = useCallback(
-    async (payload: LoginPayload) => {
-      const endpoint = `${API_URL}/signin`;
-      return postAxios<KcUser>(endpoint, payload);
-    },
-    [postAxios],
-  );
-
-  const refreshToken = useCallback(async () => {
-    const endpoint = `${API_URL}/refreshtoken`;
-    const token = user?.refreshToken;
-    return postAxios<KcUser>(endpoint, { token });
-  }, [user, postAxios]);
-
-  const forgotPassword = useCallback(
-    async (email: string) => {
-      const endpoint = `${API_URL}/forgotpwd`;
-      return postAxios<void>(endpoint, { email });
-    },
-    [postAxios],
-  );
-
-  const verifyEmail = useCallback(
-    async (email: string) => {
-      const endpoint = `${API_URL}/verifyemail`;
-      return postAxios<void>(endpoint, { email });
-    },
-    [postAxios],
-  );
-
-  const signup = useCallback(
-    async (payload: SignupPayload) => {
-      const endpoint = `${API_URL}/signup`;
-      return postAxios<void>(endpoint, payload);
-    },
-    [postAxios],
-  );
-
-  return { login, signup, refreshToken, forgotPassword, verifyEmail };
+  return useMutation({
+    mutationFn: () =>
+      postAxios<KcUser>(`${API_URL}/refreshtoken`, { token }),
+  });
 }

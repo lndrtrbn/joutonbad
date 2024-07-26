@@ -1,36 +1,85 @@
-import { Controller } from "react-hook-form";
+import * as z from "zod";
+import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
 
-import useSignupForm, {
-  SignupFormProps,
-} from "../../../hooks/useSignupForm";
 import Alert from "../../../components/Alert/Alert";
+import { useSignup } from "../../../http/useHttpAuth";
+import { APIErrorMessage } from "../../../utils/error";
 import InputText from "../../../components/InputText/InputText";
 import ButtonLoading from "../../../components/ButtonLoading/ButtonLoading";
 
-export default function FormSignup({
-  onSubmit,
-  error,
-  loading = false,
-  canReset = false,
-}: SignupFormProps) {
-  const [
-    {
-      control,
-      handleSubmit,
-      formState: { isValid, errors },
+const schema = z
+  .object({
+    username: z.string().min(1),
+    password: z.string().min(1),
+    passwordConfirm: z.string().min(1),
+    email: z.string().email("L'adresse mail est incorrecte"),
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    message: "Les mots de passe ne sont pas identiques",
+    path: ["passwordConfirm"],
+  });
+
+type Inputs = z.infer<typeof schema>;
+
+type Props = {
+  onSuccess: () => void;
+};
+
+export default function FormSignup({ onSuccess }: Props) {
+  const [errorMsg, setErrorMsg] = useState("");
+  const { mutateAsync, isPending, error } = useSignup();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid, errors },
+  } = useForm<Inputs>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      username: "",
+      password: "",
+      passwordConfirm: "",
+      email: "",
     },
-    globalError,
-    clearGlobalError,
-  ] = useSignupForm(canReset, error);
+    mode: "onTouched",
+  });
+
+  useEffect(() => {
+    if (!error) {
+      setErrorMsg("");
+    } else if (
+      error?.message === APIErrorMessage.ALREADY_EXISTING_USER
+    ) {
+      setErrorMsg(
+        "Un compte existe déjà pour cette licence ou cet email",
+      );
+    } else if (error?.message === APIErrorMessage.NO_PLAYER_FOUND) {
+      setErrorMsg("Aucun profil trouvé avec cette licence");
+    } else if (
+      error?.message === APIErrorMessage.PLAYER_ALREADY_LINKED
+    ) {
+      setErrorMsg("Le profil lié à cette licence est déjà actif");
+    } else {
+      setErrorMsg("Erreur à la création de compte");
+    }
+  }, [error]);
+
+  function submit(data: Inputs) {
+    mutateAsync(data, {
+      onSuccess,
+    });
+  }
 
   return (
     <form
       className="flex flex-col gap-4 w-full"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(submit)}
     >
-      {globalError && (
-        <Alert type="error" onClose={clearGlobalError}>
-          {globalError}
+      {errorMsg && (
+        <Alert type="error" onClose={() => setErrorMsg("")}>
+          {errorMsg}
         </Alert>
       )}
 
@@ -92,7 +141,11 @@ export default function FormSignup({
           />
         )}
       />
-      <ButtonLoading disabled={!isValid || loading} loading={loading}>
+
+      <ButtonLoading
+        disabled={!isValid || isPending}
+        loading={isPending}
+      >
         Créer mon compte
       </ButtonLoading>
     </form>
