@@ -5,39 +5,31 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Settings } from "../../../utils/settings";
 import Alert from "../../../components/Alert/Alert";
+import { APIErrorMessage } from "../../../utils/error";
 import InputText from "../../../components/InputText/InputText";
-import { APIError, APIErrorMessage } from "../../../utils/error";
+import { useUpdateSettings } from "../../../http/useHttpSettings";
 import ButtonLoading from "../../../components/ButtonLoading/ButtonLoading";
-
-export type FormSettingsInputs = {
-  clubPart: number;
-};
 
 const schema = z.object({
   clubPart: z.number().min(0),
 });
 
+type Inputs = z.infer<typeof schema>;
+
 type Props = {
-  onSubmit: (data: FormSettingsInputs) => Promise<void>;
   settings: Settings;
-  error?: APIError;
-  loading?: boolean;
 };
 
-export default function FormSettings({
-  onSubmit,
-  settings,
-  error,
-  loading = false,
-}: Props) {
+export default function FormSettings({ settings }: Props) {
   const [errorMsg, setErrorMsg] = useState("");
+  const { mutateAsync, isPending, error } = useUpdateSettings();
 
   const {
     control,
     handleSubmit,
     formState: { isValid, isDirty },
     reset,
-  } = useForm<FormSettingsInputs>({
+  } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
       clubPart: settings.clubPart,
@@ -57,11 +49,17 @@ export default function FormSettings({
     }
   }, [error, reset]);
 
+  function submit(inputs: Inputs) {
+    mutateAsync(inputs, {
+      onSuccess: (d) => reset({ clubPart: d.clubPart }),
+    });
+  }
+
   return (
     <>
       <form
         className="flex gap-6 flex-wrap"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(submit)}
       >
         <Controller
           name="clubPart"
@@ -77,8 +75,8 @@ export default function FormSettings({
           )}
         />
         <ButtonLoading
-          disabled={!isValid || !isDirty || loading}
-          loading={loading}
+          disabled={!isValid || !isDirty || isPending}
+          loading={isPending}
           style="w-full"
         >
           Modifier
