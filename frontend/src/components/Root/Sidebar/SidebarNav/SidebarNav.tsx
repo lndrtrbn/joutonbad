@@ -14,9 +14,7 @@ import { isEditor } from "../../../../utils/user";
 import { useAuthContext } from "../../../../contexts/auth.context";
 
 export default function SidebarNav() {
-  const {
-    user: [user],
-  } = useAuthContext();
+  const { user } = useAuthContext();
 
   return (
     <div className={SidebarNavStyle.base}>
@@ -40,8 +38,8 @@ export default function SidebarNav() {
           <Link to="/admin/inscriptions" icon={faAddressCard}>
             Inscriptions
           </Link>
-          <Link to="/admin/global" icon={faGear}>
-            Global
+          <Link to="/admin/settings" icon={faGear}>
+            Paramètres
           </Link>
         </>
       )}

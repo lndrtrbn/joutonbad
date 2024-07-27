@@ -2,29 +2,24 @@ import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
-import useFetch from "../../http/useFetch";
+import {
+  useQueryTournamentById,
+  useUpdateTournament,
+} from "../../http/useHttpTournament";
 import Link from "../../components/Link/Link";
 import Title from "../../components/Title/Title";
-import useHttpPlayer from "../../http/useHttpPlayer";
 import Separator from "../../components/Separator/Separator";
-import useHttpTournament from "../../http/useHttpTournament";
+import { useQueryAdminPlayers } from "../../http/useHttpPlayer";
 import AdminTournamentPageStyle from "./AdminTournamentPage.style";
-import useUpdateTournamenent from "../../hooks/useUpdateTournament";
 import FormTournament from "../AdminTournamentsPage/FormTournament/FormTournament";
 
 export default function AdminTournamentPage() {
   const { id } = useParams();
-
-  const { getTournamentById } = useHttpTournament();
-  const [tournament, refetchTournament] = useFetch(() =>
-    getTournamentById(id || ""),
+  const { data: admins } = useQueryAdminPlayers();
+  const { data: tournament } = useQueryTournamentById(id || "");
+  const { mutateAsync, error, isPending } = useUpdateTournament(
+    id || "",
   );
-
-  const [callUpdate, updateError, updateFetching] =
-    useUpdateTournamenent(id || "", refetchTournament);
-
-  const { getAdminPlayers } = useHttpPlayer();
-  const [admins] = useFetch(getAdminPlayers);
 
   if (!tournament) return null;
 
@@ -47,10 +42,10 @@ export default function AdminTournamentPage() {
           <Title size="2xl">{tournament.name}</Title>
           <FormTournament
             players={admins ?? []}
-            onSubmit={callUpdate}
-            error={updateError}
+            onSubmit={mutateAsync}
+            error={error}
             tournament={tournament}
-            loading={updateFetching}
+            loading={isPending}
           />
         </section>
       </div>

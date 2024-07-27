@@ -1,10 +1,42 @@
-import { useCallback, useMemo } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import useAxios from "./useAxios";
 import { API_URL } from "./config";
 import { Player } from "../utils/player";
 import { Device } from "../utils/preferences";
 import { useAuthContext } from "../contexts/auth.context";
+import { useAlertsContext } from "../contexts/alerts.context";
+
+const KEY = "players";
+const ENDPOINT = `${API_URL}/player`;
+
+export function useQueryPlayers() {
+  const { getAxios } = useAxios();
+
+  return useQuery({
+    queryKey: [KEY],
+    queryFn: () => getAxios<Player[]>(ENDPOINT),
+  });
+}
+
+export function useQueryAdminPlayers() {
+  const { getAxios } = useAxios();
+
+  return useQuery({
+    queryKey: [KEY, "admins"],
+    queryFn: () => getAxios<Player[]>(`${ENDPOINT}/admins`),
+  });
+}
+
+export function useQueryPlayer(licence?: string) {
+  const { getAxios } = useAxios();
+
+  return useQuery({
+    queryKey: [KEY, licence],
+    queryFn: () => getAxios<Player>(`${ENDPOINT}/${licence}`),
+    enabled: !!licence,
+  });
+}
 
 export type CreatePlayerPayload = {
   name: string;
@@ -13,87 +45,67 @@ export type CreatePlayerPayload = {
   club: string;
 };
 
+export function useCreatePlayer() {
+  const { postAxios } = useAxios();
+  const queryClient = useQueryClient();
+  const { addSuccessAlert } = useAlertsContext();
+
+  return useMutation({
+    mutationFn: (payload: CreatePlayerPayload) =>
+      postAxios<Player>(ENDPOINT, payload),
+    onSuccess: () => {
+      addSuccessAlert("Joueur enregistré");
+      queryClient.invalidateQueries({ queryKey: [KEY] });
+    },
+  });
+}
+
 export type UpdateProfilPayload = {
   favoriteDevice: Device;
   favoriteColor: string;
 };
 
-export default function useHttpPlayer() {
-  const {
-    getAxios,
-    postAxios,
-    postFormAxios,
-    deleteAxios,
-    patchAxios,
-  } = useAxios();
-  const {
-    user: [user],
-  } = useAuthContext();
+export function useUpdateProfil() {
+  const { patchAxios } = useAxios();
+  const queryClient = useQueryClient();
+  const { setProfil } = useAuthContext();
+  const { addSuccessAlert } = useAlertsContext();
 
-  const headers = useMemo(
-    () => ({
-      Authorization: `Bearer ${user?.accessToken}`,
-    }),
-    [user],
-  );
-
-  const getAllPlayers = useCallback(async () => {
-    const endpoint = `${API_URL}/player`;
-    return getAxios<Player[]>(endpoint, headers);
-  }, [headers, getAxios]);
-
-  const getPlayer = useCallback(
-    async (licence: string) => {
-      const endpoint = `${API_URL}/player/${licence}`;
-      return getAxios<Player>(endpoint, headers);
+  return useMutation({
+    mutationFn: (payload: UpdateProfilPayload) =>
+      patchAxios<Player>(`${ENDPOINT}/profil`, payload),
+    onSuccess: (data) => {
+      addSuccessAlert("Profil mis à jour");
+      queryClient.invalidateQueries({ queryKey: [KEY] });
+      setProfil(data);
     },
-    [headers, getAxios],
-  );
+  });
+}
 
-  const getAdminPlayers = useCallback(async () => {
-    const endpoint = `${API_URL}/player/admins`;
-    return getAxios<Player[]>(endpoint, headers);
-  }, [headers, getAxios]);
+export function useDeletePlayer() {
+  const { deleteAxios } = useAxios();
+  const queryClient = useQueryClient();
+  const { addSuccessAlert } = useAlertsContext();
 
-  const createPlayer = useCallback(
-    async (payload: CreatePlayerPayload) => {
-      const endpoint = `${API_URL}/player`;
-      return postAxios<Player>(endpoint, payload, headers);
+  return useMutation({
+    mutationFn: (id: string) => deleteAxios<Player>(`${ENDPOINT}/${id}`),
+    onSuccess: () => {
+      addSuccessAlert("Joueur supprimé");
+      queryClient.invalidateQueries({ queryKey: [KEY] });
     },
-    [headers, postAxios],
-  );
+  });
+}
 
-  const updateProfil = useCallback(
-    async (payload: UpdateProfilPayload) => {
-      const endpoint = `${API_URL}/player/profil`;
-      return patchAxios<Player>(endpoint, payload, headers);
+export function useUploadPlayers() {
+  const { postFormAxios } = useAxios();
+  const queryClient = useQueryClient();
+  const { addSuccessAlert } = useAlertsContext();
+
+  return useMutation({
+    mutationFn: (file: File) => postFormAxios<Player[]>(`${ENDPOINT}/csv`, { file }),
+    onSuccess: () => {
+      addSuccessAlert("Import de joueurs lancé");
+      queryClient.invalidateQueries({ queryKey: [KEY] });
     },
-    [headers, patchAxios],
-  );
-
-  const uploadPlayers = useCallback(
-    async (file: File) => {
-      const endpoint = `${API_URL}/player/csv`;
-      return postFormAxios<Player[]>(endpoint, { file }, headers);
-    },
-    [headers, postFormAxios],
-  );
-
-  const deletePlayer = useCallback(
-    async (id: string) => {
-      const endpoint = `${API_URL}/player/${id}`;
-      return deleteAxios<Player>(endpoint, headers);
-    },
-    [headers, deleteAxios],
-  );
-
-  return {
-    getPlayer,
-    getAllPlayers,
-    getAdminPlayers,
-    createPlayer,
-    updateProfil,
-    deletePlayer,
-    uploadPlayers,
-  };
+  });
 }

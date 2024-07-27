@@ -1,11 +1,33 @@
-import { useCallback, useMemo } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import useAxios from "./useAxios";
 import { API_URL } from "./config";
 import { Level } from "../utils/level";
 import { Discipline } from "../utils/discipline";
 import { Registration } from "../utils/registration";
-import { useAuthContext } from "../contexts/auth.context";
+import { KEY as TOURNAMENT_KEY } from "./useHttpTournament";
+import { useAlertsContext } from "../contexts/alerts.context";
+
+const KEY = "registrations";
+const ENDPOINT = `${API_URL}/registration`;
+
+export function useQueryRegistrations() {
+  const { getAxios } = useAxios();
+
+  return useQuery({
+    queryKey: [KEY],
+    queryFn: () => getAxios<Registration[]>(ENDPOINT),
+  });
+}
+
+export function useQueryRegistrationsByTournament(id: string) {
+  const { getAxios } = useAxios();
+
+  return useQuery({
+    queryKey: [KEY, id],
+    queryFn: () => getAxios<Registration[]>(`${ENDPOINT}/tournament/${id}`),
+  });
+}
 
 export type CreateRegistrationPayload = {
   discipline: Discipline;
@@ -22,65 +44,59 @@ export type CreateRegistrationPayload = {
   };
 };
 
+export function useCreateRegistration() {
+  const { postAxios } = useAxios();
+  const queryClient = useQueryClient();
+  const { addSuccessAlert } = useAlertsContext();
+
+  return useMutation({
+    mutationFn: (payload: CreateRegistrationPayload) =>
+      postAxios<Registration>(ENDPOINT, payload),
+    onSuccess: () => {
+      addSuccessAlert("Inscription enregistrée");
+      queryClient.invalidateQueries({ queryKey: [KEY] });
+      queryClient.invalidateQueries({ queryKey: [TOURNAMENT_KEY] });
+    },
+  });
+}
+
 export type UpdateRegistrationPayload = {
   sent?: boolean;
   cancelled?: string;
 };
 
-export default function useHttpRegistration() {
-  const { getAxios, postAxios, patchAxios, deleteAxios } = useAxios();
-  const {
-    user: [user],
-  } = useAuthContext();
-  const headers = useMemo(
-    () => ({
-      Authorization: `Bearer ${user?.accessToken}`,
-    }),
-    [user],
-  );
+export function useUpdateRegistration() {
+  const { patchAxios } = useAxios();
+  const queryClient = useQueryClient();
+  const { addSuccessAlert } = useAlertsContext();
 
-  const getAllRegistrations = useCallback(async () => {
-    const endpoint = `${API_URL}/registration`;
-    return getAxios<Registration[]>(endpoint, headers);
-  }, [headers, getAxios]);
-
-  const getRegistrationsByTournament = useCallback(
-    async (id: string) => {
-      const endpoint = `${API_URL}/registration/tournament/${id}`;
-      return getAxios<Registration[]>(endpoint, headers);
+  return useMutation({
+    mutationFn: ({
+      id,
+      payload,
+    }: {
+      id: string;
+      payload: UpdateRegistrationPayload;
+    }) => patchAxios<Registration>(`${ENDPOINT}/${id}`, payload),
+    onSuccess: () => {
+      addSuccessAlert("Inscription mise à jour");
+      queryClient.invalidateQueries({ queryKey: [KEY] });
+      queryClient.invalidateQueries({ queryKey: [TOURNAMENT_KEY] });
     },
-    [headers, getAxios],
-  );
+  });
+}
 
-  const createRegistration = useCallback(
-    async (payload: CreateRegistrationPayload) => {
-      const endpoint = `${API_URL}/registration`;
-      return postAxios<Registration>(endpoint, payload, headers);
+export function useDeleteRegistration() {
+  const { deleteAxios } = useAxios();
+  const queryClient = useQueryClient();
+  const { addSuccessAlert } = useAlertsContext();
+
+  return useMutation({
+    mutationFn: (id: string) => deleteAxios<Registration>(`${ENDPOINT}/${id}`),
+    onSuccess: () => {
+      addSuccessAlert("Inscription supprimée");
+      queryClient.invalidateQueries({ queryKey: [KEY] });
+      queryClient.invalidateQueries({ queryKey: [TOURNAMENT_KEY] });
     },
-    [headers, postAxios],
-  );
-
-  const updateRegistration = useCallback(
-    async (id: string, payload: UpdateRegistrationPayload) => {
-      const endpoint = `${API_URL}/registration/${id}`;
-      return patchAxios<Registration>(endpoint, payload, headers);
-    },
-    [headers, patchAxios],
-  );
-
-  const deleteRegistration = useCallback(
-    async (id: string) => {
-      const endpoint = `${API_URL}/registration/${id}`;
-      return deleteAxios<Registration>(endpoint, headers);
-    },
-    [headers, deleteAxios],
-  );
-
-  return {
-    getRegistrationsByTournament,
-    getAllRegistrations,
-    createRegistration,
-    updateRegistration,
-    deleteRegistration,
-  };
+  });
 }

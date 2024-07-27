@@ -4,22 +4,22 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import MemberRowStyle from "./MemberRow.style";
-import { Player } from "../../../utils/player";
-import useModal from "../../../hooks/useModal";
-import Button from "../../../components/Button/Button";
-import ModalConfirm from "../../../components/ModalConfirm/ModalConfirm";
+import { Player } from "../../../../utils/player";
+import useModal from "../../../../hooks/useModal";
+import Button from "../../../../components/Button/Button";
+import { useDeletePlayer } from "../../../../http/useHttpPlayer";
+import ModalConfirm from "../../../../components/ModalConfirm/ModalConfirm";
 
 type MemberRowProps = {
   member: Player;
-  onDelete: (id: string) => Promise<unknown>;
   alt?: boolean;
 };
 
 export default function MemberRow({
   member,
-  onDelete,
   alt = false,
 }: MemberRowProps) {
+  const { mutateAsync: deletePlayer } = useDeletePlayer();
   const [portal, open, close] = useModal();
 
   function askDelete() {
@@ -27,7 +27,7 @@ export default function MemberRow({
       <ModalConfirm
         onClose={close}
         onConfirm={async () => {
-          await onDelete(member.id);
+          await deletePlayer(member.id);
           close();
         }}
       >

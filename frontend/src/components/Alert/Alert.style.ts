@@ -4,7 +4,7 @@ const AlertStyle = {
   msg: "flex-1",
   info: "bg-bg text-black/60",
   error: "bg-error/20 text-error",
-  success: "bg-success/20 text-success",
+  success: "bg-success/30 text-success",
   icon: "mt-1 cursor-pointer",
 };
 

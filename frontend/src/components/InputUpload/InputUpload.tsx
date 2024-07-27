@@ -4,14 +4,16 @@ import Button from "../Button/Button";
 
 type Props = {
   label: string;
+  onChange: InputHTMLAttributes<HTMLInputElement>["onChange"];
   accept?: InputHTMLAttributes<HTMLInputElement>["accept"];
-  onChange?: InputHTMLAttributes<HTMLInputElement>["onChange"];
+  disabled?: InputHTMLAttributes<HTMLInputElement>["disabled"];
 };
 
 export default function InputUpload({
   label,
   accept,
   onChange,
+  disabled,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -30,10 +32,12 @@ export default function InputUpload({
         accept={accept}
         onChange={change}
         className="w-0 h-0 opacity-0"
+        disabled={disabled}
       />
 
       <Button
         onClick={() => inputRef.current?.click()}
+        disabled={disabled}
         style="w-full"
       >
         {label}

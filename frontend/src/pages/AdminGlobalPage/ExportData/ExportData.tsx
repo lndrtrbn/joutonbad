@@ -3,17 +3,13 @@ import { useEffect, useState } from "react";
 import useTimeout from "../../../hooks/useTimeout";
 import Alert from "../../../components/Alert/Alert";
 import Title from "../../../components/Title/Title";
-import useLazyFetch from "../../../http/useLazyFetch";
 import Button from "../../../components/Button/Button";
 import { APIErrorMessage } from "../../../utils/error";
-import useHttpGoogle from "../../../http/useHttpGoogle";
+import useExportToGoogle from "../../../http/useHttpGoogle";
 
 export default function ExportData() {
-  const { exportData } = useHttpGoogle();
-  const [callExport, , error, fetching, fetched] = useLazyFetch<
-    void,
-    void
-  >(exportData);
+  const { mutateAsync, isPending, isSuccess, error } =
+    useExportToGoogle();
 
   const [errorMsg, setErrorMsg] = useState("");
   const [showFeedback, setShowFeedback] = useState(false);
@@ -22,15 +18,15 @@ export default function ExportData() {
 
   function onExport() {
     clear();
-    callExport();
+    mutateAsync();
   }
 
   useEffect(() => {
-    if (error || fetched) {
+    if (error || isSuccess) {
       setShowFeedback(true);
       run();
     }
-  }, [error, fetched, run]);
+  }, [error, isSuccess, run]);
 
   useEffect(() => {
     if (!error) {
@@ -53,14 +49,14 @@ export default function ExportData() {
         vers Google Sheet
       </Title>
 
-      <Button onClick={onExport} disabled={fetching} style="w-full">
+      <Button onClick={onExport} disabled={isPending} style="w-full">
         Exporter
       </Button>
 
       {showFeedback && (
         <div className="mt-4 w-96">
           {errorMsg && <Alert type="error">{errorMsg}</Alert>}
-          {fetched && (
+          {isPending && (
             <Alert type="success">
               L'export de données a bien été effectué
             </Alert>

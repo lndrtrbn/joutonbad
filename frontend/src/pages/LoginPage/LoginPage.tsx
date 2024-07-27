@@ -1,14 +1,12 @@
 import { useLocation } from "react-router-dom";
 
 import FormLogin from "./FormLogin/FormLogin";
-import useLogin from "../../hooks/useLogin";
 import Link from "../../components/Link/Link";
 import Title from "../../components/Title/Title";
 import Alert from "../../components/Alert/Alert";
 import AuthLayout from "../../components/AuthLayout/AuthLayout";
 
 export default function LoginPage() {
-  const [callLogin, error, fetching] = useLogin();
   const { state } = useLocation();
 
   return (
@@ -30,11 +28,7 @@ export default function LoginPage() {
         </Alert>
       )}
 
-      <FormLogin
-        onSubmit={callLogin}
-        error={error}
-        loading={fetching}
-      />
+      <FormLogin />
 
       <Link to="/signup" inline>
         Créer mon compte

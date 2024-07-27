@@ -4,16 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 
 import Alert from "../../../components/Alert/Alert";
+import { APIErrorMessage } from "../../../utils/error";
+import { useCreatePlayer } from "../../../http/useHttpPlayer";
 import InputText from "../../../components/InputText/InputText";
-import { APIError, APIErrorMessage } from "../../../utils/error";
 import ButtonLoading from "../../../components/ButtonLoading/ButtonLoading";
-
-export type FormMemberInputs = {
-  name: string;
-  lastname: string;
-  license: string;
-  club: string;
-};
 
 const schema = z.object({
   name: z.string().min(1),
@@ -22,17 +16,10 @@ const schema = z.object({
   club: z.string().min(1),
 });
 
-type Props = {
-  onSubmit: (data: FormMemberInputs) => void;
-  error?: APIError;
-  loading?: boolean;
-};
+type Inputs = z.infer<typeof schema>;
 
-export default function FormMember({
-  onSubmit,
-  error,
-  loading = false,
-}: Props) {
+export default function FormMember() {
+  const { mutateAsync, isPending, error } = useCreatePlayer();
   const [errorMsg, setErrorMsg] = useState("");
 
   const {
@@ -40,7 +27,7 @@ export default function FormMember({
     handleSubmit,
     formState: { isValid },
     reset,
-  } = useForm<FormMemberInputs>({
+  } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
       name: "",
@@ -60,8 +47,8 @@ export default function FormMember({
     }
   }, [error]);
 
-  function submit(data: FormMemberInputs) {
-    onSubmit(data);
+  function submit(data: Inputs) {
+    mutateAsync(data);
     reset();
   }
 
@@ -108,8 +95,8 @@ export default function FormMember({
           )}
         />
         <ButtonLoading
-          disabled={!isValid || loading}
-          loading={loading}
+          disabled={!isValid || isPending}
+          loading={isPending}
           style="w-full"
         >
           Ajouter

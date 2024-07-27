@@ -63,5 +63,10 @@ export function useAuthContext() {
       "useAuthContext must be used within a AuthProvider",
     );
   }
-  return context;
+  return {
+    user: context.user[0],
+    setUser: context.user[1],
+    profil: context.profil[0],
+    setProfil: context.profil[1],
+  };
 }

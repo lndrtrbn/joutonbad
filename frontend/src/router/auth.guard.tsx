@@ -15,9 +15,7 @@ type Props = {
  */
 export default function AuthGuard({ children }: Props) {
   const navigate = useNavigate();
-  const {
-    user: [user],
-  } = useAuthContext();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     if (!user) {

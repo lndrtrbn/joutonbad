@@ -5,37 +5,21 @@ import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 
-import { DISCIPLINES, Discipline } from "../../../utils/discipline";
 import { Player } from "../../../utils/player";
-import { APIError } from "../../../utils/error";
 import Alert from "../../../components/Alert/Alert";
 import { LEVELS, Level } from "../../../utils/level";
-import FormTournamentStyle from "./FormTournament.style";
 import Button from "../../../components/Button/Button";
+import { Tournament } from "../../../utils/tournament";
+import FormTournamentStyle from "./FormTournament.style";
 import InputTag from "../../../components/InputTag/InputTag";
-import { Link, Tournament } from "../../../utils/tournament";
 import InputText from "../../../components/InputText/InputText";
 import InputArray from "../../../components/InputArray/InputArray";
+import { DISCIPLINES, Discipline } from "../../../utils/discipline";
 import { TournamentPayload } from "../../../http/useHttpTournament";
 import InputLabels from "../../../components/InputLabels/InputLabels";
 import InputCheckbox from "../../../components/InputCheckbox/InputCheckbox";
 import ButtonLoading from "../../../components/ButtonLoading/ButtonLoading";
 import InputSelectMembers from "../../../components/InputSelectMembers/InputSelectMembers";
-
-export type FormTournamentInputs = {
-  inChargeId: string;
-  name: string;
-  location: string;
-  startDate: string;
-  endDate: string;
-  minLevel: Level;
-  maxLevel: Level;
-  disciplines: Discipline[];
-  prices: string[];
-  links: Link[];
-  freezed: boolean;
-  nocturne: boolean;
-};
 
 const schema = z.object({
   inChargeId: z.string().min(1),
@@ -57,10 +41,16 @@ const schema = z.object({
   nocturne: z.boolean(),
 });
 
+type Inputs = z.infer<typeof schema> & {
+  minLevel: Level;
+  maxLevel: Level;
+  disciplines: Discipline[];
+};
+
 type Props = {
   players: Player[];
   onSubmit: (data: TournamentPayload) => void;
-  error?: APIError;
+  error: Error | null;
   tournament?: Tournament;
   loading?: boolean;
 };
@@ -89,9 +79,9 @@ function defaultValues(t?: Tournament) {
 
 export default function FormTournament({
   players,
+  tournament,
   onSubmit,
   error,
-  tournament,
   loading = false,
 }: Props) {
   const [errorMsg, setErrorMsg] = useState("");
@@ -109,7 +99,7 @@ export default function FormTournament({
     handleSubmit,
     formState: { errors, isValid, isDirty },
     reset,
-  } = useForm<FormTournamentInputs>({
+  } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: defaultValues(tournament),
   });
@@ -118,7 +108,7 @@ export default function FormTournament({
     reset(defaultValues(tournament));
   }, [tournament, reset]);
 
-  function submit(data: FormTournamentInputs) {
+  function submit(data: Inputs) {
     onSubmit({
       ...data,
       startDate: parse(

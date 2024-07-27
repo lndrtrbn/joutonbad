@@ -1,15 +1,13 @@
 import { useMemo } from "react";
 
-import useFetch from "../../http/useFetch";
 import Title from "../../components/Title/Title";
 import CalendarList from "./CalendarList/CalendarList";
 import Separator from "../../components/Separator/Separator";
-import useHttpTournament from "../../http/useHttpTournament";
 import { filterPast, filterToCome } from "../../utils/tournament";
+import { useQueryTournaments } from "../../http/useHttpTournament";
 
 export default function HomePage() {
-  const { getAllTournaments } = useHttpTournament();
-  const [tournaments] = useFetch(getAllTournaments);
+  const { data: tournaments } = useQueryTournaments();
 
   const listPast = useMemo(
     () => filterPast(tournaments),

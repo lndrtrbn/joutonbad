@@ -4,36 +4,22 @@ import { compareAsc, startOfDay, subDays } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
-import useFetch from "../../http/useFetch";
 import Link from "../../components/Link/Link";
 import Title from "../../components/Title/Title";
 import MembersList from "./MembersList/MembersList";
 import { Discipline } from "../../utils/discipline";
-import useHttpTournament from "../../http/useHttpTournament";
 import { useAuthContext } from "../../contexts/auth.context";
 import Separator from "../../components/Separator/Separator";
+import { useQueryTournamentById } from "../../http/useHttpTournament";
 import TournamentDetails from "./TournamentDetails/TournamentDetails";
-import useCreateRegistration from "../../hooks/useCreateRegistration";
 import RegistrationDouble from "../../components/RegistrationDouble/RegistrationDouble";
 import TournamentRegistrationSimple from "../../components/TournamentRegistrationSimple/TournamentRegistrationSimple";
 
 export default function TournamentPage() {
-  const {
-    user: [user],
-  } = useAuthContext();
+  const { user } = useAuthContext();
 
   const { id } = useParams();
-  const { getTournamentById } = useHttpTournament();
-  const [tournament, refetchTournament] = useFetch(() =>
-    getTournamentById(id || ""),
-  );
-
-  const [callCreateSimple, , createSimpleFetching] =
-    useCreateRegistration(refetchTournament);
-  const [callCreateDouble, createDoubleError, createDoubleFetching] =
-    useCreateRegistration(refetchTournament);
-  const [callCreateMixte, createMixteError, createMixteFetching] =
-    useCreateRegistration(refetchTournament);
+  const { data: tournament } = useQueryTournamentById(id || "");
 
   const registrationsDone = useMemo(() => {
     if (!tournament) return false;
@@ -51,11 +37,7 @@ export default function TournamentPage() {
       <Title size="3xl">{tournament.name}</Title>
       <Separator />
 
-      <Link
-        inline
-        to="/"
-        style="flex items-center gap-2 mb-4 w-[100px]"
-      >
+      <Link inline to="/" style="flex items-center gap-2 mb-4 w-[100px]">
         <FontAwesomeIcon icon={faChevronLeft} />
         Calendrier
       </Link>
@@ -70,11 +52,8 @@ export default function TournamentPage() {
             tournament.disciplines.includes(Discipline.SD)) && (
             <TournamentRegistrationSimple
               tournament={tournament}
-              registrations={tournament.registrations}
               canRegister={!registrationsDone}
               playerLicense={user?.license}
-              register={callCreateSimple}
-              loading={createSimpleFetching}
             />
           )}
 
@@ -82,26 +61,18 @@ export default function TournamentPage() {
             tournament.disciplines.includes(Discipline.DD)) && (
             <RegistrationDouble
               discipline={Discipline.DH}
-              registrations={tournament.registrations}
-              playerLicense={user?.license}
-              canRegister={!registrationsDone}
-              register={callCreateDouble}
-              loading={createDoubleFetching}
               tournament={tournament}
-              error={createDoubleError}
+              canRegister={!registrationsDone}
+              playerLicense={user?.license}
             />
           )}
 
           {tournament.disciplines.includes(Discipline.DM) && (
             <RegistrationDouble
               discipline={Discipline.DM}
-              registrations={tournament.registrations}
-              playerLicense={user?.license}
-              canRegister={!registrationsDone}
-              register={callCreateMixte}
-              loading={createMixteFetching}
               tournament={tournament}
-              error={createMixteError}
+              canRegister={!registrationsDone}
+              playerLicense={user?.license}
             />
           )}
         </section>

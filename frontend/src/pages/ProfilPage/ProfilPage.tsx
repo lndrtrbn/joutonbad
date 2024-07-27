@@ -1,26 +1,57 @@
-import { Controller } from "react-hook-form";
+import * as z from "zod";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import Title from "../../components/Title/Title";
 import Button from "../../components/Button/Button";
+import { useUpdateProfil } from "../../http/useHttpPlayer";
 import Separator from "../../components/Separator/Separator";
 import { useAuthContext } from "../../contexts/auth.context";
-import usePreferencesForm from "../../hooks/usePreferencesForm";
+import { DEFAULT_MAIN_COLOR } from "../../styles/designSystem/colors";
 import InputCheckbox from "../../components/InputCheckbox/InputCheckbox";
+import ButtonLoading from "../../components/ButtonLoading/ButtonLoading";
+
+const schema = z.object({
+  preferMobile: z.boolean(),
+  favoriteColor: z.string(),
+});
+
+type Inputs = z.infer<typeof schema>;
 
 export default function ProfilPage() {
-  const {
-    profil: [profil],
-  } = useAuthContext();
-  const { form, onSubmit } = usePreferencesForm();
+  const { profil } = useAuthContext();
+  const { mutateAsync, isPending } = useUpdateProfil();
 
   const {
     control,
     handleSubmit,
     reset,
     formState: { isValid, isDirty },
-  } = form;
+  } = useForm<Inputs>({
+    defaultValues: {
+      preferMobile: profil?.favoriteDevice === "mobile",
+      favoriteColor: profil?.favoriteColor ?? DEFAULT_MAIN_COLOR,
+    },
+    resolver: zodResolver(schema),
+  });
 
-  if (!profil) return null;
+  async function onSubmit(data: Inputs) {
+    try {
+      if (profil) {
+        const updated = await mutateAsync({
+          favoriteDevice: data.preferMobile ? "mobile" : "desktop",
+          favoriteColor: data.favoriteColor,
+        });
+        reset({
+          preferMobile: updated.favoriteDevice === "mobile",
+          favoriteColor: updated.favoriteColor,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <>
       <Title size="3xl">Mon profil</Title>
@@ -46,7 +77,12 @@ export default function ProfilPage() {
         />
 
         <div className="flex gap-4 items-center mt-8">
-          <Button disabled={!isDirty || !isValid}>Sauvegarder</Button>
+          <ButtonLoading
+            disabled={!isDirty || !isValid || isPending}
+            loading={isPending}
+          >
+            Sauvegarder
+          </ButtonLoading>
           <Button
             variant="light"
             disabled={!isDirty}

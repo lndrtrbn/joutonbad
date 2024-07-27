@@ -1,42 +1,37 @@
-import { useCallback, useMemo } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import useAxios from "./useAxios";
 import { API_URL } from "./config";
 import { Settings } from "../utils/settings";
-import { useAuthContext } from "../contexts/auth.context";
+import { useAlertsContext } from "../contexts/alerts.context";
+
+const KEY = "settings";
+const ENDPOINT = `${API_URL}/settings`;
+
+export function useQuerySettings() {
+  const { getAxios } = useAxios();
+
+  return useQuery({
+    queryKey: [KEY],
+    queryFn: () => getAxios<Settings>(ENDPOINT),
+  });
+}
 
 export type UpdateSettingsPayload = {
   clubPart: number;
 };
 
-export default function useHttpSettings() {
-  const { getAxios, patchAxios } = useAxios();
-  const {
-    user: [user],
-  } = useAuthContext();
+export function useUpdateSettings() {
+  const { patchAxios } = useAxios();
+  const queryClient = useQueryClient();
+  const { addSuccessAlert } = useAlertsContext();
 
-  const headers = useMemo(
-    () => ({
-      Authorization: `Bearer ${user?.accessToken}`,
-    }),
-    [user],
-  );
-
-  const getSettings = useCallback(async () => {
-    const endpoint = `${API_URL}/settings`;
-    return getAxios<Settings>(endpoint, headers);
-  }, [headers, getAxios]);
-
-  const updateSettings = useCallback(
-    async (payload: UpdateSettingsPayload) => {
-      const endpoint = `${API_URL}/settings`;
-      return patchAxios<Settings>(endpoint, payload, headers);
+  return useMutation({
+    mutationFn: (payload: UpdateSettingsPayload) =>
+      patchAxios<Settings>(ENDPOINT, payload),
+    onSuccess: () => {
+      addSuccessAlert("Paramètres mis à jour");
+      queryClient.invalidateQueries({ queryKey: [KEY] });
     },
-    [headers, patchAxios],
-  );
-
-  return {
-    getSettings,
-    updateSettings,
-  };
+  });
 }

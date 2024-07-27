@@ -1,53 +1,60 @@
 import { useEffect, useState } from "react";
 
 import {
-  Registration,
+  CreateRegistrationPayload,
+  useCreateRegistration,
+} from "../../http/useHttpRegistration";
+import FormRegistrationDouble, {
   RegistrationDoubleInputs,
-} from "../../utils/registration";
+} from "./FormRegistrationDouble/FormRegistrationDouble";
 import Alert from "../Alert/Alert";
 import Title from "../Title/Title";
 import { Discipline } from "../../utils/discipline";
 import { Tournament } from "../../utils/tournament";
-import { APIError, APIErrorMessage } from "../../utils/error";
-import { CreateRegistrationPayload } from "../../http/useHttpRegistration";
-import FormRegistrationDouble from "./FormRegistrationDouble/FormRegistrationDouble";
+import { APIErrorMessage } from "../../utils/error";
 
 type Props = {
   tournament: Tournament;
-  registrations: Registration[];
   playerLicense: string;
   discipline: Discipline;
   canRegister: boolean;
-  loading?: boolean;
-  register: (data: CreateRegistrationPayload) => void;
-  error?: APIError;
+  onSuccess?: () => void;
 };
 
 export default function RegistrationDouble({
   tournament,
-  registrations = [],
   playerLicense,
   discipline,
   canRegister,
-  loading = false,
-  register,
-  error,
+  onSuccess,
 }: Props) {
-  const [errorMsg, setErrorMsg] = useState<string>();
+  const [errorMsg, setErrorMsg] = useState("");
+  const { mutateAsync, error, isPending } = useCreateRegistration();
 
   const isMixte = discipline == Discipline.DM;
 
-  const registration = registrations.find(
+  useEffect(() => {
+    if (!error) {
+      setErrorMsg("");
+    } else if (error.message === APIErrorMessage.ALREADY_REGISTERED) {
+      setErrorMsg("Tu es déjà inscrit.e à ce tournoi sur ce tableau");
+    } else if (error.message === APIErrorMessage.ALREADY_REGISTERED_PARTNER) {
+      setErrorMsg("Ton/ta partenaire est déjà inscrit.e avec une autre personne");
+    } else {
+      setErrorMsg("Erreur lors de l'inscription");
+    }
+  }, [error]);
+
+  const registration = tournament.registrations.find(
     (reg) =>
       reg.player.license == playerLicense &&
       !reg.cancelled &&
       ((isMixte && reg.discipline == Discipline.DM) ||
         (!isMixte &&
-          (reg.discipline == Discipline.DD ||
-            reg.discipline == Discipline.DH))),
+          (reg.discipline == Discipline.DD || reg.discipline == Discipline.DH))),
   );
 
-  function registerDouble(data: RegistrationDoubleInputs) {
+  function submit(data: RegistrationDoubleInputs) {
     const payload: CreateRegistrationPayload = {
       discipline: data.discipline,
       level: data.rank,
@@ -62,30 +69,8 @@ export default function RegistrationDouble({
         level: data.partnerRank,
       },
     };
-    register(payload);
+    mutateAsync(payload, { onSuccess });
   }
-
-  useEffect(() => {
-    if (error) {
-      switch (error.message) {
-        case APIErrorMessage.ALREADY_REGISTERED:
-          setErrorMsg(
-            "Tu es déjà inscrit.e à ce tournoi sur ce tableau",
-          );
-          break;
-        case APIErrorMessage.ALREADY_REGISTERED_PARTNER:
-          setErrorMsg(
-            "Ton/ta partenaire est déjà inscrit.e avec une autre personne",
-          );
-          break;
-        default:
-          setErrorMsg("Erreur lors de l'inscription");
-          break;
-      }
-    } else {
-      setErrorMsg("");
-    }
-  }, [error]);
 
   if (!registration && !canRegister) return null;
 
@@ -97,15 +82,13 @@ export default function RegistrationDouble({
 
   return (
     <div>
-      <Title size="2xl">
-        Inscription en {isMixte ? "Mixte" : "Double"}
-      </Title>
+      <Title size="2xl">Inscription en {isMixte ? "Mixte" : "Double"}</Title>
 
       {!registration ? (
         <>
           <FormRegistrationDouble
-            onSubmit={registerDouble}
-            loading={loading}
+            onSubmit={submit}
+            loading={isPending}
             disciplines={disciplines}
           />
           {errorMsg && <Alert type="error">{errorMsg}</Alert>}
