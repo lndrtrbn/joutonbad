@@ -9,14 +9,8 @@ import { useQueryTournaments } from "../../http/useHttpTournament";
 export default function HomePage() {
   const { data: tournaments } = useQueryTournaments();
 
-  const listPast = useMemo(
-    () => filterPast(tournaments),
-    [tournaments],
-  );
-  const listToCome = useMemo(
-    () => filterToCome(tournaments),
-    [tournaments],
-  );
+  const listPast = useMemo(() => filterPast(tournaments), [tournaments]);
+  const listToCome = useMemo(() => filterToCome(tournaments), [tournaments]);
 
   return (
     <>
@@ -24,15 +18,9 @@ export default function HomePage() {
       <Separator />
 
       <div className="flex flex-col gap-10">
-        <CalendarList
-          title="Tournois à venir"
-          tournaments={listToCome}
-        />
+        <CalendarList title="Tournois à venir" tournaments={listToCome} />
 
-        <CalendarList
-          title="Tournois passés"
-          tournaments={listPast}
-        />
+        <CalendarList title="Tournois passés" tournaments={listPast} />
       </div>
     </>
   );

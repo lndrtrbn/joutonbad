@@ -14,9 +14,7 @@ export default function FormMembersUpload() {
 
   return (
     <>
-      <Title subtitle>
-        Fichier .csv au format NOM;Prénom;licence
-      </Title>
+      <Title subtitle>Fichier .csv au format NOM;Prénom;licence</Title>
       <InputUpload
         label="Importer"
         accept=".csv"

@@ -38,8 +38,7 @@ export const FAQ: Faq = [
     ],
   },
   {
-    question:
-      "Comment m'inscrire à un tournoi qui n'est pas dans le calendrier ?",
+    question: "Comment m'inscrire à un tournoi qui n'est pas dans le calendrier ?",
     answers: [
       "Plusieurs cas sont possibles. Si le tournoi est dans longtemps, il n'a peut-être juste pas encore été ajouté, patience.",
       "Sinon c'est sûrement que le tournoi est loin de Rennes et dans ce cas le club ne prend pas en charge les inscriptions.",
@@ -55,8 +54,6 @@ export const FAQ: Faq = [
   },
   {
     question: "Comment déclarer un bug ?",
-    answers: [
-      "Tu peux contacter un.e membre du bureau si tu rencontres un bug.",
-    ],
+    answers: ["Tu peux contacter un.e membre du bureau si tu rencontres un bug."],
   },
 ];

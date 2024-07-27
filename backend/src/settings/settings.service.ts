@@ -1,10 +1,7 @@
 import { PlateformSettings, Prisma } from "@prisma/client";
 import { Injectable, Logger } from "@nestjs/common";
 
-import {
-  SettingsCreatePayload,
-  SettingsUpdatePayload,
-} from "./settings";
+import { SettingsCreatePayload, SettingsUpdatePayload } from "./settings";
 import { PrismaService } from "src/prisma/prisma.service";
 import { AuthenticatedKcUser } from "src/keycloak/keycloakUser";
 import { CannotCreateException } from "src/exceptions/cannotCreate.exception";

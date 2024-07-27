@@ -54,10 +54,7 @@ export default function FormMember() {
 
   return (
     <>
-      <form
-        className="flex gap-6 flex-wrap"
-        onSubmit={handleSubmit(submit)}
-      >
+      <form className="flex gap-6 flex-wrap" onSubmit={handleSubmit(submit)}>
         <Controller
           name="name"
           control={control}
@@ -104,11 +101,7 @@ export default function FormMember() {
       </form>
 
       {errorMsg && (
-        <Alert
-          type="error"
-          onClose={() => setErrorMsg("")}
-          style="mt-4"
-        >
+        <Alert type="error" onClose={() => setErrorMsg("")} style="mt-4">
           {errorMsg}
         </Alert>
       )}

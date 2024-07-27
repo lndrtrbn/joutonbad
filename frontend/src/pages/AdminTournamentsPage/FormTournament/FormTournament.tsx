@@ -111,31 +111,17 @@ export default function FormTournament({
   function submit(data: Inputs) {
     onSubmit({
       ...data,
-      startDate: parse(
-        data.startDate,
-        "dd/MM/yyyy",
-        new Date(),
-      ).toISOString(),
-      endDate: parse(
-        data.endDate,
-        "dd/MM/yyyy",
-        new Date(),
-      ).toISOString(),
+      startDate: parse(data.startDate, "dd/MM/yyyy", new Date()).toISOString(),
+      endDate: parse(data.endDate, "dd/MM/yyyy", new Date()).toISOString(),
       prices: data.prices.map((price) => parseFloat(price)),
     });
     !tournament && reset();
   }
 
   return (
-    <form
-      className={FormTournamentStyle.base}
-      onSubmit={handleSubmit(submit)}
-    >
+    <form className={FormTournamentStyle.base} onSubmit={handleSubmit(submit)}>
       <div
-        className={twMerge(
-          FormTournamentStyle.col,
-          "sm:flex-1 sm:grow-[5] w-full",
-        )}
+        className={twMerge(FormTournamentStyle.col, "sm:flex-1 sm:grow-[5] w-full")}
       >
         {error && (
           <div className={FormTournamentStyle.error}>
@@ -246,10 +232,7 @@ export default function FormTournament({
       </div>
 
       <div
-        className={twMerge(
-          FormTournamentStyle.col,
-          "sm:flex-1 sm:grow-[4] w-full",
-        )}
+        className={twMerge(FormTournamentStyle.col, "sm:flex-1 sm:grow-[4] w-full")}
       >
         <Controller
           name="disciplines"
@@ -315,8 +298,7 @@ export default function FormTournament({
           )}
         />
         <Alert type="info">
-          En cochant la case, les membres ne pourront pas s'inscrire
-          au tournois
+          En cochant la case, les membres ne pourront pas s'inscrire au tournois
         </Alert>
 
         <div className="flex flex-col gap-2">

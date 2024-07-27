@@ -66,9 +66,7 @@ export default function InputText({
           disabled={disabled}
           readOnly={readonly}
         />
-        {label && (
-          <label className={InputTextStyle.label}>{label}</label>
-        )}
+        {label && <label className={InputTextStyle.label}>{label}</label>}
         {onReset && value && (
           <Button
             style={InputTextStyle.resetBtn}
@@ -80,9 +78,7 @@ export default function InputText({
           </Button>
         )}
       </div>
-      {inError && error && (
-        <span className={InputTextStyle.errorText}>{error}</span>
-      )}
+      {inError && error && <span className={InputTextStyle.errorText}>{error}</span>}
     </div>
   );
 }

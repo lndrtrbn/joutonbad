@@ -46,18 +46,11 @@ export default function InputLabels({
               namePlaceholder={namePlaceholder}
               valuePlaceholder={valuePlaceholder}
               onChange={(val) =>
-                onChange([
-                  ...value.slice(0, i),
-                  val,
-                  ...value.slice(i + 1),
-                ])
+                onChange([...value.slice(0, i), val, ...value.slice(i + 1)])
               }
               onDelete={() => {
                 setQty((val) => val.slice(0, val.length - 1));
-                onChange([
-                  ...value.slice(0, i),
-                  ...value.slice(i + 1),
-                ]);
+                onChange([...value.slice(0, i), ...value.slice(i + 1)]);
               }}
             />
           ))}

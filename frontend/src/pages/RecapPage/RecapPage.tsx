@@ -1,10 +1,7 @@
 import { compareAsc } from "date-fns";
 import { useEffect, useState } from "react";
 
-import {
-  Registration,
-  filterByDiscipline,
-} from "../../utils/registration";
+import { Registration, filterByDiscipline } from "../../utils/registration";
 import Box from "../../components/Box/Box";
 import RecapPageStyle from "./RecapPage.style";
 import Title from "../../components/Title/Title";
@@ -22,9 +19,7 @@ export default function RecapPage() {
   const [toCome, setToCome] = useState<Tournament[]>([]);
   const [past, setPast] = useState<Tournament[]>([]);
 
-  const [myRegistrations, setMyregistrations] = useState<
-    Registration[]
-  >([]);
+  const [myRegistrations, setMyregistrations] = useState<Registration[]>([]);
   const [cost, setCost] = useState(0);
 
   useEffect(() => {
@@ -39,8 +34,7 @@ export default function RecapPage() {
       myTournaments
         ?.sort(
           (a, b) =>
-            new Date(a.startDate).getTime() -
-            new Date(b.startDate).getTime(),
+            new Date(a.startDate).getTime() - new Date(b.startDate).getTime(),
         )
         .forEach((tournament) => {
           // Sort tournaments if passed or not.
@@ -50,17 +44,12 @@ export default function RecapPage() {
 
           // Compute how much the player have to pay.
           const registrations = tournament.registrations.filter(
-            (reg) =>
-              reg.player.license == user.license && !reg.cancelled,
+            (reg) => reg.player.license == user.license && !reg.cancelled,
           );
           setMyregistrations((regs) => [...regs, ...registrations]);
-          if (registrations.length == 1)
-            setCost((c) => c + tournament.prices[0]);
+          if (registrations.length == 1) setCost((c) => c + tournament.prices[0]);
           if (registrations.length == 2)
-            setCost(
-              (c) =>
-                c + (tournament.prices[1] ?? tournament.prices[0]),
-            );
+            setCost((c) => c + (tournament.prices[1] ?? tournament.prices[0]));
           if (registrations.length == 3)
             setCost(
               (c) =>
@@ -95,8 +84,7 @@ export default function RecapPage() {
         <Box title="Statistiques" style="max-w-[640px]">
           <div className="flex flex-wrap gap-4">
             <div className={RecapPageStyle.stat}>
-              {myTournaments.length} Tournois |{" "}
-              {myRegistrations.length} Tableaux
+              {myTournaments.length} Tournois | {myRegistrations.length} Tableaux
             </div>
             <div className={RecapPageStyle.stat}>
               {[
@@ -109,9 +97,7 @@ export default function RecapPage() {
                 .filter((a) => !!a)
                 .join(" | ")}
             </div>
-            <div className={RecapPageStyle.stat}>
-              {cost}€ payé par le club
-            </div>
+            <div className={RecapPageStyle.stat}>{cost}€ payé par le club</div>
           </div>
         </Box>
 

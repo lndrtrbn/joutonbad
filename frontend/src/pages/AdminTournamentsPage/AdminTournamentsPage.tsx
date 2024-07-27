@@ -30,10 +30,7 @@ export default function AdminTournamentsPage() {
           mobileFull
           style="max-w-[1100px]"
         >
-          <TournamentsList
-            tournaments={tournaments}
-            onDelete={deleteTournament}
-          />
+          <TournamentsList tournaments={tournaments} onDelete={deleteTournament} />
         </Box>
 
         <Box title="Ajouter un tournoi" style="max-w-[1100px]">

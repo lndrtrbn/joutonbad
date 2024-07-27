@@ -10,10 +10,7 @@ export type ModalHeaderProps = {
   onClose?: () => void;
 };
 
-export default function ModalHeader({
-  children,
-  onClose,
-}: ModalHeaderProps) {
+export default function ModalHeader({ children, onClose }: ModalHeaderProps) {
   return (
     <div className={twMerge(ModalHeaderStyle.base)}>
       <div className={ModalHeaderStyle.title}>

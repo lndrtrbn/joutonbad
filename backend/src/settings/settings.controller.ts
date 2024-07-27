@@ -1,8 +1,4 @@
-import {
-  AuthenticatedUser,
-  Resource,
-  Roles,
-} from "nest-keycloak-connect";
+import { AuthenticatedUser, Resource, Roles } from "nest-keycloak-connect";
 import { PlateformSettings } from "@prisma/client";
 import { Body, Controller, Get, Patch } from "@nestjs/common";
 

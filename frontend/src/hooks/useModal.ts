@@ -1,11 +1,7 @@
 import { createPortal } from "react-dom";
 import { ReactNode, ReactPortal, useState } from "react";
 
-type UseModal = [
-  ReactPortal | undefined,
-  (modal: ReactNode) => void,
-  () => void,
-];
+type UseModal = [ReactPortal | undefined, (modal: ReactNode) => void, () => void];
 
 /**
  * Create a portal at the root of the DOM to insert the modal component in it.

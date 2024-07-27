@@ -1,11 +1,7 @@
 import { format } from "date-fns";
 import { twMerge } from "tailwind-merge";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBan,
-  faPaperPlane,
-  faTrashCan,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBan, faPaperPlane, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 import useModal from "../../../../hooks/useModal";
 import Link from "../../../../components/Link/Link";
@@ -58,8 +54,7 @@ export default function RegistrationRow({
         }}
       >
         <p>
-          Es-tu sûr.e de vouloir confirmer l'inscription{" "}
-          {registration.discipline} de
+          Es-tu sûr.e de vouloir confirmer l'inscription {registration.discipline} de
           <span className="font-medium">
             {" "}
             {registration.player.name} {registration.player.lastname}
@@ -80,8 +75,7 @@ export default function RegistrationRow({
         }}
       >
         <p>
-          Es-tu sûr.e de vouloir supprimer l'inscription{" "}
-          {registration.discipline} de
+          Es-tu sûr.e de vouloir supprimer l'inscription {registration.discipline} de
           <span className="font-medium">
             {" "}
             {registration.player.name} {registration.player.lastname}
@@ -162,8 +156,7 @@ export default function RegistrationRow({
             <>
               <br />
               <span className={RegistrationRowStyle.partner}>
-                {registration.partner.name}{" "}
-                {registration.partner.lastname}
+                {registration.partner.name} {registration.partner.lastname}
               </span>
             </>
           )}

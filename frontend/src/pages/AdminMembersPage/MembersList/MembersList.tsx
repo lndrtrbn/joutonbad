@@ -20,9 +20,7 @@ export default function MembersList({ members }: Props) {
       .filter((player) => inactive || player.kcId)
       .filter((player) => active || !player.kcId)
       .sort((a, b) =>
-        `${a.lastname} ${a.name}`.localeCompare(
-          `${b.lastname} ${b.name}`,
-        ),
+        `${a.lastname} ${a.name}`.localeCompare(`${b.lastname} ${b.name}`),
       ),
   );
 
@@ -35,11 +33,7 @@ export default function MembersList({ members }: Props) {
           children="Inactif.ve"
         />
 
-        <InputCheckbox
-          checked={active}
-          onChange={setActive}
-          children="Actif.ve"
-        />
+        <InputCheckbox checked={active} onChange={setActive} children="Actif.ve" />
       </div>
 
       <div className="overflow-auto">

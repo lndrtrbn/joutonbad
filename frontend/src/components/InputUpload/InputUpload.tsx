@@ -9,12 +9,7 @@ type Props = {
   disabled?: InputHTMLAttributes<HTMLInputElement>["disabled"];
 };
 
-export default function InputUpload({
-  label,
-  accept,
-  onChange,
-  disabled,
-}: Props) {
+export default function InputUpload({ label, accept, onChange, disabled }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   function change(event: ChangeEvent<HTMLInputElement>) {

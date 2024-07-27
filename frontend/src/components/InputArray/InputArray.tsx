@@ -47,15 +47,9 @@ export default function InputArray({
               value={val ?? ""}
               label={placeholder.replace("{i}", `${i + 1}`)}
               width={width}
-              onReset={
-                i === value.length - 1 ? onDecrement : undefined
-              }
+              onReset={i === value.length - 1 ? onDecrement : undefined}
               onChange={(val) => {
-                onChange([
-                  ...value.slice(0, i),
-                  val,
-                  ...value.slice(i + 1),
-                ]);
+                onChange([...value.slice(0, i), val, ...value.slice(i + 1)]);
               }}
             />
           ))}

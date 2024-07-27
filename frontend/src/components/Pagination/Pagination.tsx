@@ -33,11 +33,7 @@ export default function Pagination({
   return (
     <div className="relative">
       <div className="flex gap-2 w-full justify-center select-none">
-        <Button
-          variant="icon"
-          disabled={page === 0}
-          onClick={() => setPage(0)}
-        >
+        <Button variant="icon" disabled={page === 0} onClick={() => setPage(0)}>
           <FontAwesomeIcon icon={faAngleDoubleLeft} />
         </Button>
         <Button
@@ -54,22 +50,13 @@ export default function Pagination({
           <div className="absolute top-[40px] z-10 bg-white border border-black/20 rounded-xl p-4">
             <p className="text-center">Taille des pages</p>
             <div className="flex gap-4 mt-4">
-              <Button
-                onClick={() => setSize(10)}
-                active={pageSize === 10}
-              >
+              <Button onClick={() => setSize(10)} active={pageSize === 10}>
                 10
               </Button>
-              <Button
-                onClick={() => setSize(25)}
-                active={pageSize === 25}
-              >
+              <Button onClick={() => setSize(25)} active={pageSize === 25}>
                 25
               </Button>
-              <Button
-                onClick={() => setSize(50)}
-                active={pageSize === 50}
-              >
+              <Button onClick={() => setSize(50)} active={pageSize === 50}>
                 50
               </Button>
             </div>

@@ -17,9 +17,7 @@ export default function AdminTournamentPage() {
   const { id } = useParams();
   const { data: admins } = useQueryAdminPlayers();
   const { data: tournament } = useQueryTournamentById(id || "");
-  const { mutateAsync, error, isPending } = useUpdateTournament(
-    id || "",
-  );
+  const { mutateAsync, error, isPending } = useUpdateTournament(id || "");
 
   if (!tournament) return null;
 

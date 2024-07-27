@@ -24,9 +24,7 @@ export default function TournamentDetails({ tournament }: Props) {
 
       <div className="flex flex-col gap-4">
         <div className="flex flex-col sm:flex-row sm:gap-8">
-          <Title subtitle>
-            Début {strDate(tournament.startDate)}
-          </Title>
+          <Title subtitle>Début {strDate(tournament.startDate)}</Title>
           <Title subtitle>Fin {strDate(tournament.endDate)}</Title>
         </div>
 
@@ -45,9 +43,7 @@ export default function TournamentDetails({ tournament }: Props) {
 
           <section>
             <p>Tableaux</p>
-            <Title style="mb-0">
-              {tournament.disciplines.join(" ")}
-            </Title>
+            <Title style="mb-0">{tournament.disciplines.join(" ")}</Title>
           </section>
 
           <section>
@@ -60,16 +56,13 @@ export default function TournamentDetails({ tournament }: Props) {
           <section>
             <p>Responsable REC</p>
             <Title style="mb-0">
-              {tournament.inCharge.lastname}{" "}
-              {tournament.inCharge.name}
+              {tournament.inCharge.lastname} {tournament.inCharge.name}
             </Title>
           </section>
 
           <section>
             <p>Nocturne</p>
-            <Title style="mb-0">
-              {tournament.nocturne ? "Oui" : "Non"}
-            </Title>
+            <Title style="mb-0">{tournament.nocturne ? "Oui" : "Non"}</Title>
           </section>
 
           {tournament.links.length > 0 && (
@@ -77,12 +70,7 @@ export default function TournamentDetails({ tournament }: Props) {
               <p>Liens</p>
               <div className={TournamentDetailsStyle.list}>
                 {tournament.links.map((link) => (
-                  <Link
-                    key={link.name}
-                    to={link.url}
-                    inline
-                    target="_blank"
-                  >
+                  <Link key={link.name} to={link.url} inline target="_blank">
                     {link.name}
                   </Link>
                 ))}
@@ -94,17 +82,12 @@ export default function TournamentDetails({ tournament }: Props) {
         {!tournament.freezed ? (
           <Alert type="info">
             Fin des inscriptions le{" "}
-            {strDate(
-              subDays(
-                new Date(tournament.startDate),
-                14,
-              ).toISOString(),
-            )}
+            {strDate(subDays(new Date(tournament.startDate), 14).toISOString())}
           </Alert>
         ) : (
           <Alert type="info">
-            Les inscriptions ont été clôturées. Ceci peut être dû au
-            fait que le tournoi soit complet.
+            Les inscriptions ont été clôturées. Ceci peut être dû au fait que le
+            tournoi soit complet.
           </Alert>
         )}
       </div>

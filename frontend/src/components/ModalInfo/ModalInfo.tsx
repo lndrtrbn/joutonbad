@@ -11,11 +11,7 @@ type Props = {
   onClose: () => void;
 };
 
-export default function ModalInfo({
-  children,
-  title,
-  onClose,
-}: Props) {
+export default function ModalInfo({ children, title, onClose }: Props) {
   return (
     <Modal onClickOutside={onClose}>
       <ModalHeader>{title}</ModalHeader>

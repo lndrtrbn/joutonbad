@@ -11,18 +11,9 @@ export default function AlertPortal() {
   return (
     <>
       {createPortal(
-        <div
-          className={twMerge(
-            AlertPortalStyle.base,
-            AlertPortalStyle.position,
-          )}
-        >
+        <div className={twMerge(AlertPortalStyle.base, AlertPortalStyle.position)}>
           {alerts.map((alert, i) => (
-            <Alert
-              key={i}
-              type={alert.type}
-              onClose={() => removeAlert(alert)}
-            >
+            <Alert key={i} type={alert.type} onClose={() => removeAlert(alert)}>
               {alert.message}
             </Alert>
           ))}

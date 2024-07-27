@@ -38,10 +38,7 @@ export default function FormForgotPwd({ onSuccess }: Props) {
   }
 
   return (
-    <form
-      className="flex flex-col gap-4 w-full"
-      onSubmit={handleSubmit(submit)}
-    >
+    <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit(submit)}>
       <Controller
         name="email"
         control={control}
@@ -57,10 +54,7 @@ export default function FormForgotPwd({ onSuccess }: Props) {
           />
         )}
       />
-      <ButtonLoading
-        disabled={!isValid || isPending}
-        loading={isPending}
-      >
+      <ButtonLoading disabled={!isValid || isPending} loading={isPending}>
         Changer de mot de passe
       </ButtonLoading>
     </form>

@@ -44,8 +44,7 @@ export default function useAxios() {
   );
 
   const getAxios = useCallback(
-    <T>(endpoint: string) =>
-      call(() => axios.get<T>(endpoint, { headers })),
+    <T>(endpoint: string) => call(() => axios.get<T>(endpoint, { headers })),
     [call, headers],
   );
 
@@ -68,8 +67,7 @@ export default function useAxios() {
   );
 
   const deleteAxios = useCallback(
-    <T>(endpoint: string) =>
-      call(() => axios.delete<T>(endpoint, { headers })),
+    <T>(endpoint: string) => call(() => axios.delete<T>(endpoint, { headers })),
     [call, headers],
   );
 

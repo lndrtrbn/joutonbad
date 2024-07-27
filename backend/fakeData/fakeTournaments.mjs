@@ -15,26 +15,12 @@ export function generateTournaments(quantity) {
       endDate,
       createdAt: new Date(),
       updatedAt: new Date(),
-      disciplines: faker.helpers.arrayElements(
-        ["SH", "SD", "DH", "DD", "DM"],
-        {
-          min: 2,
-          max: 4,
-        },
-      ),
-      maxLevel: faker.helpers.arrayElement([
-        "R5",
-        "R4",
-        "N3",
-        "N2",
-        "N1",
-      ]),
-      minLevel: faker.helpers.arrayElement([
-        "P10",
-        "P11",
-        "P12",
-        "D9",
-      ]),
+      disciplines: faker.helpers.arrayElements(["SH", "SD", "DH", "DD", "DM"], {
+        min: 2,
+        max: 4,
+      }),
+      maxLevel: faker.helpers.arrayElement(["R5", "R4", "N3", "N2", "N1"]),
+      minLevel: faker.helpers.arrayElement(["P10", "P11", "P12", "D9"]),
       prices: [
         faker.number.int({ min: 10, max: 14 }),
         faker.number.int({ min: 18, max: 22 }),

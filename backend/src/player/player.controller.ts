@@ -17,22 +17,14 @@ import {
 import { parse } from "csv-parse/sync";
 import { Player } from "@prisma/client";
 import { FileInterceptor } from "@nestjs/platform-express";
-import {
-  AuthenticatedUser,
-  Resource,
-  Roles,
-} from "nest-keycloak-connect";
+import { AuthenticatedUser, Resource, Roles } from "nest-keycloak-connect";
 
 import { CONFIG } from "src/config";
 import { trimLicense } from "src/utils/license";
 import { PlayerService } from "./player.service";
 import { AuthenticatedKcUser } from "src/keycloak/keycloakUser";
 import { KeycloakService } from "src/keycloak/keycloak.service";
-import {
-  CsvPlayer,
-  PlayerCreatePayload,
-  PlayerUpdatePayload,
-} from "./player";
+import { CsvPlayer, PlayerCreatePayload, PlayerUpdatePayload } from "./player";
 
 @Resource("player")
 @Controller("player")
@@ -45,9 +37,7 @@ export class PlayerController {
   ) {}
 
   @Get()
-  async get(
-    @Query("ids") ids: string | undefined,
-  ): Promise<Player[]> {
+  async get(@Query("ids") ids: string | undefined): Promise<Player[]> {
     this.logger.log(`[get] With ids: ${ids}`);
 
     return this.playerService.getWhere(
@@ -77,9 +67,7 @@ export class PlayerController {
   }
 
   @Get(":license")
-  async getBylicense(
-    @Param("license") license: string,
-  ): Promise<Player> {
+  async getBylicense(@Param("license") license: string): Promise<Player> {
     this.logger.log(`[findByLicense] With: ${license}`);
 
     return this.playerService.getOneWhere({

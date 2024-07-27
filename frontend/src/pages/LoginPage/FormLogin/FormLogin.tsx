@@ -55,10 +55,7 @@ export default function FormLogin() {
   }
 
   return (
-    <form
-      className="flex flex-col gap-4 w-full"
-      onSubmit={handleSubmit(submit)}
-    >
+    <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit(submit)}>
       <Controller
         name="username"
         control={control}
@@ -87,10 +84,7 @@ export default function FormLogin() {
 
       {errorMsg && <Alert type="error">{errorMsg}</Alert>}
 
-      <ButtonLoading
-        disabled={!isValid || isPending}
-        loading={isPending}
-      >
+      <ButtonLoading disabled={!isValid || isPending} loading={isPending}>
         Me connecter
       </ButtonLoading>
     </form>

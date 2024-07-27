@@ -14,9 +14,7 @@ export type User = {
   roles: string[];
 };
 
-export function kcUserToUser(
-  kcUser: KcUser | undefined,
-): User | undefined {
+export function kcUserToUser(kcUser: KcUser | undefined): User | undefined {
   if (!kcUser) return undefined;
 
   const decoded = jose.decodeJwt(kcUser.access_token);

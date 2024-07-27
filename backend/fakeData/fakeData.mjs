@@ -6,9 +6,7 @@ async function fakeData() {
   const args = process.argv.slice(2);
   const argDb = args.find((arg) => arg.startsWith("--db="));
   const argTournamentsNb = args.find((arg) => arg.startsWith("--t="));
-  const argRegistrationsNb = args.find((arg) =>
-    arg.startsWith("--r="),
-  );
+  const argRegistrationsNb = args.find((arg) => arg.startsWith("--r="));
 
   if (!argDb || !argDb.startsWith("--db=")) {
     console.error("Cannot run fake import: no argument --db found");
@@ -29,12 +27,9 @@ async function fakeData() {
     const collRegistrations = database.collection("Registration");
 
     if (tournamentsNb > 0) {
-      await collTournaments.insertMany(
-        generateTournaments(tournamentsNb),
-        {
-          ordered: true,
-        },
-      );
+      await collTournaments.insertMany(generateTournaments(tournamentsNb), {
+        ordered: true,
+      });
     }
 
     if (registrationsNb > 0) {

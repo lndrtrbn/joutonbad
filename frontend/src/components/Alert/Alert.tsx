@@ -18,12 +18,7 @@ export type AlertProps = {
   style?: string;
 };
 
-export default function Alert({
-  type,
-  children,
-  onClose,
-  style = "",
-}: AlertProps) {
+export default function Alert({ type, children, onClose, style = "" }: AlertProps) {
   const icon = {
     info: faInfo,
     success: faCheck,

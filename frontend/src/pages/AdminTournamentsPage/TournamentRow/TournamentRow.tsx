@@ -41,31 +41,23 @@ export default function TournamentRow({
   );
 
   const infoModal = (
-    <ModalInfo
-      title="Le tournoi ne peut pas être supprimé"
-      onClose={close}
-    >
+    <ModalInfo title="Le tournoi ne peut pas être supprimé" onClose={close}>
       <p>
         Des inscriptions ont déjà été faites pour le tournoi{" "}
-        <span className="font-medium"> "{tournament.name}"</span>.
-        Pour cette raison il ne peut pas être supprimé.
+        <span className="font-medium"> "{tournament.name}"</span>. Pour cette raison
+        il ne peut pas être supprimé.
       </p>
     </ModalInfo>
   );
 
   function askDelete() {
-    open(
-      tournament.registrations.length > 0 ? infoModal : confirmModal,
-    );
+    open(tournament.registrations.length > 0 ? infoModal : confirmModal);
   }
 
   return (
     <>
       <div
-        className={twMerge(
-          TournamentRowStyle.base,
-          alt && TournamentRowStyle.alt,
-        )}
+        className={twMerge(TournamentRowStyle.base, alt && TournamentRowStyle.alt)}
       >
         <span className={TournamentRowStyle.dates}>
           {format(new Date(tournament.startDate), "dd/MM ")}

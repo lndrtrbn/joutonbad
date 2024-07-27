@@ -33,12 +33,7 @@ export default function InputLabel({
         onChange={(val) => onChange([value ? value[0] : "", val])}
         width="flex-[1] sm:flex-[2]"
       />
-      <Button
-        type="button"
-        variant="icon"
-        style="shrink-0"
-        onClick={onDelete}
-      >
+      <Button type="button" variant="icon" style="shrink-0" onClick={onDelete}>
         <FontAwesomeIcon icon={faClose} />
       </Button>
     </div>

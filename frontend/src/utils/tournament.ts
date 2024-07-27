@@ -35,18 +35,12 @@ export type TournamentList = {
   tournaments: Tournament[];
 }[];
 
-export function groupByMonth(
-  tournaments: Tournament[],
-): TournamentList {
+export function groupByMonth(tournaments: Tournament[]): TournamentList {
   const newList: TournamentList = [];
   byStartDate(tournaments).forEach((tournament) => {
-    const month = format(
-      new Date(tournament.startDate),
-      "MMMM yyyy",
-      {
-        locale: fr,
-      },
-    );
+    const month = format(new Date(tournament.startDate), "MMMM yyyy", {
+      locale: fr,
+    });
 
     const monthList = newList.find((item) => item.month === month);
     if (monthList) {
@@ -67,8 +61,7 @@ export function filterDisciplines(
 ) {
   return (tournaments ?? []).filter((tournament) => {
     return (
-      !disciplines ||
-      disciplines.every((d) => tournament.disciplines.includes(d))
+      !disciplines || disciplines.every((d) => tournament.disciplines.includes(d))
     );
   });
 }
@@ -107,16 +100,12 @@ export function filterPast(tournaments?: Tournament[]) {
 
 export function byCreatedDate(tournaments?: Tournament[]) {
   return (tournaments ?? []).sort(
-    (a, b) =>
-      new Date(b.createdAt).getTime() -
-      new Date(a.createdAt).getTime(),
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );
 }
 
 export function byStartDate(tournaments?: Tournament[]) {
   return (tournaments ?? []).sort(
-    (a, b) =>
-      new Date(a.startDate).getTime() -
-      new Date(b.startDate).getTime(),
+    (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime(),
   );
 }

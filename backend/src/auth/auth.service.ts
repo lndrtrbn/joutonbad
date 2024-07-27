@@ -25,10 +25,7 @@ export class AuthService {
     private keycloakService: KeycloakService,
   ) {}
 
-  private async executeActions(
-    userId: string,
-    actions: string[],
-  ): Promise<void> {
+  private async executeActions(userId: string, actions: string[]): Promise<void> {
     const { access_token } = await this.keycloakService.getApiToken(
       CONFIG.kcApiUser,
       CONFIG.kcApiPwd,
@@ -60,13 +57,9 @@ export class AuthService {
     };
 
     try {
-      const { data } = await axios.post<GrantProperties>(
-        URL,
-        payload,
-        {
-          headers: urlEncoded(),
-        },
-      );
+      const { data } = await axios.post<GrantProperties>(URL, payload, {
+        headers: urlEncoded(),
+      });
       return data;
     } catch (error) {
       this.logger.error(`[refreshApiToken] ${JSON.stringify(error)}`);
@@ -86,10 +79,7 @@ export class AuthService {
    * @param userEmail The email of the user to execute actions.
    * @param actions Actions to execute.
    */
-  async executeUserActions(
-    userEmail: string,
-    actions: string[],
-  ): Promise<void> {
+  async executeUserActions(userEmail: string, actions: string[]): Promise<void> {
     const user = (await this.keycloakService.getUsers()).find(
       (u) => u.email == userEmail,
     );
@@ -104,10 +94,7 @@ export class AuthService {
    * @param username The username of the user who wants a token.
    * @param password The password of the usre who wants a token.
    */
-  async signin(
-    username: string,
-    password: string,
-  ): Promise<GrantProperties> {
+  async signin(username: string, password: string): Promise<GrantProperties> {
     return this.keycloakService.getApiToken(username, password);
   }
 
@@ -117,9 +104,7 @@ export class AuthService {
    * @param payload The data of the user to create.
    * @returns 201 if success.
    */
-  async createUser(
-    payload: KeycloakUserCreatePayload,
-  ): Promise<void> {
+  async createUser(payload: KeycloakUserCreatePayload): Promise<void> {
     const license = trimLicense(payload.username);
     this.logger.log(`[createUser] With: ${license}`);
 

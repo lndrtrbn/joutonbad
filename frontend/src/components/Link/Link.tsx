@@ -37,9 +37,7 @@ export default function Link({
         )
       }
     >
-      {icon && (
-        <FontAwesomeIcon className={LinkStyle.icon} icon={icon} />
-      )}
+      {icon && <FontAwesomeIcon className={LinkStyle.icon} icon={icon} />}
       {children}
     </NavLink>
   );

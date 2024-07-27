@@ -49,9 +49,7 @@ export default function CalendarList({ title, tournaments }: Props) {
 
       <div className="flex gap-4 flex-wrap mt-8">
         {filteredTournaments.length == 0 && (
-          <Title subtitle>
-            Aucun tournoi correspondant aux filtres
-          </Title>
+          <Title subtitle>Aucun tournoi correspondant aux filtres</Title>
         )}
         {filteredTournaments.map((monthList) => (
           <div key={monthList.month} className="w-full sm:w-auto">
@@ -64,9 +62,7 @@ export default function CalendarList({ title, tournaments }: Props) {
                 <TournamentCard
                   key={tournament.id}
                   tournament={tournament}
-                  registeredDisciplines={getRegisteredDisciplines(
-                    tournament,
-                  )}
+                  registeredDisciplines={getRegisteredDisciplines(tournament)}
                 />
               ))}
             </div>

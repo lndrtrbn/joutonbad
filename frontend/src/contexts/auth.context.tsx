@@ -1,9 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import { User } from "../utils/user";
 import { Player } from "../utils/player";
@@ -23,9 +18,7 @@ const AuthContext = createContext<Context | undefined>(undefined);
  */
 export function AuthProvider({ children }: ProviderProps) {
   const userState = useState<User | undefined>(getLocalItem("user"));
-  const profilState = useState<Player | undefined>(
-    getLocalItem("profil"),
-  );
+  const profilState = useState<Player | undefined>(getLocalItem("profil"));
 
   const [user] = userState;
   const [profil] = profilState;
@@ -59,9 +52,7 @@ export function AuthProvider({ children }: ProviderProps) {
 export function useAuthContext() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error(
-      "useAuthContext must be used within a AuthProvider",
-    );
+    throw new Error("useAuthContext must be used within a AuthProvider");
   }
   return {
     user: context.user[0],

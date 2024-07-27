@@ -31,11 +31,7 @@ export default function InputTag({
       {label && <p>{label}</p>}
       <div className={InputTagStyle.list}>
         {list.map((item) => (
-          <Tag
-            key={item}
-            active={value.includes(item)}
-            onClick={() => toggle(item)}
-          >
+          <Tag key={item} active={value.includes(item)} onClick={() => toggle(item)}>
             {item}
           </Tag>
         ))}

@@ -14,9 +14,7 @@ export default defineConfig({
       // See: https://docs.keycloakify.dev/build-options#themename
       themeName: "joutonbad-theme",
       // See: https://docs.keycloakify.dev/environnement-variables
-      extraThemeProperties: [
-        "MY_ENV_VARIABLE=${env.MY_ENV_VARIABLE:}",
-      ],
+      extraThemeProperties: ["MY_ENV_VARIABLE=${env.MY_ENV_VARIABLE:}"],
       // This is a hook that will be called after the build is done
       // but before the jar is created.
       // You can use it to add/remove/edit your theme files.
@@ -25,10 +23,7 @@ export default defineConfig({
         const path = await import("path");
 
         await fs.writeFile(
-          path.join(
-            keycloakifyBuildOptions.keycloakifyBuildDirPath,
-            "foo.txt",
-          ),
+          path.join(keycloakifyBuildOptions.keycloakifyBuildDirPath, "foo.txt"),
           Buffer.from(
             [
               "This file was created by the postBuild hook of the keycloakify vite plugin",

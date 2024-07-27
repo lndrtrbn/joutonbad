@@ -8,10 +8,7 @@ export type ModalProps = {
   onClickOutside: () => void;
 };
 
-export default function Modal({
-  children,
-  onClickOutside,
-}: ModalProps) {
+export default function Modal({ children, onClickOutside }: ModalProps) {
   const ref = useClickOutside(onClickOutside);
 
   return (

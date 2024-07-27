@@ -11,20 +11,13 @@ type Props = {
   onDelete: (id: string) => Promise<unknown>;
 };
 
-export default function TournamentsList({
-  tournaments,
-  onDelete,
-}: Props) {
+export default function TournamentsList({ tournaments, onDelete }: Props) {
   const [search, setSearch] = useState("");
   const [paginatedTournaments, pagination] = usePagination(
     tournaments
-      .filter((t) =>
-        t.name.toLowerCase().includes(search.toLowerCase()),
-      )
+      .filter((t) => t.name.toLowerCase().includes(search.toLowerCase()))
       .sort(
-        (a, b) =>
-          new Date(a.startDate).getTime() -
-          new Date(b.startDate).getTime(),
+        (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime(),
       ),
   );
 

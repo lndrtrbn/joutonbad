@@ -6,9 +6,7 @@ export type LogoVerticalProps = {
   withTitle?: boolean;
 };
 
-export default function LogoVertical({
-  withTitle = false,
-}: LogoVerticalProps) {
+export default function LogoVertical({ withTitle = false }: LogoVerticalProps) {
   return (
     <div className={LogoVerticalStyle.base}>
       <Svg name="logo" size={48} style={LogoVerticalStyle.logo} />

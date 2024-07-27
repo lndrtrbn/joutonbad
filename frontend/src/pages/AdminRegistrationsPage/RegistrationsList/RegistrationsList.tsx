@@ -32,9 +32,7 @@ export default function RegistrationsList({
   const [filtered, setFiltered] = useState<Registration[]>([]);
   const [paginatedRegistrations, pagination] = usePagination(
     filtered.sort(
-      (a, b) =>
-        new Date(a.createdAt).getTime() -
-        new Date(b.createdAt).getTime(),
+      (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
     ),
   );
 
@@ -113,9 +111,7 @@ export default function RegistrationsList({
             alt={i % 2 == 0}
           />
         ))}
-        {filtered.length == 0 && (
-          <Title subtitle>{noResultLabel}</Title>
-        )}
+        {filtered.length == 0 && <Title subtitle>{noResultLabel}</Title>}
       </div>
       <Pagination {...pagination} />
     </section>

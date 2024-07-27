@@ -30,8 +30,7 @@ export const CONFIG: Config = {
   kcRoleEditor: process.env.KC_ROLE_EDITOR ?? "",
   googleSpreadSheetId: process.env.GOOGLE_SPREADSHEET_ID ?? "",
   googlePlayersSheetId: process.env.GOOGLE_PLAYERS_SHEET_ID ?? "",
-  googleTournamentsSheetId:
-    process.env.GOOGLE_TOURNAMENTS_SHEET_ID ?? "",
+  googleTournamentsSheetId: process.env.GOOGLE_TOURNAMENTS_SHEET_ID ?? "",
   googleRegistrationsDoneSheetId:
     process.env.GOOGLE_REGISTRATIONS_DONE_SHEET_ID ?? "",
   googleRegistrationsToDoSheetId:

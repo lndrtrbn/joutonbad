@@ -16,10 +16,7 @@ import { useCallback, useEffect, useRef } from "react";
  * @param delay Delay in milliseconds.
  * @returns A function to run the timeout and an other to clear it.
  */
-export default function useTimeout(
-  callback: () => void,
-  delay: number,
-) {
+export default function useTimeout(callback: () => void, delay: number) {
   const timeoutRef = useRef<NodeJS.Timeout>();
   const savedCallback = useRef(callback);
 
@@ -28,10 +25,7 @@ export default function useTimeout(
   }, [callback]);
 
   const run = useCallback(() => {
-    timeoutRef.current = setTimeout(
-      () => savedCallback.current(),
-      delay,
-    );
+    timeoutRef.current = setTimeout(() => savedCallback.current(), delay);
     return () => clearTimeout(timeoutRef.current);
   }, [delay]);
 

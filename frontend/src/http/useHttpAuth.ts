@@ -58,7 +58,6 @@ export function useRefreshToken() {
   const token = user?.refreshToken;
 
   return useMutation({
-    mutationFn: () =>
-      postAxios<KcUser>(`${API_URL}/refreshtoken`, { token }),
+    mutationFn: () => postAxios<KcUser>(`${API_URL}/refreshtoken`, { token }),
   });
 }

@@ -22,8 +22,8 @@ export default function LoginPage() {
       {state === "from-forgotpwd" && (
         <Alert type="info">
           <p>
-            Un email a été envoyé à ton adresse. Tu y trouveras un
-            lien pour changer ton mot de passe.
+            Un email a été envoyé à ton adresse. Tu y trouveras un lien pour changer
+            ton mot de passe.
           </p>
         </Alert>
       )}

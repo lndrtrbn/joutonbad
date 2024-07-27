@@ -27,8 +27,7 @@ export default function ModalCancelRegistration({
       }}
     >
       <p className={ModalCancelRegistrationStyle.content}>
-        Es-tu sûr.e de vouloir annuler l'inscription{" "}
-        {registration.discipline} de
+        Es-tu sûr.e de vouloir annuler l'inscription {registration.discipline} de
         <span className="font-medium">
           {" "}
           {registration.player.name} {registration.player.lastname}

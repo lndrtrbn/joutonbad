@@ -24,9 +24,7 @@ export default function AdminRegistrationsPage() {
 
   const [registrationsToDo, setTodo] = useState<Registration[]>([]);
   const [registrationsDone, setDone] = useState<Registration[]>([]);
-  const [registrationsCancelled, setCancelled] = useState<
-    Registration[]
-  >([]);
+  const [registrationsCancelled, setCancelled] = useState<Registration[]>([]);
 
   useEffect(() => {
     if (registrations) {

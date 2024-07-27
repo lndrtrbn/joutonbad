@@ -1,9 +1,4 @@
-import {
-  Player,
-  Prisma,
-  Registration,
-  Tournament,
-} from "@prisma/client";
+import { Player, Prisma, Registration, Tournament } from "@prisma/client";
 
 export type TournamentCreatePayload = Pick<
   Prisma.TournamentCreateInput,

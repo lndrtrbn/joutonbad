@@ -12,10 +12,7 @@ import { useEffect, useRef } from "react";
  * @param callback The function to call each delay.
  * @param delay Delay in milliseconds.
  */
-export default function useInterval(
-  callback: () => void,
-  delay: number | null,
-) {
+export default function useInterval(callback: () => void, delay: number | null) {
   const savedCallback = useRef(callback);
 
   useEffect(() => {

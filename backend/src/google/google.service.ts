@@ -39,17 +39,13 @@ export class GoogleService {
     const registrationsToDo = registrations.filter(
       (reg) => !reg.sent && !reg.cancelled,
     );
-    const registrationsCancelled = registrations.filter(
-      (reg) => reg.cancelled,
-    );
+    const registrationsCancelled = registrations.filter((reg) => reg.cancelled);
 
     // Transform data into Google Sheet format.
     const dataPlayers = playersToSheetData(players);
     const dataTournaments = tournamentsToSheetData(tournaments);
-    const dataRegistrationsDone =
-      registrationsToSheetData(registrationsDone);
-    const dataRegistrationsTodo =
-      registrationsToSheetData(registrationsToDo);
+    const dataRegistrationsDone = registrationsToSheetData(registrationsDone);
+    const dataRegistrationsTodo = registrationsToSheetData(registrationsToDo);
     const dataRegistrationsCancelled = registrationsToSheetData(
       registrationsCancelled,
     );
@@ -70,14 +66,8 @@ export class GoogleService {
           requests: [
             getUpdateRequest(sheetPlayers, dataPlayers),
             getUpdateRequest(sheetTournaments, dataTournaments),
-            getUpdateRequest(
-              sheetRegistrationsDone,
-              dataRegistrationsDone,
-            ),
-            getUpdateRequest(
-              sheetRegistrationsToDo,
-              dataRegistrationsTodo,
-            ),
+            getUpdateRequest(sheetRegistrationsDone, dataRegistrationsDone),
+            getUpdateRequest(sheetRegistrationsToDo, dataRegistrationsTodo),
             getUpdateRequest(
               sheetRegistrationsCancelled,
               dataRegistrationsCancelled,

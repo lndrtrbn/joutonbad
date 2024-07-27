@@ -22,9 +22,7 @@ import { RegistrationService } from "./registration.service";
 @Controller("registration")
 export class RegistrationController {
   private readonly logger = new Logger(RegistrationController.name);
-  constructor(
-    private readonly registrationService: RegistrationService,
-  ) {}
+  constructor(private readonly registrationService: RegistrationService) {}
 
   @Get()
   async getAll(): Promise<Registration[]> {
@@ -33,9 +31,7 @@ export class RegistrationController {
   }
 
   @Get("tournament/:id")
-  async getByTournament(
-    @Param("id") id: string,
-  ): Promise<Registration[]> {
+  async getByTournament(@Param("id") id: string): Promise<Registration[]> {
     this.logger.log(`GET /registration/tournament/${id}`);
     return this.registrationService.getWhere({
       tournamentId: id,
@@ -43,12 +39,8 @@ export class RegistrationController {
   }
 
   @Post()
-  async create(
-    @Body() data: RegistrationCreatePayload,
-  ): Promise<Registration> {
-    this.logger.log(
-      `POST /registration ${JSON.stringify(data, undefined, 2)}`,
-    );
+  async create(@Body() data: RegistrationCreatePayload): Promise<Registration> {
+    this.logger.log(`POST /registration ${JSON.stringify(data, undefined, 2)}`);
     return this.registrationService.create(data);
   }
 

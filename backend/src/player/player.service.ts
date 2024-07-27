@@ -9,10 +9,7 @@ import {
 } from "./player";
 import { trimLicense } from "src/utils/license";
 import { PrismaService } from "src/prisma/prisma.service";
-import {
-  AuthenticatedKcUser,
-  KeycloakUser,
-} from "src/keycloak/keycloakUser";
+import { AuthenticatedKcUser, KeycloakUser } from "src/keycloak/keycloakUser";
 import { CannotCreateException } from "src/exceptions/cannotCreate.exception";
 import { NoPlayerFoundException } from "src/exceptions/noPlayerFound.exception";
 import { PlayerAlreadyLinkedException } from "src/exceptions/playerAlreadyLinked.exception";
@@ -41,16 +38,12 @@ export class PlayerService {
    * @param where The conditions of the player to fetch.
    * @returns The player match the conditions.
    */
-  async getOneWhere(
-    where?: Prisma.PlayerWhereInput,
-  ): Promise<Player> {
+  async getOneWhere(where?: Prisma.PlayerWhereInput): Promise<Player> {
     const player = await this.prisma.player.findFirst({
       where,
     });
     if (!player) {
-      this.logger.error(
-        `No player found with conditions: ${JSON.stringify(where)}`,
-      );
+      this.logger.error(`No player found with conditions: ${JSON.stringify(where)}`);
       throw new NoPlayerFoundException();
     }
     return player;
@@ -104,9 +97,9 @@ export class PlayerService {
   async upload(players: CsvPlayer[]): Promise<Player[]> {
     this.logger.log(`[upload] With: ${players}`);
 
-    const allPlayerLicenses = (
-      await this.prisma.player.findMany()
-    ).map((p) => p.license);
+    const allPlayerLicenses = (await this.prisma.player.findMany()).map(
+      (p) => p.license,
+    );
     const playersToAdd = players.filter(
       (p) => !allPlayerLicenses.includes(trimLicense(p[2])),
     );

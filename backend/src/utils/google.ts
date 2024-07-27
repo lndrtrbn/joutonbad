@@ -56,9 +56,7 @@ export function getUpdateRequest(
   };
 }
 
-export function playersToSheetData(
-  players: Player[],
-): sheets_v4.Schema$RowData[] {
+export function playersToSheetData(players: Player[]): sheets_v4.Schema$RowData[] {
   const header = {
     values: [
       { userEnteredValue: { stringValue: "Prénom" } },
@@ -109,8 +107,7 @@ export function tournamentsToSheetData(
         userEnteredValue: {
           // https://stackoverflow.com/a/73535864
           numberValue:
-            (tournament.startDate.getTime() / 1000 + 3600) / 86400 +
-            25569,
+            (tournament.startDate.getTime() / 1000 + 3600) / 86400 + 25569,
         },
         userEnteredFormat: {
           numberFormat: {
@@ -122,9 +119,7 @@ export function tournamentsToSheetData(
       {
         userEnteredValue: {
           // https://stackoverflow.com/a/73535864
-          numberValue:
-            (tournament.endDate.getTime() / 1000 + 3600) / 86400 +
-            25569,
+          numberValue: (tournament.endDate.getTime() / 1000 + 3600) / 86400 + 25569,
         },
         userEnteredFormat: {
           numberFormat: {
@@ -174,8 +169,7 @@ export function registrationsToSheetData(
         {
           userEnteredValue: {
             // https://stackoverflow.com/a/73535864
-            numberValue:
-              (reg.createdAt.getTime() / 1000 + 3600) / 86400 + 25569,
+            numberValue: (reg.createdAt.getTime() / 1000 + 3600) / 86400 + 25569,
           },
           userEnteredFormat: {
             numberFormat: {

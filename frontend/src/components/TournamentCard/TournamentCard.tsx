@@ -24,10 +24,7 @@ export default function TournamentCard({
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={twMerge(
-        TournamentCardStyle.base,
-        TournamentCardStyle.hover,
-      )}
+      className={twMerge(TournamentCardStyle.base, TournamentCardStyle.hover)}
     >
       <Link to={`/tournoi/${tournament.id}`}>
         <div

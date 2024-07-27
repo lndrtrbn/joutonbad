@@ -57,10 +57,7 @@ export default function FormSettings({ settings }: Props) {
 
   return (
     <>
-      <form
-        className="flex gap-6 flex-wrap"
-        onSubmit={handleSubmit(submit)}
-      >
+      <form className="flex gap-6 flex-wrap" onSubmit={handleSubmit(submit)}>
         <Controller
           name="clubPart"
           control={control}
@@ -84,11 +81,7 @@ export default function FormSettings({ settings }: Props) {
       </form>
 
       {errorMsg && (
-        <Alert
-          type="error"
-          onClose={() => setErrorMsg("")}
-          style="mt-4"
-        >
+        <Alert type="error" onClose={() => setErrorMsg("")} style="mt-4">
           {errorMsg}
         </Alert>
       )}

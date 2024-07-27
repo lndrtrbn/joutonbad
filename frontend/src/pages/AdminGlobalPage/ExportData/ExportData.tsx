@@ -8,8 +8,7 @@ import { APIErrorMessage } from "../../../utils/error";
 import useExportToGoogle from "../../../http/useHttpGoogle";
 
 export default function ExportData() {
-  const { mutateAsync, isPending, isSuccess, error } =
-    useExportToGoogle();
+  const { mutateAsync, isPending, isSuccess, error } = useExportToGoogle();
 
   const [errorMsg, setErrorMsg] = useState("");
   const [showFeedback, setShowFeedback] = useState(false);
@@ -45,8 +44,7 @@ export default function ExportData() {
   return (
     <>
       <Title subtitle>
-        Exporter les données des membres, tournois et inscriptions
-        vers Google Sheet
+        Exporter les données des membres, tournois et inscriptions vers Google Sheet
       </Title>
 
       <Button onClick={onExport} disabled={isPending} style="w-full">
@@ -57,9 +55,7 @@ export default function ExportData() {
         <div className="mt-4 w-96">
           {errorMsg && <Alert type="error">{errorMsg}</Alert>}
           {isPending && (
-            <Alert type="success">
-              L'export de données a bien été effectué
-            </Alert>
+            <Alert type="success">L'export de données a bien été effectué</Alert>
           )}
         </div>
       )}

@@ -8,9 +8,7 @@ export default function usePagination<T>(items: T[] | undefined) {
   const nbPages = Math.floor((items ?? []).length / pageSize);
   const pageStart = page * pageSize + 1;
   const pageEnd =
-    page * pageSize + pageSize > total
-      ? total
-      : page * pageSize + pageSize;
+    page * pageSize + pageSize > total ? total : page * pageSize + pageSize;
 
   return [
     (items ?? []).slice(pageSize * page, pageSize * page + pageSize),

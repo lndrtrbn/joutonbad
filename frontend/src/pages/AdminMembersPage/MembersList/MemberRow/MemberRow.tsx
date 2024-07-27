@@ -15,10 +15,7 @@ type MemberRowProps = {
   alt?: boolean;
 };
 
-export default function MemberRow({
-  member,
-  alt = false,
-}: MemberRowProps) {
+export default function MemberRow({ member, alt = false }: MemberRowProps) {
   const { mutateAsync: deletePlayer } = useDeletePlayer();
   const [portal, open, close] = useModal();
 
@@ -40,9 +37,8 @@ export default function MemberRow({
           ?
         </p>
         <p>
-          Un compte actif ne devrait pas être supprimé. S'il est
-          supprimé, toutes ses inscriptions seront également
-          supprimées en même temps.
+          Un compte actif ne devrait pas être supprimé. S'il est supprimé, toutes ses
+          inscriptions seront également supprimées en même temps.
         </p>
       </ModalConfirm>,
     );
@@ -50,15 +46,8 @@ export default function MemberRow({
 
   return (
     <>
-      <div
-        className={twMerge(
-          MemberRowStyle.base,
-          alt && MemberRowStyle.alt,
-        )}
-      >
-        <span className={MemberRowStyle.license}>
-          {member.license}
-        </span>
+      <div className={twMerge(MemberRowStyle.base, alt && MemberRowStyle.alt)}>
+        <span className={MemberRowStyle.license}>{member.license}</span>
         <span className={MemberRowStyle.name}>
           {member.lastname} {member.name}
         </span>

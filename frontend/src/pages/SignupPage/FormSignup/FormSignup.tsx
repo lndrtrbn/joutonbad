@@ -49,17 +49,11 @@ export default function FormSignup({ onSuccess }: Props) {
   useEffect(() => {
     if (!error) {
       setErrorMsg("");
-    } else if (
-      error?.message === APIErrorMessage.ALREADY_EXISTING_USER
-    ) {
-      setErrorMsg(
-        "Un compte existe déjà pour cette licence ou cet email",
-      );
+    } else if (error?.message === APIErrorMessage.ALREADY_EXISTING_USER) {
+      setErrorMsg("Un compte existe déjà pour cette licence ou cet email");
     } else if (error?.message === APIErrorMessage.NO_PLAYER_FOUND) {
       setErrorMsg("Aucun profil trouvé avec cette licence");
-    } else if (
-      error?.message === APIErrorMessage.PLAYER_ALREADY_LINKED
-    ) {
+    } else if (error?.message === APIErrorMessage.PLAYER_ALREADY_LINKED) {
       setErrorMsg("Le profil lié à cette licence est déjà actif");
     } else {
       setErrorMsg("Erreur à la création de compte");
@@ -73,10 +67,7 @@ export default function FormSignup({ onSuccess }: Props) {
   }
 
   return (
-    <form
-      className="flex flex-col gap-4 w-full"
-      onSubmit={handleSubmit(submit)}
-    >
+    <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit(submit)}>
       {errorMsg && (
         <Alert type="error" onClose={() => setErrorMsg("")}>
           {errorMsg}
@@ -142,10 +133,7 @@ export default function FormSignup({ onSuccess }: Props) {
         )}
       />
 
-      <ButtonLoading
-        disabled={!isValid || isPending}
-        loading={isPending}
-      >
+      <ButtonLoading disabled={!isValid || isPending} loading={isPending}>
         Créer mon compte
       </ButtonLoading>
     </form>

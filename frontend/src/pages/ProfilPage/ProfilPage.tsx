@@ -55,9 +55,7 @@ export default function ProfilPage() {
   return (
     <>
       <Title size="3xl">Mon profil</Title>
-      <Title subtitle>
-        Se trouvent sur cette page tes préférences personnelles
-      </Title>
+      <Title subtitle>Se trouvent sur cette page tes préférences personnelles</Title>
 
       <Separator />
 
@@ -83,11 +81,7 @@ export default function ProfilPage() {
           >
             Sauvegarder
           </ButtonLoading>
-          <Button
-            variant="light"
-            disabled={!isDirty}
-            onClick={() => reset()}
-          >
+          <Button variant="light" disabled={!isDirty} onClick={() => reset()}>
             Annuler
           </Button>
         </div>

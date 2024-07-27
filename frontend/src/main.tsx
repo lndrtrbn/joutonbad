@@ -1,7 +1,4 @@
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 
@@ -21,9 +18,7 @@ const queryClient = new QueryClient({
   },
 });
 
-ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement,
-).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <Suspense fallback={<ScreenLoader />}>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>

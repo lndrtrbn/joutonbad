@@ -41,11 +41,7 @@ export default function Sidebar() {
         <SidebarFooter />
 
         {closable && !opened && (
-          <Button
-            onClick={toggle}
-            style={SidebarStyle.button}
-            variant="icon"
-          >
+          <Button onClick={toggle} style={SidebarStyle.button} variant="icon">
             <FontAwesomeIcon icon={faBars} />
           </Button>
         )}

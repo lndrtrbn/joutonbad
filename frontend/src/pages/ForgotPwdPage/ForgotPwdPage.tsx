@@ -13,9 +13,7 @@ export default function ForgotPwdPage() {
       <Title size="3xl">Mot de passe oublié</Title>
 
       <FormForgotPwd
-        onSuccess={() =>
-          navigate("/login", { state: "from-forgotpwd" })
-        }
+        onSuccess={() => navigate("/login", { state: "from-forgotpwd" })}
       />
 
       <Link to="/login" inline>

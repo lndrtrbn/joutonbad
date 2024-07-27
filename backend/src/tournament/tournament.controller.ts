@@ -22,9 +22,7 @@ import { TournamentService } from "./tournament.service";
 @Resource("tournament")
 @Controller("tournament")
 export class TournamentController {
-  constructor(
-    private readonly tournamentService: TournamentService,
-  ) {}
+  constructor(private readonly tournamentService: TournamentService) {}
 
   @Get(":id")
   async getById(@Param("id") id: string): Promise<FullTournament> {
@@ -39,17 +37,13 @@ export class TournamentController {
   }
 
   @Get("license/:license")
-  async getByPlayer(
-    @Param("license") license: string,
-  ): Promise<FullTournament[]> {
+  async getByPlayer(@Param("license") license: string): Promise<FullTournament[]> {
     return this.tournamentService.getPlayerTournament(license);
   }
 
   @Post()
   @Roles({ roles: [CONFIG.kcRoleEditor] })
-  async create(
-    @Body() data: TournamentCreatePayload,
-  ): Promise<Tournament> {
+  async create(@Body() data: TournamentCreatePayload): Promise<Tournament> {
     return this.tournamentService.create(data);
   }
 

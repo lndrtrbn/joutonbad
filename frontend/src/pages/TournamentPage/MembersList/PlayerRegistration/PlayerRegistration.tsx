@@ -1,7 +1,4 @@
-import {
-  faCheck,
-  faHourglass,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faHourglass } from "@fortawesome/free-solid-svg-icons";
 import { twMerge } from "tailwind-merge";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -13,10 +10,7 @@ type Props = {
   style?: string;
 };
 
-export default function PlayerRegistration({
-  registration,
-  style,
-}: Props) {
+export default function PlayerRegistration({ registration, style }: Props) {
   const partnerStr = registration.partner
     ? `Avec ${registration.partner.lastname} ${registration.partner.name} | `
     : "";
@@ -33,18 +27,14 @@ export default function PlayerRegistration({
           : `${partnerStr}Inscription à envoyer`
       }
     >
-      <FontAwesomeIcon
-        size="sm"
-        icon={registration.sent ? faCheck : faHourglass}
-      />
+      <FontAwesomeIcon size="sm" icon={registration.sent ? faCheck : faHourglass} />
       <div className="flex-1">
         <p>
           {registration.player.lastname} {registration.player.name}
         </p>
         {registration.partner && (
           <p>
-            {registration.partner.lastname}{" "}
-            {registration.partner.name}
+            {registration.partner.lastname} {registration.partner.name}
           </p>
         )}
       </div>

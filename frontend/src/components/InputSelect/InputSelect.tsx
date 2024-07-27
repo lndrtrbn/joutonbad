@@ -78,10 +78,7 @@ export default function InputSelect<T>({
           <div className={InputSelectStyle.items}>
             {filteredItems.map((item) => (
               <p key={toLabel(item)}>
-                <Button
-                  onClick={() => onSelectItem(item)}
-                  variant="inline"
-                >
+                <Button onClick={() => onSelectItem(item)} variant="inline">
                   {toLabel(item)}
                 </Button>
               </p>
