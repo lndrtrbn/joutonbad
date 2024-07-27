@@ -40,6 +40,10 @@ export default function FormLogin() {
       setErrorMsg("");
     } else if (error?.message === APIErrorMessage.UNAUTHORIZED) {
       setErrorMsg("Les informations de connexion sont invalides");
+    } else if (error?.message === APIErrorMessage.NO_PLAYER_FOUND) {
+      setErrorMsg(
+        "Aucun joueur n'est associé à cette licence, rapproche toi d'un membre du bureau pour activer ton compte",
+      );
     } else {
       setErrorMsg("Erreur de connexion");
     }

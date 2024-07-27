@@ -13,6 +13,7 @@ import { authorization, urlEncoded } from "src/utils/headers";
 import { KeycloakService } from "src/keycloak/keycloak.service";
 import { UnauthorizedException } from "src/exceptions/unauthorized.exception";
 import { InternalErrorException } from "src/exceptions/internalError.exception";
+import { NoPlayerFoundException } from "src/exceptions/noPlayerFound.exception";
 import { AlreadyExistingUserException } from "src/exceptions/alreadyExistingUser.exception";
 import { PlayerAlreadyLinkedException } from "src/exceptions/playerAlreadyLinked.exception";
 
@@ -92,9 +93,15 @@ export class AuthService {
    * Call keycloak to get a token.
    *
    * @param username The username of the user who wants a token.
-   * @param password The password of the usre who wants a token.
+   * @param password The password of the user who wants a token.
    */
   async signin(username: string, password: string): Promise<GrantProperties> {
+    const player = await this.playerService.getOneWhere({
+      license: trimLicense(username),
+    });
+    if (!player) {
+      throw new NoPlayerFoundException();
+    }
     return this.keycloakService.getApiToken(username, password);
   }
 

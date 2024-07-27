@@ -9,6 +9,7 @@ import {
 } from "./player";
 import { trimLicense } from "src/utils/license";
 import { PrismaService } from "src/prisma/prisma.service";
+import { KeycloakService } from "src/keycloak/keycloak.service";
 import { AuthenticatedKcUser, KeycloakUser } from "src/keycloak/keycloakUser";
 import { CannotCreateException } from "src/exceptions/cannotCreate.exception";
 import { NoPlayerFoundException } from "src/exceptions/noPlayerFound.exception";
@@ -18,7 +19,7 @@ import { PlayerAlreadyLinkedException } from "src/exceptions/playerAlreadyLinked
 export class PlayerService {
   private readonly logger = new Logger(PlayerService.name);
 
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private kcService: KeycloakService) {}
 
   /**
    * Get a list of players.
@@ -80,10 +81,14 @@ export class PlayerService {
    */
   async create(payload: PlayerCreatePayload): Promise<Player> {
     this.logger.log(`[create] With: ${payload}`);
+    const license = trimLicense(payload.license);
+
+    const kcUser = await this.kcService.getUser(license);
 
     const data = {
       ...payload,
-      license: trimLicense(payload.license),
+      license,
+      kcId: kcUser ? kcUser.id : undefined,
     };
 
     try {
@@ -100,21 +105,32 @@ export class PlayerService {
     const allPlayerLicenses = (await this.prisma.player.findMany()).map(
       (p) => p.license,
     );
-    const playersToAdd = players.filter(
+    const csvPlayersToAdd = players.filter(
       (p) => !allPlayerLicenses.includes(trimLicense(p[2])),
     );
 
-    this.logger.log(`[upload] To add: ${playersToAdd}`);
+    this.logger.log(`[upload] To add: ${csvPlayersToAdd}`);
 
-    if (playersToAdd.length == 0) {
+    if (csvPlayersToAdd.length == 0) {
       return [];
     }
 
+    const kcUsers = await this.kcService.getUsers();
+
+    const playersToAdd = csvPlayersToAdd.map((data) => {
+      const player = csvPlayerToCreatePayload(data);
+      const kcUser = kcUsers.find((u) => u.username === player.license);
+      return {
+        ...player,
+        kcId: kcUser ? kcUser.id : undefined,
+      };
+    });
+
     try {
       return this.prisma.$transaction(
-        playersToAdd.map((player) =>
+        playersToAdd.map((data) =>
           this.prisma.player.create({
-            data: csvPlayerToCreatePayload(player),
+            data,
           }),
         ),
       );

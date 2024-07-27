@@ -50,6 +50,26 @@ export class KeycloakService {
   }
 
   /**
+   * Get a user by username.
+   *
+   * @returns The list of keycloak users
+   */
+  async getUser(username: string): Promise<KeycloakUser> {
+    const { access_token } = await this.getApiToken(
+      CONFIG.kcApiUser,
+      CONFIG.kcApiPwd,
+    );
+    return (
+      await axios.get(
+        `${CONFIG.kcUrl}/admin/realms/${CONFIG.kcRealm}/users?username=${username}`,
+        {
+          headers: authorization(access_token),
+        },
+      )
+    ).data[0];
+  }
+
+  /**
    * Get the list of keycloak users.
    *
    * @returns The list of keycloak users
