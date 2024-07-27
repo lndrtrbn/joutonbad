@@ -1,5 +1,5 @@
 import { compareAsc } from "date-fns";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Registration, filterByDiscipline } from "../../utils/registration";
 import Box from "../../components/Box/Box";
@@ -9,11 +9,13 @@ import { Tournament } from "../../utils/tournament";
 import { Discipline } from "../../utils/discipline";
 import { useAuthContext } from "../../contexts/auth.context";
 import Separator from "../../components/Separator/Separator";
+import { useQuerySettings } from "../../http/useHttpSettings";
 import CalendarList from "../HomePage/CalendarList/CalendarList";
 import { useQueryTournamentsByPlayer } from "../../http/useHttpTournament";
 
 export default function RecapPage() {
   const { user } = useAuthContext();
+  const { data: settings } = useQuerySettings();
   const { data: myTournaments } = useQueryTournamentsByPlayer();
 
   const [toCome, setToCome] = useState<Tournament[]>([]);
@@ -21,6 +23,11 @@ export default function RecapPage() {
 
   const [myRegistrations, setMyregistrations] = useState<Registration[]>([]);
   const [cost, setCost] = useState(0);
+
+  const personalCost = useMemo(() => {
+    const value = cost - (settings?.clubPart ?? 0);
+    return value > 0 ? value : 0;
+  }, [cost, settings]);
 
   useEffect(() => {
     if (user) {
@@ -97,7 +104,9 @@ export default function RecapPage() {
                 .filter((a) => !!a)
                 .join(" | ")}
             </div>
-            <div className={RecapPageStyle.stat}>{cost}€ payé par le club</div>
+            <div className={RecapPageStyle.stat}>
+              {cost}€ avancé par le club | {personalCost}€ à charge
+            </div>
           </div>
         </Box>
 
