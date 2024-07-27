@@ -19,10 +19,7 @@ import { AlreadyRegisteredPartnerException } from "src/exceptions/alreadyRegiste
 export class RegistrationService {
   private readonly logger = new Logger(RegistrationService.name);
 
-  constructor(
-    private prisma: PrismaService,
-    private playerService: PlayerService,
-  ) {}
+  constructor(private prisma: PrismaService, private playerService: PlayerService) {}
 
   /**
    * Get all the registration existing in the collection.
@@ -86,16 +83,14 @@ export class RegistrationService {
       throw new AlreadyRegisteredException();
     }
 
-    const freezedTournament = await this.prisma.tournament.findFirst({
+    const tournament = await this.prisma.tournament.findFirst({
       where: {
         id: payload.tournamentId,
-        freezed: true,
       },
     });
-
-    if (freezedTournament) {
+    if (tournament.freezed.includes(payload.discipline)) {
       this.logger.error(
-        `Tournament ${payload.tournamentId} is freezed. Cannot register`,
+        `Tournament ${payload.tournamentId} is freezed for ${payload.discipline}. Cannot register`,
       );
       throw new FreezedTournamentException();
     }

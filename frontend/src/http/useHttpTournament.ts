@@ -48,7 +48,7 @@ export type TournamentPayload = {
   minLevel?: Level;
   maxLevel?: Level;
   disciplines?: Discipline[];
-  freezed?: boolean;
+  freezed?: Discipline[];
   nocturne?: boolean;
 };
 

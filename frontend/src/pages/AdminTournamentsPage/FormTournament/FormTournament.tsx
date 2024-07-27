@@ -37,7 +37,7 @@ const schema = z.object({
       url: z.string().min(1),
     }),
   ),
-  freezed: z.boolean(),
+  freezed: z.array(z.string()),
   nocturne: z.boolean(),
 });
 
@@ -45,6 +45,7 @@ type Inputs = z.infer<typeof schema> & {
   minLevel: Level;
   maxLevel: Level;
   disciplines: Discipline[];
+  freezed: Discipline[];
 };
 
 type Props = {
@@ -72,7 +73,7 @@ function defaultValues(t?: Tournament) {
     disciplines: t?.disciplines ?? [],
     prices: t?.prices.map((p) => `${p}`) ?? [],
     links: t?.links ?? [],
-    freezed: t?.freezed ?? false,
+    freezed: t?.freezed ?? [],
     nocturne: t?.nocturne ?? false,
   };
 }
@@ -290,15 +291,16 @@ export default function FormTournament({
           name="freezed"
           control={control}
           render={({ field: { value, onChange } }) => (
-            <InputCheckbox
-              checked={!!value}
-              onChange={onChange}
-              children="Bloquer les inscriptions"
+            <InputTag
+              label="Bloquer des inscriptions"
+              value={value}
+              onChange={(val) => onChange(val as Discipline[])}
+              list={DISCIPLINES}
             />
           )}
         />
         <Alert type="info">
-          En cochant la case, les membres ne pourront pas s'inscrire au tournois
+          Les disciplines sélectionnées ne pourront plus faire l'objet d'inscriptions
         </Alert>
 
         <div className="flex flex-col gap-2">

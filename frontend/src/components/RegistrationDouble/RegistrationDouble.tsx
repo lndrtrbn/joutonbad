@@ -79,6 +79,12 @@ export default function RegistrationDouble({
     : tournament.disciplines.filter(
         (d) => d === Discipline.DD || d === Discipline.DH,
       );
+  const freezedDisciplines = tournament.freezed.filter((f) =>
+    disciplines.includes(f),
+  );
+  const availableDisciplines = disciplines.filter(
+    (d) => !freezedDisciplines.includes(d),
+  );
 
   return (
     <div>
@@ -86,11 +92,19 @@ export default function RegistrationDouble({
 
       {!registration ? (
         <>
-          <FormRegistrationDouble
-            onSubmit={submit}
-            loading={isPending}
-            disciplines={disciplines}
-          />
+          {freezedDisciplines.length > 0 && (
+            <Alert type="info" style="mb-4">
+              Les inscriptions pour les tableaux {freezedDisciplines.join(", ")} ont
+              éte fermées
+            </Alert>
+          )}
+          {availableDisciplines.length > 0 && (
+            <FormRegistrationDouble
+              onSubmit={submit}
+              loading={isPending}
+              disciplines={availableDisciplines}
+            />
+          )}
           {errorMsg && <Alert type="error">{errorMsg}</Alert>}
         </>
       ) : (

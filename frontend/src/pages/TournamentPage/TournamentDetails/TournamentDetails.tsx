@@ -79,17 +79,10 @@ export default function TournamentDetails({ tournament }: Props) {
           )}
         </div>
 
-        {!tournament.freezed ? (
-          <Alert type="info">
-            Fin des inscriptions le{" "}
-            {strDate(subDays(new Date(tournament.startDate), 14).toISOString())}
-          </Alert>
-        ) : (
-          <Alert type="info">
-            Les inscriptions ont été clôturées. Ceci peut être dû au fait que le
-            tournoi soit complet.
-          </Alert>
-        )}
+        <Alert type="info">
+          Fin des inscriptions le{" "}
+          {strDate(subDays(new Date(tournament.startDate), 14).toISOString())}
+        </Alert>
       </div>
     </section>
   );

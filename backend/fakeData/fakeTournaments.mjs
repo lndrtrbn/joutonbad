@@ -27,7 +27,7 @@ export function generateTournaments(quantity) {
       ],
       links: [],
       inChargeId: "667018a1956cc6cd66f2b343",
-      freezed: false,
+      freezed: [],
       nocturne: faker.datatype.boolean(),
     });
   }

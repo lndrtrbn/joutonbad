@@ -21,7 +21,7 @@ export type Tournament = {
   links: Link[];
   registrations: Registration[];
   inCharge: Player;
-  freezed?: boolean;
+  freezed: Discipline[];
   nocturne?: boolean;
 };
 

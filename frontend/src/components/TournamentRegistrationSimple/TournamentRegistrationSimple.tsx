@@ -8,6 +8,7 @@ import FormRegistrationSingle, {
 import Title from "../Title/Title";
 import { Tournament } from "../../utils/tournament";
 import { Discipline } from "../../utils/discipline";
+import Alert from "../Alert/Alert";
 
 type Props = {
   tournament: Tournament;
@@ -45,8 +46,14 @@ export default function TournamentRegistrationSimple({
 
   if (!registration && !canRegister) return null;
 
-  const disciplines = tournament.disciplines.filter(
+  const disciplines: Discipline[] = tournament.disciplines.filter(
     (d) => d === Discipline.SD || d === Discipline.SH,
+  );
+  const freezedDisciplines = tournament.freezed.filter((f) =>
+    disciplines.includes(f),
+  );
+  const availableDisciplines = disciplines.filter(
+    (d) => !freezedDisciplines.includes(d),
   );
 
   return (
@@ -54,11 +61,21 @@ export default function TournamentRegistrationSimple({
       <Title size="2xl">Inscription en simple</Title>
 
       {!registration ? (
-        <FormRegistrationSingle
-          onSubmit={registerSimple}
-          loading={isPending}
-          disciplines={disciplines}
-        />
+        <>
+          {freezedDisciplines.length > 0 && (
+            <Alert type="info" style="mb-4">
+              Les inscriptions pour les tableaux {freezedDisciplines.join(", ")} ont
+              éte fermées
+            </Alert>
+          )}
+          {availableDisciplines.length > 0 && (
+            <FormRegistrationSingle
+              onSubmit={registerSimple}
+              loading={isPending}
+              disciplines={availableDisciplines}
+            />
+          )}
+        </>
       ) : (
         <Title subtitle>Inscrit.e</Title>
       )}

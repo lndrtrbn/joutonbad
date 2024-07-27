@@ -23,7 +23,6 @@ export default function TournamentPage() {
 
   const registrationsDone = useMemo(() => {
     if (!tournament) return false;
-    if (tournament.freezed) return true;
     const startDate = new Date(tournament.startDate);
     const twoWeeksAgo = startOfDay(subDays(startDate, 14));
     const today = startOfDay(new Date());
