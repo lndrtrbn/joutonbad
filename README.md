@@ -4,10 +4,10 @@ Web application to help manage and centralize the registrations of your club's b
 
 > Project made by Landry Trebon for the REC Badminton.
 
-## Table of contents
+This README is to help developers set up a local env.
+For deployment informations please go to `/deployment` folder.
 
 - [Joutonbad](#joutonbad)
-  - [Table of contents](#table-of-contents)
   - [Repository organization](#repository-organization)
   - [Development techs](#development-techs)
   - [Run locally](#run-locally)
@@ -19,8 +19,7 @@ Web application to help manage and centralize the registrations of your club's b
       - [Email configuration](#email-configuration)
     - [\[FIRST LAUNCH\] Prepare the environment](#first-launch-prepare-the-environment)
     - [Start applications](#start-applications)
-  - [Deployment on server](#deployment-on-server)
-  - [\[backend\] How to run a migration](#backend-how-to-run-a-migration)
+    - [\[backend\] How to run a migration](#backend-how-to-run-a-migration)
 
 ## Repository organization
 
@@ -136,19 +135,7 @@ In each **frontend** and **backend** folder run the command:
 npm start
 ```
 
-## Deployment on server
-
-Connect to the VPS through SSH.
-
-Go to `joutonbad/deployment/joutonbad-prod` folder.
-
-Fetch last commits and run
-
-```
-docker compose up -d
-```
-
-## [backend] How to run a migration
+### [backend] How to run a migration
 
 Go to the migration folder (`backend/prisma/migrations`) and run this command:
 

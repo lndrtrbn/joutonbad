@@ -1,2 +1,1 @@
-export const API_URL =
-  process.env.NODE_ENV === "development" ? "http://192.168.1.32:3000" : "/api";
+export const API_URL = import.meta.env.VITE_API_URL;

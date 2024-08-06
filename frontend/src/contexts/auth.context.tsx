@@ -40,7 +40,7 @@ export function AuthProvider({ children }: ProviderProps) {
     >
       <style>{`
       :root {
-        --color-main: ${hexToRgb(profil?.favoriteColor)};
+        --color-main: ${hexToRgb(undefined)};
       }
       `}</style>
       {children}

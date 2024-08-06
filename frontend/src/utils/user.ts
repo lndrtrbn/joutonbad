@@ -28,5 +28,5 @@ export function kcUserToUser(kcUser: KcUser | undefined): User | undefined {
 }
 
 export function isEditor(user: User): boolean {
-  return user.roles.includes("joutonbad-editor");
+  return user.roles.includes(import.meta.env.VITE_KC_EDITOR_ROLE);
 }
