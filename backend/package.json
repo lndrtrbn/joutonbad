@@ -30,8 +30,8 @@
     "date-fns": "^2.30.0",
     "googleapis": "^126.0.1",
     "jsonwebtoken": "^9.0.1",
-    "keycloak-connect": "^21.1.2",
-    "nest-keycloak-connect": "^1.9.2",
+    "keycloak-connect": "^25.0.4",
+    "nest-keycloak-connect": "^1.10.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
   },
