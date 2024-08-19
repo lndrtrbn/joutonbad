@@ -4,6 +4,9 @@
 
 FROM node:20.5.1-alpine3.18 As build
 
+ARG VITE_API_URL
+ARG VITE_KC_EDITOR_ROLE
+
 WORKDIR /app
 
 COPY --chown=node:node package*.json ./
