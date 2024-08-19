@@ -8,7 +8,7 @@
   - [Nginx configuration](#nginx-configuration)
     - [Set app in maintenance](#set-app-in-maintenance)
     - [Set app back online](#set-app-back-online)
-    - [make keycloak available](#make-keycloak-available)
+    - [Make keycloak available](#make-keycloak-available)
 
 
 ## Repository organization
@@ -70,7 +70,7 @@ sudo ln -s /etc/nginx/sites-available/joutonbad /etc/nginx/sites-enabled/joutonb
 sudo service nginx restart
 ```
 
-### make keycloak available
+### Make keycloak available
 
 ```
 sudo rm /etc/nginx/sites-enabled/joutonbad-maintenance-kc
