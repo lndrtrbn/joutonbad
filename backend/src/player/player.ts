@@ -12,7 +12,7 @@ export type PlayerUpdatePayload = Pick<
   "favoriteDevice" | "favoriteColor"
 >;
 
-export type CsvPlayer = [licence: string, name: string, firstname: string];
+export type CsvPlayer = [lastname: string, name: string, licence: string];
 
 export function csvPlayerToCreatePayload(csv: CsvPlayer): PlayerCreatePayload {
   return {

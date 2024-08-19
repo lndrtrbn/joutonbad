@@ -99,6 +99,7 @@ export class PlayerController {
       delimiter: ";",
       trim: true,
       encoding: "latin1",
+      from_line: 2,
     });
     return this.playerService.upload(players);
   }
