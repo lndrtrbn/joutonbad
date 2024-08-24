@@ -1,10 +1,11 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { Prisma, Registration } from "@prisma/client";
 
 import {
   RegistrationCreatePayload,
   RegistrationUpdatePayload,
 } from "./registration";
+import { AppLogger } from "src/utils/AppLogger";
 import { trimLicense } from "src/utils/license";
 import { PrismaService } from "src/prisma/prisma.service";
 import { PlayerService } from "src/player/player.service";
@@ -17,7 +18,7 @@ import { AlreadyRegisteredPartnerException } from "src/exceptions/alreadyRegiste
 
 @Injectable()
 export class RegistrationService {
-  private readonly logger = new Logger(RegistrationService.name);
+  private readonly logger = new AppLogger(RegistrationService.name, "service");
 
   constructor(private prisma: PrismaService, private playerService: PlayerService) {}
 
@@ -79,7 +80,10 @@ export class RegistrationService {
     });
 
     if (existingRegistration) {
-      this.logger.error(`Player ${payload.playerLicense} already registered`);
+      this.logger.error(
+        "create",
+        `Player ${payload.playerLicense} already registered`,
+      );
       throw new AlreadyRegisteredException();
     }
 
@@ -90,6 +94,7 @@ export class RegistrationService {
     });
     if (tournament.freezed.includes(payload.discipline)) {
       this.logger.error(
+        "create",
         `Tournament ${payload.tournamentId} is freezed for ${payload.discipline}. Cannot register`,
       );
       throw new FreezedTournamentException();
@@ -143,7 +148,10 @@ export class RegistrationService {
         );
 
         if (existingRegistrationPartner) {
-          this.logger.error(`Player ${payload.partner.license} already registered`);
+          this.logger.error(
+            "create",
+            `Player ${payload.partner.license} already registered`,
+          );
           throw new AlreadyRegisteredPartnerException();
         }
 
@@ -180,7 +188,7 @@ export class RegistrationService {
         )
       )[0];
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error("create", error);
       throw new CannotCreateException();
     }
   }
@@ -223,7 +231,7 @@ export class RegistrationService {
         )
       ).length;
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error("delete", error);
       throw new CannotDeleteException();
     }
   }

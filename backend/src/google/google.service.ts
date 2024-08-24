@@ -1,5 +1,5 @@
 import { google } from "googleapis";
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 
 import {
   getSheets,
@@ -10,20 +10,19 @@ import {
   tournamentsToSheetData,
 } from "src/utils/google";
 import { CONFIG } from "src/config";
+import { AppLogger } from "src/utils/AppLogger";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CannotExportException } from "src/exceptions/cannotExport.exception";
 
 @Injectable()
 export class GoogleService {
-  private readonly logger = new Logger(GoogleService.name);
+  private readonly logger = new AppLogger(GoogleService.name, "service");
 
   constructor(private prisma: PrismaService) {
     initGoogleAuth();
   }
 
   async export(): Promise<void> {
-    this.logger.log(`[export] called`);
-
     // Fetch data from Mongo.
     const players = await this.prisma.player.findMany();
     const tournaments = await this.prisma.tournament.findMany();
@@ -76,7 +75,7 @@ export class GoogleService {
         },
       });
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error("export", error);
       throw new CannotExportException();
     }
   }

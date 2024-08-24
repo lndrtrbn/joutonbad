@@ -1,16 +1,17 @@
+import { Injectable } from "@nestjs/common";
 import { PlateformSettings, Prisma } from "@prisma/client";
-import { Injectable, Logger } from "@nestjs/common";
 
-import { SettingsCreatePayload, SettingsUpdatePayload } from "./settings";
+import { AppLogger } from "src/utils/AppLogger";
 import { PrismaService } from "src/prisma/prisma.service";
 import { AuthenticatedKcUser } from "src/keycloak/keycloakUser";
+import { SettingsCreatePayload, SettingsUpdatePayload } from "./settings";
 import { CannotCreateException } from "src/exceptions/cannotCreate.exception";
 import { InternalErrorException } from "src/exceptions/internalError.exception";
 import { InvalidPayloadException } from "src/exceptions/invalidPayload.exception";
 
 @Injectable()
 export class SettingsService {
-  private readonly logger = new Logger(SettingsService.name);
+  private readonly logger = new AppLogger(SettingsService.name, "service");
 
   constructor(private prisma: PrismaService) {}
 
@@ -20,8 +21,6 @@ export class SettingsService {
    * @returns The settings of the platform.
    */
   async get(): Promise<PlateformSettings | null> {
-    this.logger.log(`[get] called`);
-
     return this.prisma.plateformSettings.findFirst();
   }
 
@@ -31,8 +30,6 @@ export class SettingsService {
    * @returns The created plateform settings.
    */
   async create(): Promise<PlateformSettings> {
-    this.logger.log(`[create] called`);
-
     const data: SettingsCreatePayload = {
       clubPart: 72,
       history: [],
@@ -41,7 +38,7 @@ export class SettingsService {
     try {
       return await this.prisma.plateformSettings.create({ data });
     } catch (error) {
-      this.logger.error(`[create] ${error}`);
+      this.logger.error("create", `${error}`);
       throw new CannotCreateException();
     }
   }
@@ -56,8 +53,6 @@ export class SettingsService {
     payload: SettingsUpdatePayload,
     kcUser: AuthenticatedKcUser,
   ): Promise<PlateformSettings> {
-    this.logger.log(`[update] With: ${payload}`);
-
     const currentPlayer = await this.prisma.findMe(kcUser.sub);
 
     const settings = await this.get();

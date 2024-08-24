@@ -1,38 +1,34 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Logger,
-} from "@nestjs/common";
 import { Resource, Roles } from "nest-keycloak-connect";
+import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 
 import {
   RegistrationCreatePayload,
   RegistrationUpdatePayload,
 } from "./registration";
 import { CONFIG } from "src/config";
+import { toStr } from "src/utils/string";
 import { Registration } from "@prisma/client";
+import { AppLogger } from "src/utils/AppLogger";
 import { RegistrationService } from "./registration.service";
 
 @Resource("registration")
 @Controller("registration")
 export class RegistrationController {
-  private readonly logger = new Logger(RegistrationController.name);
+  private readonly logger = new AppLogger(RegistrationController.name, "controller");
+
   constructor(private readonly registrationService: RegistrationService) {}
 
   @Get()
   async getAll(): Promise<Registration[]> {
-    this.logger.log(`GET /registration`);
+    this.logger.log("getAll", "Get all registrations");
+
     return this.registrationService.getAll();
   }
 
   @Get("tournament/:id")
   async getByTournament(@Param("id") id: string): Promise<Registration[]> {
-    this.logger.log(`GET /registration/tournament/${id}`);
+    this.logger.log("getByTournament", `Get registrations for tournament: ${id}`);
+
     return this.registrationService.getWhere({
       tournamentId: id,
     });
@@ -40,7 +36,8 @@ export class RegistrationController {
 
   @Post()
   async create(@Body() data: RegistrationCreatePayload): Promise<Registration> {
-    this.logger.log(`POST /registration ${JSON.stringify(data, undefined, 2)}`);
+    this.logger.log("create", `Create a new tournament: ${toStr(data)}`);
+
     return this.registrationService.create(data);
   }
 
@@ -50,14 +47,16 @@ export class RegistrationController {
     @Param("id") id: string,
     @Body() data: RegistrationUpdatePayload,
   ): Promise<Registration> {
-    this.logger.log(`PATCH /registration/${id} ${data}`);
+    this.logger.log("update", `Update tournament: ${id} with ${toStr(data)}`);
+
     return this.registrationService.update(id, data);
   }
 
   @Delete(":id")
   @Roles({ roles: [CONFIG.kcRoleEditor] })
   async delete(@Param("id") id: string): Promise<number> {
-    this.logger.log(`DELETE /registration/${id}`);
+    this.logger.log("delete", `Delete tournament: ${id}`);
+
     return this.registrationService.delete(id);
   }
 }

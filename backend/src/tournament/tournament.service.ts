@@ -1,11 +1,12 @@
 import { Tournament } from "@prisma/client";
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 
 import {
   FullTournament,
   TournamentCreatePayload,
   TournamentUpdatePayload,
 } from "./tournament";
+import { AppLogger } from "src/utils/AppLogger";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CannotCreateException } from "src/exceptions/cannotCreate.exception";
 import { CannotDeleteException } from "src/exceptions/cannotDelete.exception";
@@ -13,7 +14,7 @@ import { NoTournamentFoundException } from "src/exceptions/noTournamentFound.exc
 
 @Injectable()
 export class TournamentService {
-  private readonly logger = new Logger(TournamentService.name);
+  private readonly logger = new AppLogger(TournamentService.name, "service");
 
   constructor(private prisma: PrismaService) {}
 
@@ -23,8 +24,6 @@ export class TournamentService {
    * @returns Array of tournaments.
    */
   async getAll(): Promise<FullTournament[]> {
-    this.logger.log(`[getAll] called`);
-
     return this.prisma.tournament.findMany({
       include: {
         inCharge: true,
@@ -44,8 +43,6 @@ export class TournamentService {
    * @returns Array of matching tournaments.
    */
   async getByIds(ids: string[]): Promise<FullTournament[]> {
-    this.logger.log(`[getByIds] With: ${ids.join(",")}`);
-
     return this.prisma.tournament.findMany({
       where: {
         id: {
@@ -117,8 +114,6 @@ export class TournamentService {
    * @returns The created tournament.
    */
   async create(payload: TournamentCreatePayload): Promise<Tournament> {
-    this.logger.log(`[create] With: ${payload}`);
-
     const data = {
       ...payload,
       startDate: new Date(payload.startDate),
@@ -128,7 +123,7 @@ export class TournamentService {
     try {
       return await this.prisma.tournament.create({ data });
     } catch (error) {
-      this.logger.error(`[create] ${error}`);
+      this.logger.error("create", `${error}`);
       throw new CannotCreateException();
     }
   }
@@ -141,8 +136,6 @@ export class TournamentService {
    * @returns The updated tournament.
    */
   async update(id: string, payload: TournamentUpdatePayload): Promise<Tournament> {
-    this.logger.log(`[update] With: ${payload}`);
-
     const data = {
       ...payload,
     };
@@ -167,8 +160,6 @@ export class TournamentService {
    * @returns The deleted tournament.
    */
   async delete(id: string) {
-    this.logger.log(`[delete] With id: ${id}`);
-
     const tournament = await this.getById(id);
 
     if (!tournament) throw new NoTournamentFoundException();

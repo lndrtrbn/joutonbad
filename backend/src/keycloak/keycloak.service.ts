@@ -1,8 +1,9 @@
 import axios, { AxiosError } from "axios";
 import { GrantProperties } from "keycloak-connect";
-import { Injectable, Logger, UnauthorizedException } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 
 import { CONFIG } from "src/config";
+import { AppLogger } from "src/utils/AppLogger";
 import { trimLicense } from "src/utils/license";
 import { authorization, urlEncoded } from "src/utils/headers";
 import { GetTokenPayload, KeycloakUser } from "src/keycloak/keycloakUser";
@@ -10,7 +11,7 @@ import { InternalErrorException } from "src/exceptions/internalError.exception";
 
 @Injectable()
 export class KeycloakService {
-  private readonly logger = new Logger(KeycloakService.name);
+  private readonly logger = new AppLogger(KeycloakService.name, "service");
 
   /**
    * Get an access token (and additionnal token data) for a user.
@@ -21,7 +22,7 @@ export class KeycloakService {
    */
   async getApiToken(username: string, password: string): Promise<GrantProperties> {
     const license = trimLicense(username);
-    this.logger.log(`[getApiToken] With: ${license}`);
+    this.logger.log("getApiToken", `License: ${license}`);
 
     const URL = `${CONFIG.kcUrl}/realms/${CONFIG.kcRealm}/protocol/openid-connect/token`;
     const payload: GetTokenPayload = {
@@ -38,7 +39,11 @@ export class KeycloakService {
       });
       return data;
     } catch (error) {
-      this.logger.error(`[getApiToken] ${JSON.stringify(error)}`);
+      const errorStr = JSON.stringify(error).replace(
+        /password=(.+?)"/,
+        'password=*****"',
+      );
+      this.logger.error("getApiToken", `${errorStr}`);
 
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {

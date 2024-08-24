@@ -1,12 +1,13 @@
 import axios, { AxiosError } from "axios";
+import { Injectable } from "@nestjs/common";
 import { GrantProperties } from "keycloak-connect";
-import { Injectable, Logger } from "@nestjs/common";
 
 import {
   GetTokenPayload,
   KeycloakUserCreatePayload,
 } from "../keycloak/keycloakUser";
 import { CONFIG } from "src/config";
+import { AppLogger } from "src/utils/AppLogger";
 import { trimLicense } from "src/utils/license";
 import { PlayerService } from "src/player/player.service";
 import { authorization, urlEncoded } from "src/utils/headers";
@@ -19,7 +20,7 @@ import { PlayerAlreadyLinkedException } from "src/exceptions/playerAlreadyLinked
 
 @Injectable()
 export class AuthService {
-  private readonly logger = new Logger(AuthService.name);
+  private readonly logger = new AppLogger(AuthService.name, "service");
 
   constructor(
     private playerService: PlayerService,
@@ -63,7 +64,7 @@ export class AuthService {
       });
       return data;
     } catch (error) {
-      this.logger.error(`[refreshApiToken] ${JSON.stringify(error)}`);
+      this.logger.error("refreshApiToken", `${JSON.stringify(error)}`);
 
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
@@ -113,7 +114,7 @@ export class AuthService {
    */
   async createUser(payload: KeycloakUserCreatePayload): Promise<void> {
     const license = trimLicense(payload.username);
-    this.logger.log(`[createUser] With: ${license}`);
+    this.logger.log("createUser", `License: ${license}`);
 
     const player = await this.playerService.getOneWhere({
       license,
@@ -129,7 +130,10 @@ export class AuthService {
     );
 
     if (!access_token) {
-      this.logger.error(`[createUser] No API token`);
+      this.logger.error(
+        "createUser",
+        `No API token when trying to create a keycloak user`,
+      );
       throw new InternalErrorException();
     }
 
@@ -160,8 +164,7 @@ export class AuthService {
         await this.playerService.link(license, user);
       }
     } catch (error) {
-      this.logger.error(JSON.stringify(error, undefined, 2));
-      this.logger.error(`[createUser] ${error}`);
+      this.logger.error("createUser", `${error}`);
 
       if (error instanceof AxiosError) {
         if (error.response?.status === 409) {

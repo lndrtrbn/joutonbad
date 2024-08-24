@@ -1,5 +1,5 @@
+import { Injectable } from "@nestjs/common";
 import { Player, Prisma } from "@prisma/client";
-import { Injectable, Logger } from "@nestjs/common";
 
 import {
   CsvPlayer,
@@ -7,6 +7,7 @@ import {
   PlayerUpdatePayload,
   csvPlayerToCreatePayload,
 } from "./player";
+import { AppLogger } from "src/utils/AppLogger";
 import { trimLicense } from "src/utils/license";
 import { PrismaService } from "src/prisma/prisma.service";
 import { KeycloakService } from "src/keycloak/keycloak.service";
@@ -17,7 +18,7 @@ import { PlayerAlreadyLinkedException } from "src/exceptions/playerAlreadyLinked
 
 @Injectable()
 export class PlayerService {
-  private readonly logger = new Logger(PlayerService.name);
+  private readonly logger = new AppLogger(PlayerService.name, "service");
 
   constructor(private prisma: PrismaService, private kcService: KeycloakService) {}
 
@@ -44,7 +45,10 @@ export class PlayerService {
       where,
     });
     if (!player) {
-      this.logger.error(`No player found with conditions: ${JSON.stringify(where)}`);
+      this.logger.error(
+        "getOneWhere",
+        `No player found with conditions: ${JSON.stringify(where)}`,
+      );
       throw new NoPlayerFoundException();
     }
     return player;
@@ -58,7 +62,10 @@ export class PlayerService {
    * @returns The linked player.
    */
   async link(license: string, kcUser: KeycloakUser): Promise<Player> {
-    this.logger.log(`[link] License: ${license}, With: ${kcUser.id}`);
+    this.logger.log(
+      "link",
+      `Link a player with license: ${license} to id: ${kcUser.id}`,
+    );
 
     const player = await this.getOneWhere({
       license: trimLicense(license),
@@ -80,7 +87,7 @@ export class PlayerService {
    * @returns The created player.
    */
   async create(payload: PlayerCreatePayload): Promise<Player> {
-    this.logger.log(`[create] With: ${payload}`);
+    this.logger.log("create", `${payload}`);
     const license = trimLicense(payload.license);
 
     const kcUser = await this.kcService.getUser(license);
@@ -94,13 +101,13 @@ export class PlayerService {
     try {
       return await this.prisma.player.create({ data });
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error("create", error);
       throw new CannotCreateException();
     }
   }
 
   async upload(players: CsvPlayer[]): Promise<Player[]> {
-    this.logger.log(`[upload] With: ${players}`);
+    this.logger.log("upload", `All players: ${players}`);
 
     const allPlayerLicenses = (await this.prisma.player.findMany()).map(
       (p) => p.license,
@@ -109,7 +116,7 @@ export class PlayerService {
       (p) => !allPlayerLicenses.includes(trimLicense(p[2])),
     );
 
-    this.logger.log(`[upload] To add: ${csvPlayersToAdd}`);
+    this.logger.log("upload", `To add: ${csvPlayersToAdd}`);
 
     if (csvPlayersToAdd.length == 0) {
       return [];
@@ -150,7 +157,7 @@ export class PlayerService {
     payload: PlayerUpdatePayload,
     kcUser: AuthenticatedKcUser,
   ): Promise<Player> {
-    this.logger.log(`[update] With: ${payload}`);
+    this.logger.log("update", `${payload}`);
 
     const currentPlayer = await this.prisma.findMe(kcUser.sub);
 
@@ -171,8 +178,6 @@ export class PlayerService {
    * @returns The deleted player.
    */
   async delete(id: string) {
-    this.logger.log(`[delete] With id: ${id}`);
-
     return this.prisma.player.delete({
       where: { id },
     });
