@@ -14,7 +14,7 @@ export default function ButtonLoading({
 }: ButtonLoadingProps) {
   return (
     <Button {...props}>
-      {loading ? <FontAwesomeIcon icon={faSpinner} spin /> : <>{children}</>}
+      {loading ? <FontAwesomeIcon icon={faSpinner} spin /> : <span>{children}</span>}
     </Button>
   );
 }
