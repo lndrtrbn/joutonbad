@@ -3,13 +3,11 @@ dotenv.config({ path: `${process.env.NODE_ENV ?? ""}.env` });
 
 import { NestFactory } from "@nestjs/core";
 
-import { VERSION } from "./version";
 import { AppModule } from "./app.module";
 import { CONFIG, testConfig } from "./config";
 import { PrismaService } from "./prisma/prisma.service";
 
 async function bootstrap() {
-  console.log(`[VERSION] ${VERSION}`);
   testConfig();
   const app = await NestFactory.create(AppModule, {
     logger:

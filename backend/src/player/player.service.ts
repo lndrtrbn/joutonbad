@@ -10,8 +10,6 @@ import {
 import { AppLogger } from "src/utils/AppLogger";
 import { trimLicense } from "src/utils/license";
 import { PrismaService } from "src/prisma/prisma.service";
-import { KeycloakService } from "src/keycloak/keycloak.service";
-import { AuthenticatedKcUser, KeycloakUser } from "src/keycloak/keycloakUser";
 import { CannotCreateException } from "src/exceptions/cannotCreate.exception";
 import { NoPlayerFoundException } from "src/exceptions/noPlayerFound.exception";
 import { PlayerAlreadyLinkedException } from "src/exceptions/playerAlreadyLinked.exception";
@@ -20,7 +18,7 @@ import { PlayerAlreadyLinkedException } from "src/exceptions/playerAlreadyLinked
 export class PlayerService {
   private readonly logger = new AppLogger(PlayerService.name, "service");
 
-  constructor(private prisma: PrismaService, private kcService: KeycloakService) {}
+  constructor(private prisma: PrismaService) {}
 
   /**
    * Get a list of players.
@@ -61,7 +59,8 @@ export class PlayerService {
    * @param kcUser The keycloak user to link to a player.
    * @returns The linked player.
    */
-  async link(license: string, kcUser: KeycloakUser): Promise<Player> {
+  async link(license: string, kcUser: any): Promise<Player> {
+    // TODO
     this.logger.log(
       "link",
       `Link a player with license: ${license} to id: ${kcUser.id}`,
@@ -90,12 +89,13 @@ export class PlayerService {
     this.logger.log("create", `${payload}`);
     const license = trimLicense(payload.license);
 
-    const kcUser = await this.kcService.getUser(license);
+    // const kcUser = await this.kcService.getUser(license);
 
     const data = {
       ...payload,
       license,
-      kcId: kcUser ? kcUser.id : undefined,
+      // kcId: kcUser ? kcUser.id : undefined,
+      kcId: undefined,
     };
 
     try {
@@ -122,7 +122,8 @@ export class PlayerService {
       return [];
     }
 
-    const kcUsers = await this.kcService.getUsers();
+    // const kcUsers = await this.kcService.getUsers();
+    const kcUsers = [];
 
     const playersToAdd = csvPlayersToAdd.map((data) => {
       const player = csvPlayerToCreatePayload(data);
@@ -155,7 +156,7 @@ export class PlayerService {
    */
   async update(
     payload: PlayerUpdatePayload,
-    kcUser: AuthenticatedKcUser,
+    kcUser: any, // TODO
   ): Promise<Player> {
     this.logger.log("update", `${payload}`);
 

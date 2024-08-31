@@ -1,17 +1,14 @@
-import { Resource, Roles } from "nest-keycloak-connect";
 import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 
 import {
   RegistrationCreatePayload,
   RegistrationUpdatePayload,
 } from "./registration";
-import { CONFIG } from "src/config";
 import { toStr } from "src/utils/string";
 import { Registration } from "@prisma/client";
 import { AppLogger } from "src/utils/AppLogger";
 import { RegistrationService } from "./registration.service";
 
-@Resource("registration")
 @Controller("registration")
 export class RegistrationController {
   private readonly logger = new AppLogger(RegistrationController.name, "controller");
@@ -42,7 +39,7 @@ export class RegistrationController {
   }
 
   @Patch(":id")
-  @Roles({ roles: [CONFIG.kcRoleEditor] })
+  // @Roles({ roles: [CONFIG.kcRoleEditor] })
   async update(
     @Param("id") id: string,
     @Body() data: RegistrationUpdatePayload,
@@ -53,7 +50,7 @@ export class RegistrationController {
   }
 
   @Delete(":id")
-  @Roles({ roles: [CONFIG.kcRoleEditor] })
+  // @Roles({ roles: [CONFIG.kcRoleEditor] })
   async delete(@Param("id") id: string): Promise<number> {
     this.logger.log("delete", `Delete tournament: ${id}`);
 

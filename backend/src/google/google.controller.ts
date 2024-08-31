@@ -1,7 +1,5 @@
-import { Roles } from "nest-keycloak-connect";
 import { Controller, Post } from "@nestjs/common";
 
-import { CONFIG } from "src/config";
 import { AppLogger } from "src/utils/AppLogger";
 import { GoogleService } from "./google.service";
 
@@ -12,7 +10,7 @@ export class GoogleController {
   constructor(private readonly googleService: GoogleService) {}
 
   @Post("export")
-  @Roles({ roles: [CONFIG.kcRoleEditor] })
+  // @Roles({ roles: [CONFIG.kcRoleEditor] })
   async export(): Promise<void> {
     this.logger.log("export", "Exporting data to google drive");
 

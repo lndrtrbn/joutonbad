@@ -7,22 +7,22 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from "@nestjs/common";
 import { Tournament } from "@prisma/client";
-import { Resource, Roles } from "nest-keycloak-connect";
 
 import {
   FullTournament,
   TournamentCreatePayload,
   TournamentUpdatePayload,
 } from "./tournament";
-import { CONFIG } from "src/config";
 import { toStr } from "src/utils/string";
 import { AppLogger } from "src/utils/AppLogger";
+import { AuthGuard } from "src/auth/auth.guard";
 import { TournamentService } from "./tournament.service";
 
-@Resource("tournament")
 @Controller("tournament")
+@UseGuards(AuthGuard)
 export class TournamentController {
   private readonly logger = new AppLogger(TournamentController.name, "controller");
 
@@ -52,7 +52,7 @@ export class TournamentController {
   }
 
   @Post()
-  @Roles({ roles: [CONFIG.kcRoleEditor] })
+  // @Roles({ roles: [CONFIG.kcRoleEditor] })
   async create(@Body() data: TournamentCreatePayload): Promise<Tournament> {
     this.logger.log("create", `Create a new tournament: ${toStr(data)}`);
 
@@ -60,7 +60,7 @@ export class TournamentController {
   }
 
   @Patch(":id")
-  @Roles({ roles: [CONFIG.kcRoleEditor] })
+  // @Roles({ roles: [CONFIG.kcRoleEditor] })
   async update(
     @Param("id") id: string,
     @Body() data: TournamentUpdatePayload,
@@ -71,7 +71,7 @@ export class TournamentController {
   }
 
   @Delete(":id")
-  @Roles({ roles: [CONFIG.kcRoleEditor] })
+  // @Roles({ roles: [CONFIG.kcRoleEditor] })
   async delete(@Param("id") id: string): Promise<Tournament> {
     this.logger.log("delete", `Delete tournament: ${id}`);
 

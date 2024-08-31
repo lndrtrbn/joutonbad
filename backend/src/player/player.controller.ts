@@ -12,29 +12,24 @@ import {
   ParseFilePipe,
   MaxFileSizeValidator,
   FileTypeValidator,
+  UseGuards,
 } from "@nestjs/common";
 import { parse } from "csv-parse/sync";
 import { Player } from "@prisma/client";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { AuthenticatedUser, Resource, Roles } from "nest-keycloak-connect";
 
-import { CONFIG } from "src/config";
+import { AuthGuard } from "src/auth/auth.guard";
 import { AppLogger } from "src/utils/AppLogger";
 import { trimLicense } from "src/utils/license";
 import { PlayerService } from "./player.service";
-import { AuthenticatedKcUser } from "src/keycloak/keycloakUser";
-import { KeycloakService } from "src/keycloak/keycloak.service";
 import { CsvPlayer, PlayerCreatePayload, PlayerUpdatePayload } from "./player";
 
-@Resource("player")
 @Controller("player")
+@UseGuards(AuthGuard)
 export class PlayerController {
   private readonly logger = new AppLogger(PlayerController.name, "controller");
 
-  constructor(
-    private readonly playerService: PlayerService,
-    private keycloakService: KeycloakService,
-  ) {}
+  constructor(private readonly playerService: PlayerService) {}
 
   @Get()
   async get(@Query("ids") ids: string | undefined): Promise<Player[]> {
@@ -52,17 +47,17 @@ export class PlayerController {
   }
 
   @Get("admins")
-  @Roles({ roles: [CONFIG.kcRoleEditor] })
+  // @Roles({ roles: [CONFIG.kcRoleEditor] })
   async getAdmins(): Promise<Player[]> {
     this.logger.log("getAdmins", "Get all admin players");
 
-    const keycloakUsers = await this.keycloakService.getAdminUsers();
-    const adminIds = keycloakUsers.map((user) => user.id);
+    // const keycloakUsers = await this.keycloakService.getAdminUsers();
+    // const adminIds = keycloakUsers.map((user) => user.id);
 
     return this.playerService.getWhere({
-      kcId: {
-        in: adminIds,
-      },
+      // kcId: {
+      //   in: [],
+      // },
     });
   }
 
@@ -76,7 +71,7 @@ export class PlayerController {
   }
 
   @Post()
-  @Roles({ roles: [CONFIG.kcRoleEditor] })
+  // @Roles({ roles: [CONFIG.kcRoleEditor] })
   async create(@Body() data: PlayerCreatePayload): Promise<Player> {
     this.logger.log("create", `Create a new player for license: ${data.license}`);
 
@@ -84,7 +79,7 @@ export class PlayerController {
   }
 
   @Post("csv")
-  @Roles({ roles: [CONFIG.kcRoleEditor] })
+  // @Roles({ roles: [CONFIG.kcRoleEditor] })
   @UseInterceptors(FileInterceptor("file"))
   uploadFile(
     @UploadedFile(
@@ -112,17 +107,14 @@ export class PlayerController {
   }
 
   @Patch("profil")
-  async update(
-    @Body() data: PlayerUpdatePayload,
-    @AuthenticatedUser() kcUser: AuthenticatedKcUser,
-  ): Promise<Player> {
+  async update(@Body() data: PlayerUpdatePayload): Promise<Player> {
     this.logger.log("update", `Update a player`);
 
-    return this.playerService.update(data, kcUser);
+    return this.playerService.update(data, {}); // TODO
   }
 
   @Delete(":id")
-  @Roles({ roles: [CONFIG.kcRoleEditor] })
+  // @Roles({ roles: [CONFIG.kcRoleEditor] })
   async delete(@Param("id") id: string): Promise<Player> {
     this.logger.log("delete", `Delete player with id: ${id}`);
 

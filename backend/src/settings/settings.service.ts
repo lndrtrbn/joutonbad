@@ -3,7 +3,6 @@ import { PlateformSettings, Prisma } from "@prisma/client";
 
 import { AppLogger } from "src/utils/AppLogger";
 import { PrismaService } from "src/prisma/prisma.service";
-import { AuthenticatedKcUser } from "src/keycloak/keycloakUser";
 import { SettingsCreatePayload, SettingsUpdatePayload } from "./settings";
 import { CannotCreateException } from "src/exceptions/cannotCreate.exception";
 import { InternalErrorException } from "src/exceptions/internalError.exception";
@@ -49,11 +48,9 @@ export class SettingsService {
    * @param payload Data of the update.
    * @returns The updated plateform settings.
    */
-  async update(
-    payload: SettingsUpdatePayload,
-    kcUser: AuthenticatedKcUser,
-  ): Promise<PlateformSettings> {
-    const currentPlayer = await this.prisma.findMe(kcUser.sub);
+  async update(payload: SettingsUpdatePayload): Promise<PlateformSettings> {
+    // TODO findMe
+    const currentPlayer = await this.prisma.findMe("");
 
     const settings = await this.get();
     if (!settings) new InternalErrorException();
