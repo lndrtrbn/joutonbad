@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import { compareAsc, startOfDay, subDays } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +9,6 @@ import Link from "../../components/Link/Link";
 import Title from "../../components/Title/Title";
 import MembersList from "./MembersList/MembersList";
 import { Discipline } from "../../utils/discipline";
-import { useAuthContext } from "../../contexts/auth.context";
 import Separator from "../../components/Separator/Separator";
 import { useQueryTournamentById } from "../../http/useHttpTournament";
 import TournamentDetails from "./TournamentDetails/TournamentDetails";
@@ -16,7 +16,7 @@ import RegistrationDouble from "../../components/RegistrationDouble/Registration
 import TournamentRegistrationSimple from "../../components/TournamentRegistrationSimple/TournamentRegistrationSimple";
 
 export default function TournamentPage() {
-  const { user } = useAuthContext();
+  const { user } = useAuth0();
 
   const { id } = useParams();
   const { data: tournament } = useQueryTournamentById(id || "");
@@ -52,7 +52,7 @@ export default function TournamentPage() {
             <TournamentRegistrationSimple
               tournament={tournament}
               canRegister={!registrationsDone}
-              playerLicense={user?.license}
+              playerLicense={user.name ?? ""}
             />
           )}
 
@@ -62,7 +62,7 @@ export default function TournamentPage() {
               discipline={Discipline.DH}
               tournament={tournament}
               canRegister={!registrationsDone}
-              playerLicense={user?.license}
+              playerLicense={user.name ?? ""}
             />
           )}
 
@@ -71,7 +71,7 @@ export default function TournamentPage() {
               discipline={Discipline.DM}
               tournament={tournament}
               canRegister={!registrationsDone}
-              playerLicense={user?.license}
+              playerLicense={user.name ?? ""}
             />
           )}
         </section>

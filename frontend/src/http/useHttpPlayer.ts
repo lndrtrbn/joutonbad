@@ -1,14 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import useAxios from "./useAxios";
-import { API_URL } from "./config";
 import { Player } from "../utils/player";
 import { Device } from "../utils/preferences";
-import { useAuthContext } from "../contexts/auth.context";
+import { useProfilContext } from "../contexts/profil.context";
 import { useAlertsContext } from "../contexts/alerts.context";
 
+import { CONFIG } from "../config";
+
 const KEY = "players";
-const ENDPOINT = `${API_URL}/player`;
+const ENDPOINT = `${CONFIG.joutonbad.apiUrl}/player`;
 
 export function useQueryPlayers() {
   const { getAxios } = useAxios();
@@ -68,7 +69,7 @@ export type UpdateProfilPayload = {
 export function useUpdateProfil() {
   const { patchAxios } = useAxios();
   const queryClient = useQueryClient();
-  const { setProfil } = useAuthContext();
+  const { setProfil } = useProfilContext();
   const { addSuccessAlert } = useAlertsContext();
 
   return useMutation({

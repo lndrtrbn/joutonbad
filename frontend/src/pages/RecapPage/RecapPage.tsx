@@ -1,20 +1,20 @@
 import { compareAsc } from "date-fns";
+import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useMemo, useState } from "react";
 
-import { Registration, filterByDiscipline } from "../../utils/registration";
 import Box from "../../components/Box/Box";
 import RecapPageStyle from "./RecapPage.style";
 import Title from "../../components/Title/Title";
 import { Tournament } from "../../utils/tournament";
 import { Discipline } from "../../utils/discipline";
-import { useAuthContext } from "../../contexts/auth.context";
 import Separator from "../../components/Separator/Separator";
 import { useQuerySettings } from "../../http/useHttpSettings";
 import CalendarList from "../HomePage/CalendarList/CalendarList";
 import { useQueryTournamentsByPlayer } from "../../http/useHttpTournament";
+import { Registration, filterByDiscipline } from "../../utils/registration";
 
 export default function RecapPage() {
-  const { user } = useAuthContext();
+  const { user } = useAuth0();
   const { data: settings } = useQuerySettings();
   const { data: myTournaments } = useQueryTournamentsByPlayer();
 
@@ -51,7 +51,7 @@ export default function RecapPage() {
 
           // Compute how much the player have to pay.
           const registrations = tournament.registrations.filter(
-            (reg) => reg.player.license == user.license && !reg.cancelled,
+            (reg) => reg.player.license == user.name && !reg.cancelled,
           );
           setMyregistrations((regs) => [...regs, ...registrations]);
           if (registrations.length == 1) setCost((c) => c + tournament.prices[0]);

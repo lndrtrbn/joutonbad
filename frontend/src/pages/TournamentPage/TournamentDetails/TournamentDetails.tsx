@@ -54,7 +54,7 @@ export default function TournamentDetails({ tournament }: Props) {
           </section>
 
           <section>
-            <p>Responsable REC</p>
+            <p>Responsable</p>
             <Title style="mb-0">
               {tournament.inCharge.lastname} {tournament.inCharge.name}
             </Title>

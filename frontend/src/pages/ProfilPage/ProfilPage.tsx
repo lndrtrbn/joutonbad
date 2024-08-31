@@ -6,7 +6,7 @@ import Title from "../../components/Title/Title";
 import Button from "../../components/Button/Button";
 import { useUpdateProfil } from "../../http/useHttpPlayer";
 import Separator from "../../components/Separator/Separator";
-import { useAuthContext } from "../../contexts/auth.context";
+import { useProfilContext } from "../../contexts/profil.context";
 import { DEFAULT_MAIN_COLOR } from "../../styles/designSystem/colors";
 import InputCheckbox from "../../components/InputCheckbox/InputCheckbox";
 import ButtonLoading from "../../components/ButtonLoading/ButtonLoading";
@@ -19,7 +19,7 @@ const schema = z.object({
 type Inputs = z.infer<typeof schema>;
 
 export default function ProfilPage() {
-  const { profil } = useAuthContext();
+  const { profil } = useProfilContext();
   const { mutateAsync, isPending } = useUpdateProfil();
 
   const {

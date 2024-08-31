@@ -6,19 +6,19 @@ import {
   faMedal,
   faAddressCard,
 } from "@fortawesome/free-solid-svg-icons";
+import { useAuth0 } from "@auth0/auth0-react";
 import { faCalendarDays } from "@fortawesome/free-regular-svg-icons";
 
 import Link from "../../../Link/Link";
 import SidebarNavStyle from "./SidebarNav.style";
 import { isEditor } from "../../../../utils/user";
-import { useAuthContext } from "../../../../contexts/auth.context";
 
 export default function SidebarNav() {
-  const { user } = useAuthContext();
+  const { user } = useAuth0();
 
   return (
     <div className={SidebarNavStyle.base}>
-      <Link to="/" icon={faCalendarDays}>
+      <Link to="/home" icon={faCalendarDays}>
         Calendrier
       </Link>
       <Link to="/recap" icon={faFire}>

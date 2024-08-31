@@ -1,24 +1,21 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import axios, { AxiosResponse, isAxiosError } from "axios";
 
-import { useAuthContext } from "../contexts/auth.context";
-import { APIError, APIErrorMessage } from "../utils/error";
+import { APIError } from "../utils/error";
 import { useAlertsContext } from "../contexts/alerts.context";
 
 type AxiosRequest<T> = () => Promise<AxiosResponse<T, unknown>>;
 
 export default function useAxios() {
-  const { user, setUser } = useAuthContext();
+  const { getAccessTokenSilently } = useAuth0();
   const { addUnknownErrorAlert } = useAlertsContext();
 
-  const headers = useMemo(
-    () =>
-      user && user.accessToken
-        ? {
-            Authorization: `Bearer ${user.accessToken}`,
-          }
-        : {},
-    [user],
+  const headers = useCallback(
+    async () => ({
+      Authorization: `Bearer ${await getAccessTokenSilently()}`,
+    }),
+    [getAccessTokenSilently],
   );
 
   const call = useCallback(
@@ -28,9 +25,7 @@ export default function useAxios() {
       } catch (error) {
         if (isAxiosError(error) && error.response) {
           const apiError = new APIError(error.response.data);
-          if (apiError.message === APIErrorMessage.UNAUTHORIZED) {
-            setUser(undefined);
-          } else if (apiError.statusCode === 500) {
+          if (apiError.statusCode === 500) {
             addUnknownErrorAlert();
           }
           throw apiError;
@@ -40,34 +35,38 @@ export default function useAxios() {
         }
       }
     },
-    [setUser, addUnknownErrorAlert],
+    [addUnknownErrorAlert],
   );
 
   const getAxios = useCallback(
-    <T>(endpoint: string) => call(() => axios.get<T>(endpoint, { headers })),
+    <T>(endpoint: string) =>
+      call(async () => axios.get<T>(endpoint, { headers: await headers() })),
     [call, headers],
   );
 
   const postAxios = useCallback(
     <T>(endpoint: string, data: unknown) =>
-      call(() => axios.post<T>(endpoint, data, { headers })),
+      call(async () => axios.post<T>(endpoint, data, { headers: await headers() })),
     [call, headers],
   );
 
   const postFormAxios = useCallback(
     <T>(endpoint: string, data: unknown) =>
-      call(() => axios.postForm<T>(endpoint, data, { headers })),
+      call(async () =>
+        axios.postForm<T>(endpoint, data, { headers: await headers() }),
+      ),
     [call, headers],
   );
 
   const patchAxios = useCallback(
     <T>(endpoint: string, data: unknown) =>
-      call(() => axios.patch<T>(endpoint, data, { headers })),
+      call(async () => axios.patch<T>(endpoint, data, { headers: await headers() })),
     [call, headers],
   );
 
   const deleteAxios = useCallback(
-    <T>(endpoint: string) => call(() => axios.delete<T>(endpoint, { headers })),
+    <T>(endpoint: string) =>
+      call(async () => axios.delete<T>(endpoint, { headers: await headers() })),
     [call, headers],
   );
 

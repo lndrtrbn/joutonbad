@@ -138,7 +138,7 @@ export default function FormTournament({
               value={players.find((p) => p.id === value)}
               players={players}
               onChange={(member) => onChange(member?.id ?? "")}
-              placeholder="Responsable REC"
+              placeholder="Responsable"
             />
           )}
         />

@@ -2,15 +2,13 @@ import { Outlet, createBrowserRouter } from "react-router-dom";
 
 import AuthGuard from "./auth.guard";
 import EditorGuard from "./editor.guard";
-import UnauthGuard from "./unauth.guard";
 import Root from "../components/Root/Root";
 import FaqPage from "../pages/FaqPage/FaqPage";
 import HomePage from "../pages/HomePage/HomePage";
 import RecapPage from "../pages/RecapPage/RecapPage";
-import LoginPage from "../pages/LoginPage/LoginPage";
-import SignupPage from "../pages/SignupPage/SignupPage";
 import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
-import ForgotPwdPage from "../pages/ForgotPwdPage/ForgotPwdPage";
+import ConnectPage from "../pages/ConnectPage/ConnectPage";
+import CallbackPage from "../pages/CallbackPage/CallbackPage";
 import TournamentPage from "../pages/TournamentPage/TournamentPage";
 import AdminGlobalPage from "../pages/AdminGlobalPage/AdminGlobalPage";
 import AdminMembersPage from "../pages/AdminMembersPage/AdminMembersPage";
@@ -26,40 +24,20 @@ export const router = createBrowserRouter([
     children: [
       // PUBLIC PAGES : NO AUTH REQUIRED
       {
-        path: "/login",
-        element: (
-          <UnauthGuard>
-            <LoginPage />
-          </UnauthGuard>
-        ),
+        path: "",
+        element: <ConnectPage />,
       },
       {
-        path: "/signup",
-        element: (
-          <UnauthGuard>
-            <SignupPage />
-          </UnauthGuard>
-        ),
-      },
-      {
-        path: "/forgotpwd",
-        element: (
-          <UnauthGuard>
-            <ForgotPwdPage />
-          </UnauthGuard>
-        ),
+        path: "/callback",
+        element: <CallbackPage />,
       },
       // PRIVATE PAGES : AUTH REQUIRED
       {
         path: "/",
-        element: (
-          <AuthGuard>
-            <Root />
-          </AuthGuard>
-        ),
+        element: <AuthGuard component={Root} />,
         children: [
           {
-            path: "",
+            path: "/home",
             element: <HomePage />,
           },
           {
