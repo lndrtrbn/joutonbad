@@ -12,7 +12,7 @@ export default function Root() {
   const navigate = useNavigate();
   const { setProfil } = useProfilContext();
 
-  const { data: player, error } = useQueryPlayer(user?.joutonbadLicence);
+  const { data: player, error } = useQueryPlayer(user?.joutonbad.license);
 
   useEffect(() => {
     if (player) setProfil(player);

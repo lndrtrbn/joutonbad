@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
       // PRIVATE PAGES : AUTH REQUIRED
       {
         path: "/",
-        element: <AuthGuard component={Root} />,
+        element: <Root />,
         children: [
           {
             path: "/home",

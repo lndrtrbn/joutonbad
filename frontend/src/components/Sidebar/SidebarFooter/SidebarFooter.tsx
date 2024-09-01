@@ -11,7 +11,7 @@ export default function SidebarFooter() {
   return (
     <div className={SidebarFooterStyle.base}>
       <div className={SidebarFooterStyle.text}>
-        <p>Licence {user?.joutonbadLicence}</p>
+        <p>Licence {user?.joutonbad.license}</p>
       </div>
       <Button variant="light" onClick={logout}>
         Déconnexion

@@ -25,9 +25,9 @@ export function useQueryTournamentsByPlayer() {
   const { getAxios } = useAxios();
 
   return useQuery({
-    queryKey: [KEY, user?.joutonbadLicence],
+    queryKey: [KEY, user?.joutonbad.license],
     queryFn: () =>
-      getAxios<Tournament[]>(`${ENDPOINT}/license/${user?.joutonbadLicence}`),
+      getAxios<Tournament[]>(`${ENDPOINT}/license/${user?.joutonbad.license}`),
   });
 }
 
