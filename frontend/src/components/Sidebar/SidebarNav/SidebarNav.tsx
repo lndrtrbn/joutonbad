@@ -9,9 +9,9 @@ import {
 import { useAuth0 } from "@auth0/auth0-react";
 import { faCalendarDays } from "@fortawesome/free-regular-svg-icons";
 
-import Link from "../../../Link/Link";
+import Link from "../../Link/Link";
+import { isEditor } from "../../../utils/user";
 import SidebarNavStyle from "./SidebarNav.style";
-import { isEditor } from "../../../../utils/user";
 
 export default function SidebarNav() {
   const { user } = useAuth0();

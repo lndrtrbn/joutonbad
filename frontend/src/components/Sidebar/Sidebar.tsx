@@ -3,13 +3,13 @@ import { twMerge } from "tailwind-merge";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Button from "../../Button/Button";
+import Button from "../Button/Button";
 import SidebarStyle from "./Sidebar.style";
 import SidebarNav from "./SidebarNav/SidebarNav";
+import LogoVertical from "../LogoVertical/LogoVertical";
 import SidebarFooter from "./SidebarFooter/SidebarFooter";
-import LogoVertical from "../../LogoVertical/LogoVertical";
-import useClickOutside from "../../../hooks/useClickOutside";
-import { useWindowDimensions } from "../../../hooks/useWindowDimensions";
+import useClickOutside from "../../hooks/useClickOutside";
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 
 export default function Sidebar() {
   const { width } = useWindowDimensions();
