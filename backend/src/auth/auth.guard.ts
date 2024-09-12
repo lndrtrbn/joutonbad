@@ -6,6 +6,7 @@ import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { CONFIG } from "src/config";
 import { promisify } from "src/utils/promise";
 import { AppLogger } from "src/utils/AppLogger";
+import { trimLicense } from "src/utils/license";
 import { UnauthorizedException } from "src/exceptions/unauthorized.exception";
 import { InternalErrorException } from "src/exceptions/internalError.exception";
 
@@ -32,6 +33,10 @@ export class AuthGuard implements CanActivate {
     );
     try {
       await checkJwt(request, response);
+      request["user"] = {
+        license: trimLicense(request["auth"].joutonbad.license),
+        roles: request["auth"].joutonbad.roles,
+      };
       return true;
     } catch (error) {
       if (error instanceof UnauthorizedError) {

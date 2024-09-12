@@ -3,6 +3,7 @@ import { exit } from "process";
 type Config = {
   port: number;
   auth0Audience: string;
+  auth0RoleEditor: string;
   auth0IssuerBaseUrl: string;
   auth0ClientOriginUrl: string;
   googleSpreadSheetId: string;
@@ -16,6 +17,7 @@ type Config = {
 export const CONFIG: Config = {
   port: parseInt(process.env.API_PORT ?? ""),
   auth0Audience: process.env.AUTH0_AUDIENCE ?? "",
+  auth0RoleEditor: process.env.AUTH0_ROLE_EDITOR ?? "",
   auth0IssuerBaseUrl: process.env.AUTH0_ISSUER_BASE_URL ?? "",
   auth0ClientOriginUrl: process.env.CLIENT_ORIGIN_URL ?? "",
   googleSpreadSheetId: process.env.GOOGLE_SPREADSHEET_ID ?? "",

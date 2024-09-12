@@ -18,18 +18,29 @@ import { parse } from "csv-parse/sync";
 import { Player } from "@prisma/client";
 import { FileInterceptor } from "@nestjs/platform-express";
 
+import { CONFIG } from "src/config";
 import { AuthGuard } from "src/auth/auth.guard";
 import { AppLogger } from "src/utils/AppLogger";
 import { trimLicense } from "src/utils/license";
 import { PlayerService } from "./player.service";
+import { Roles } from "src/auth/roles.decorator";
+import { RolesGuard } from "src/auth/roles.guard";
+import { UserLicense } from "src/auth/user.decorator";
 import { CsvPlayer, PlayerCreatePayload, PlayerUpdatePayload } from "./player";
 
 @Controller("player")
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, RolesGuard)
 export class PlayerController {
   private readonly logger = new AppLogger(PlayerController.name, "controller");
 
   constructor(private readonly playerService: PlayerService) {}
+
+  @Get("/me")
+  async getMe(@UserLicense() userLicense: string): Promise<Player> {
+    this.logger.log("getMe", `Get a player by its license: ${userLicense}`);
+
+    return this.playerService.getMe(userLicense);
+  }
 
   @Get()
   async get(@Query("ids") ids: string | undefined): Promise<Player[]> {
@@ -47,7 +58,7 @@ export class PlayerController {
   }
 
   @Get("admins")
-  // @Roles({ roles: [CONFIG.kcRoleEditor] })
+  @Roles([CONFIG.auth0RoleEditor])
   async getAdmins(): Promise<Player[]> {
     this.logger.log("getAdmins", "Get all admin players");
 
@@ -63,7 +74,7 @@ export class PlayerController {
 
   @Get(":license")
   async getBylicense(@Param("license") license: string): Promise<Player> {
-    this.logger.log("findByLicense", `Get a player by its license: ${license}`);
+    this.logger.log("getBylicense", `Get a player by its license: ${license}`);
 
     return this.playerService.getOneWhere({
       license: trimLicense(license),
@@ -71,7 +82,7 @@ export class PlayerController {
   }
 
   @Post()
-  // @Roles({ roles: [CONFIG.kcRoleEditor] })
+  @Roles([CONFIG.auth0RoleEditor])
   async create(@Body() data: PlayerCreatePayload): Promise<Player> {
     this.logger.log("create", `Create a new player for license: ${data.license}`);
 
@@ -79,7 +90,7 @@ export class PlayerController {
   }
 
   @Post("csv")
-  // @Roles({ roles: [CONFIG.kcRoleEditor] })
+  @Roles([CONFIG.auth0RoleEditor])
   @UseInterceptors(FileInterceptor("file"))
   uploadFile(
     @UploadedFile(
@@ -107,14 +118,17 @@ export class PlayerController {
   }
 
   @Patch("profil")
-  async update(@Body() data: PlayerUpdatePayload): Promise<Player> {
+  async update(
+    @Body() data: PlayerUpdatePayload,
+    @UserLicense() userLicense: string,
+  ): Promise<Player> {
     this.logger.log("update", `Update a player`);
 
-    return this.playerService.update(data, {}); // TODO
+    return this.playerService.update(data, userLicense);
   }
 
   @Delete(":id")
-  // @Roles({ roles: [CONFIG.kcRoleEditor] })
+  @Roles([CONFIG.auth0RoleEditor])
   async delete(@Param("id") id: string): Promise<Player> {
     this.logger.log("delete", `Delete player with id: ${id}`);
 

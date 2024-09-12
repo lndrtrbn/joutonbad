@@ -1,15 +1,29 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from "@nestjs/common";
 
 import {
   RegistrationCreatePayload,
   RegistrationUpdatePayload,
 } from "./registration";
+import { CONFIG } from "src/config";
 import { toStr } from "src/utils/string";
 import { Registration } from "@prisma/client";
 import { AppLogger } from "src/utils/AppLogger";
+import { AuthGuard } from "src/auth/auth.guard";
+import { Roles } from "src/auth/roles.decorator";
+import { RolesGuard } from "src/auth/roles.guard";
 import { RegistrationService } from "./registration.service";
 
 @Controller("registration")
+@UseGuards(AuthGuard, RolesGuard)
 export class RegistrationController {
   private readonly logger = new AppLogger(RegistrationController.name, "controller");
 
@@ -39,7 +53,7 @@ export class RegistrationController {
   }
 
   @Patch(":id")
-  // @Roles({ roles: [CONFIG.kcRoleEditor] })
+  @Roles([CONFIG.auth0RoleEditor])
   async update(
     @Param("id") id: string,
     @Body() data: RegistrationUpdatePayload,
@@ -50,7 +64,7 @@ export class RegistrationController {
   }
 
   @Delete(":id")
-  // @Roles({ roles: [CONFIG.kcRoleEditor] })
+  @Roles([CONFIG.auth0RoleEditor])
   async delete(@Param("id") id: string): Promise<number> {
     this.logger.log("delete", `Delete tournament: ${id}`);
 

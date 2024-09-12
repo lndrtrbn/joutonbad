@@ -46,11 +46,14 @@ export class SettingsService {
    * Update the settings of the platform.
    *
    * @param payload Data of the update.
+   * @param userLicense License of the user making the request.
    * @returns The updated plateform settings.
    */
-  async update(payload: SettingsUpdatePayload): Promise<PlateformSettings> {
-    // TODO findMe
-    const currentPlayer = await this.prisma.findMe("");
+  async update(
+    payload: SettingsUpdatePayload,
+    userLicense: string,
+  ): Promise<PlateformSettings> {
+    const currentPlayer = await this.prisma.findMe(userLicense);
 
     const settings = await this.get();
     if (!settings) new InternalErrorException();

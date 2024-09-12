@@ -8,7 +8,6 @@
   - [Nginx configuration](#nginx-configuration)
     - [Set app in maintenance](#set-app-in-maintenance)
     - [Set app back online](#set-app-back-online)
-    - [Make keycloak available](#make-keycloak-available)
 
 
 ## Repository organization
@@ -58,7 +57,6 @@ docker compose up -d
 ```
 sudo rm /etc/nginx/sites-enabled/joutonbad
 sudo ln -s /etc/nginx/sites-available/joutonbad-maintenance-app /etc/nginx/sites-enabled/joutonbad-maintenance-app
-sudo ln -s /etc/nginx/sites-available/joutonbad-maintenance-kc /etc/nginx/sites-enabled/joutonbad-maintenance-kc
 sudo service nginx restart
 ```
 
@@ -67,12 +65,5 @@ sudo service nginx restart
 ```
 sudo rm /etc/nginx/sites-enabled/joutonbad-maintenance-app
 sudo ln -s /etc/nginx/sites-available/joutonbad /etc/nginx/sites-enabled/joutonbad
-sudo service nginx restart
-```
-
-### Make keycloak available
-
-```
-sudo rm /etc/nginx/sites-enabled/joutonbad-maintenance-kc
 sudo service nginx restart
 ```

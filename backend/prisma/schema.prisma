@@ -51,7 +51,6 @@ type Link {
 
 model Player {
   id             String         @id @default(auto()) @map("_id") @db.ObjectId
-  kcId           String?        
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
   name           String
@@ -62,6 +61,7 @@ model Player {
   inChargeOf     Tournament[]
   favoriteDevice Device         @default(desktop)
   favoriteColor  String?
+  active         Boolean?       @default(false)
 }
 
 type Partner {

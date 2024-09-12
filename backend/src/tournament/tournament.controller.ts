@@ -16,13 +16,16 @@ import {
   TournamentCreatePayload,
   TournamentUpdatePayload,
 } from "./tournament";
+import { CONFIG } from "src/config";
 import { toStr } from "src/utils/string";
 import { AppLogger } from "src/utils/AppLogger";
 import { AuthGuard } from "src/auth/auth.guard";
+import { Roles } from "src/auth/roles.decorator";
+import { RolesGuard } from "src/auth/roles.guard";
 import { TournamentService } from "./tournament.service";
 
 @Controller("tournament")
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, RolesGuard)
 export class TournamentController {
   private readonly logger = new AppLogger(TournamentController.name, "controller");
 
@@ -52,7 +55,7 @@ export class TournamentController {
   }
 
   @Post()
-  // @Roles({ roles: [CONFIG.kcRoleEditor] })
+  @Roles([CONFIG.auth0RoleEditor])
   async create(@Body() data: TournamentCreatePayload): Promise<Tournament> {
     this.logger.log("create", `Create a new tournament: ${toStr(data)}`);
 
@@ -60,7 +63,7 @@ export class TournamentController {
   }
 
   @Patch(":id")
-  // @Roles({ roles: [CONFIG.kcRoleEditor] })
+  @Roles([CONFIG.auth0RoleEditor])
   async update(
     @Param("id") id: string,
     @Body() data: TournamentUpdatePayload,
@@ -71,7 +74,7 @@ export class TournamentController {
   }
 
   @Delete(":id")
-  // @Roles({ roles: [CONFIG.kcRoleEditor] })
+  @Roles([CONFIG.auth0RoleEditor])
   async delete(@Param("id") id: string): Promise<Tournament> {
     this.logger.log("delete", `Delete tournament: ${id}`);
 

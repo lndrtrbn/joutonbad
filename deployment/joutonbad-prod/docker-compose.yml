@@ -111,7 +111,7 @@ services:
       dockerfile: ./Dockerfile
       args:
         VITE_API_URL: /api
-        VITE_KC_EDITOR_ROLE: tournois-api-editor
+        VITE_MODERATOR_ROLE: tournois-api-editor
     image: rec/joutonbad-front
     restart: always
     ports:
