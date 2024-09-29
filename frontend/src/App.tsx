@@ -24,6 +24,8 @@ export default function App() {
         <Auth0Provider
           domain={CONFIG.auth0.clientDomain}
           clientId={CONFIG.auth0.clientId}
+          useRefreshTokens={true}
+          cacheLocation="localstorage"
           authorizationParams={{
             audience: CONFIG.auth0.audience,
             redirect_uri: window.location.origin,

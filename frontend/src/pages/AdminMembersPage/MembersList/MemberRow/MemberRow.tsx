@@ -56,12 +56,12 @@ export default function MemberRow({ member, alt = false }: MemberRowProps) {
           <FontAwesomeIcon
             className={twMerge(
               MemberRowStyle.active,
-              !member.kcId && MemberRowStyle.inactive,
+              !member.active && MemberRowStyle.inactive,
             )}
             size="xs"
             icon={faCircle}
           />{" "}
-          {member.kcId ? "Actif.ve" : "Inactif.ve"}
+          {member.active ? "Actif.ve" : "Inactif.ve"}
         </span>
 
         <Button variant="inline" onClick={askDelete}>

@@ -1,12 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import useAxios from "./useAxios";
+import { CONFIG } from "../config";
 import { Player } from "../utils/player";
 import { Device } from "../utils/preferences";
 import { useProfilContext } from "../contexts/profil.context";
 import { useAlertsContext } from "../contexts/alerts.context";
-
-import { CONFIG } from "../config";
 
 const KEY = "players";
 const ENDPOINT = `${CONFIG.joutonbad.apiUrl}/player`;
@@ -36,6 +35,15 @@ export function useQueryPlayer(licence?: string) {
     queryKey: [KEY, licence],
     queryFn: () => getAxios<Player>(`${ENDPOINT}/${licence}`),
     enabled: !!licence,
+  });
+}
+
+export function useQueryMe() {
+  const { getAxios } = useAxios();
+
+  return useQuery({
+    queryKey: [KEY, "me"],
+    queryFn: () => getAxios<Player>(`${ENDPOINT}/me`),
   });
 }
 

@@ -1,7 +1,7 @@
 import anime from "animejs";
+import { useEffect } from "react";
 
 import LogoVertical from "../LogoVertical/LogoVertical";
-import { useEffect } from "react";
 
 export default function ScreenLoader() {
   useEffect(() => {
