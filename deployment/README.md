@@ -13,9 +13,9 @@
 ## Repository organization
 
 **joutonbad-dev** - Docker compose to deploy a dev/test env.\
-**joutonbad-local** - Docker compose for a local env for development purpose.\
-**joutonbad-prod** - Docker compose for prod.\
-**maintenance.html** - HTML page where in maintenance.
+**joutonbad-local** - Docker compose for local env - development purpose.\
+**joutonbad-prod** - Docker compose for prod env.\
+**maintenance.html** - HTML page where prod is in maintenance.
 
 ## Deploy the application
 
@@ -23,7 +23,7 @@ Connect to the VPS through SSH.
 
 Go to `joutonbad/deployment/joutonbad-prod` folder.
 
-Fetch last commits and run
+Fetch last commits and run the following commands:
 
 ```
 docker compose build

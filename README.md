@@ -2,26 +2,26 @@
 
 Web application to help manage and centralize the registrations of your club's badminton players to individual tournaments organized by other clubs.
 
-> Project made by Landry Trebon for the REC Badminton.
+Project made by Landry Trebon for the REC Badminton.
 
-This README is to help developers set up a local env.
-For deployment informations please go to `/deployment` folder.
+> This README is to help developers set up a local env.
+> For deployment informations please go to `/deployment` folder.
 
 - [Joutonbad](#joutonbad)
   - [Repository organization](#repository-organization)
   - [Development techs](#development-techs)
   - [Run locally](#run-locally)
     - [Start Docker containers](#start-docker-containers)
-    - [\[FIRST LAUNCH\] Prepare the environment](#first-launch-prepare-the-environment)
+    - [\[first launch\] Prepare the environment](#first-launch-prepare-the-environment)
     - [Start applications](#start-applications)
     - [\[backend\] How to run a migration](#backend-how-to-run-a-migration)
 
 ## Repository organization
 
-**Root folder** - Contains documentation.\
+**Root folder** - Contains documentation and prettier config.\
 **Deployment** - Contains Docker deployment files.\
 **Backend** - Contains source code for the API.\
-**Frontend** - Contains source code for the web application.
+**Frontend** - Contains source code for the browser app.
 
 ## Development techs
 
@@ -42,7 +42,7 @@ Go to `deployment/joutonbad-local` and run the command:
 docker compose up -d
 ```
 
-### [FIRST LAUNCH] Prepare the environment
+### [first launch] Prepare the environment
 
 Install dependencies in both **frontend** and **backend** folders using the command:
 
@@ -52,7 +52,7 @@ npm install # or npm i
 
 In the backend:
 
-- Create a file `.env` by copying `.env.template` and fill the environment variables,
+- Create a file `.env` by copying `.env.template` and fill the environment variables (you will need to ask for what to fill),
 - Initialize Prisma with the command:
 
 ```sh
@@ -69,6 +69,8 @@ npm start
 
 ### [backend] How to run a migration
 
+> /!\ Only for local environment, NOT for production.
+
 Go to the migration folder (`backend/prisma/migrations`) and run this command:
 
 ```sh
@@ -76,3 +78,5 @@ node <filename> --db=<DB_URL>
 ```
 
 Where `filename` is s Javascript file containing the migration.
+
+Update the file `MIGRATION.md` to update the number of the last migration run.
