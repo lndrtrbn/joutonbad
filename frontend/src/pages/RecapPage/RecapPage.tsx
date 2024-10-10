@@ -82,6 +82,14 @@ export default function RecapPage() {
     return null;
   }
 
+  const regStats = [
+    !!regSH.length && regSH.length + " SH",
+    !!regSD.length && regSD.length + " SD",
+    !!regDH.length && regDH.length + " DH",
+    !!regDD.length && regDD.length + " DD",
+    !!regDM.length && regDM.length + " DM",
+  ].filter((a) => !!a);
+
   return (
     <>
       <Title size="3xl">Recap de mes inscriptions</Title>
@@ -93,17 +101,9 @@ export default function RecapPage() {
             <div className={RecapPageStyle.stat}>
               {myTournaments.length} Tournois | {myRegistrations.length} Tableaux
             </div>
-            <div className={RecapPageStyle.stat}>
-              {[
-                !!regSH.length && regSH.length + " SH",
-                !!regSD.length && regSD.length + " SD",
-                !!regDH.length && regDH.length + " DH",
-                !!regDD.length && regDD.length + " DD",
-                !!regDM.length && regDM.length + " DM",
-              ]
-                .filter((a) => !!a)
-                .join(" | ")}
-            </div>
+            {regStats.length > 0 && (
+              <div className={RecapPageStyle.stat}>{regStats.join(" | ")}</div>
+            )}
             <div className={RecapPageStyle.stat}>
               {cost}€ avancé par le club | {personalCost}€ à charge
             </div>

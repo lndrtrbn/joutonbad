@@ -57,21 +57,6 @@ export class PlayerController {
     );
   }
 
-  @Get("admins")
-  @Roles([CONFIG.auth0RoleEditor])
-  async getAdmins(): Promise<Player[]> {
-    this.logger.log("getAdmins", "Get all admin players");
-
-    // const keycloakUsers = await this.keycloakService.getAdminUsers();
-    // const adminIds = keycloakUsers.map((user) => user.id);
-
-    return this.playerService.getWhere({
-      // kcId: {
-      //   in: [],
-      // },
-    });
-  }
-
   @Get(":license")
   async getBylicense(@Param("license") license: string): Promise<Player> {
     this.logger.log("getBylicense", `Get a player by its license: ${license}`);
