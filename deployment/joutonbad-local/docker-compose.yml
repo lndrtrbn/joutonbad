@@ -1,39 +1,9 @@
 version: "3"
 
 volumes:
-  postgres_data:
   mongo_data:
 
 services:
-  postgresql:
-    container_name: postgresql
-    image: bitnami/postgresql:14.9.0
-    restart: always
-    volumes:
-      - postgres_data:/bitnami/postgresql
-    environment:
-      POSTGRESQL_DATABASE: keycloak
-      POSTGRESQL_USERNAME: keycloak
-      POSTGRESQL_PASSWORD: keycloakpwd
-
-  keycloak:
-    container_name: keycloak
-    build:
-      context: ../../keycloak
-      dockerfile: ./Dockerfile
-    image: joutonbad/keycloak
-    restart: always
-    environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: adminpwd
-      KEYCLOAK_DATABASE_NAME: keycloak
-      KEYCLOAK_DATABASE_USER: keycloak
-      KEYCLOAK_DATABASE_PASSWORD: keycloakpwd
-    ports:
-      - 8080:8080
-    depends_on:
-      - postgresql
-
   mongo-primary:
     container_name: mongo-primary
     image: bitnami/mongodb:4.2.21
