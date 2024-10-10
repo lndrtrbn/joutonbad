@@ -68,7 +68,7 @@ services:
       dockerfile: ./Dockerfile
       args:
         VITE_API_URL: /api
-        VITE_MODERATOR_ROLE: tournois-api-editor
+        VITE_AUTH0_MODERATOR_ROLE: tournois-api-editor
     image: rec/joutonbad-front
     restart: always
     ports:
