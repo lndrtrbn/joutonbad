@@ -34,6 +34,7 @@ export class AuthGuard implements CanActivate {
     try {
       await checkJwt(request, response);
       request["user"] = {
+        auth0Id: request["auth"].sub,
         license: trimLicense(request["auth"].joutonbad.license),
         roles: request["auth"].joutonbad.roles,
       };

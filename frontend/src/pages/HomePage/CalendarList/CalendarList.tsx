@@ -11,6 +11,7 @@ import Title from "../../../components/Title/Title";
 import InputTag from "../../../components/InputTag/InputTag";
 import { Discipline, DISCIPLINES } from "../../../utils/discipline";
 import TournamentCard from "../../../components/TournamentCard/TournamentCard";
+import { trimLicense } from "../../../utils/license";
 
 type Props = {
   title: string;
@@ -19,6 +20,7 @@ type Props = {
 
 export default function CalendarList({ title, tournaments }: Props) {
   const { user } = useAuth0();
+  const license = trimLicense(user?.joutonbad.license ?? "");
 
   const [disciplines, setDisciplines] = useState<Discipline[]>([]);
 
@@ -32,7 +34,7 @@ export default function CalendarList({ title, tournaments }: Props) {
       .filter(
         (reg) =>
           !reg.cancelled &&
-          (reg.player.license === user?.name || reg.partner?.license === user?.name),
+          (reg.player.license === license || reg.partner?.license === license),
       )
       .map((reg) => reg.discipline);
   }

@@ -6,9 +6,10 @@ import FormRegistrationSingle, {
   RegistrationSingleInputs,
 } from "./FormRegistrationSingle/FormRegistrationSingle";
 import Title from "../Title/Title";
+import Alert from "../Alert/Alert";
+import { trimLicense } from "../../utils/license";
 import { Tournament } from "../../utils/tournament";
 import { Discipline } from "../../utils/discipline";
-import Alert from "../Alert/Alert";
 
 type Props = {
   tournament: Tournament;
@@ -27,7 +28,7 @@ export default function TournamentRegistrationSimple({
 
   const registration = tournament.registrations.find(
     (reg) =>
-      reg.player.license == playerLicense &&
+      reg.player.license == trimLicense(playerLicense) &&
       !reg.cancelled &&
       (reg.discipline == Discipline.SD || reg.discipline == Discipline.SH),
   );

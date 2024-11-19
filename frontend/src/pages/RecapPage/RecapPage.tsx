@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import Box from "../../components/Box/Box";
 import RecapPageStyle from "./RecapPage.style";
 import Title from "../../components/Title/Title";
+import { trimLicense } from "../../utils/license";
 import { Tournament } from "../../utils/tournament";
 import { Discipline } from "../../utils/discipline";
 import Separator from "../../components/Separator/Separator";
@@ -17,6 +18,7 @@ export default function RecapPage() {
   const { user } = useAuth0();
   const { data: settings } = useQuerySettings();
   const { data: myTournaments } = useQueryTournamentsByPlayer();
+  console.log(myTournaments);
 
   const [toCome, setToCome] = useState<Tournament[]>([]);
   const [past, setPast] = useState<Tournament[]>([]);
@@ -51,8 +53,11 @@ export default function RecapPage() {
 
           // Compute how much the player have to pay.
           const registrations = tournament.registrations.filter(
-            (reg) => reg.player.license == user.name && !reg.cancelled,
+            (reg) =>
+              reg.player.license == trimLicense(user.joutonbad.license) &&
+              !reg.cancelled,
           );
+          console.log(registrations);
           setMyregistrations((regs) => [...regs, ...registrations]);
           if (registrations.length == 1) setCost((c) => c + tournament.prices[0]);
           if (registrations.length == 2)

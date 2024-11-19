@@ -2,11 +2,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import useAxios from "./useAxios";
+import { CONFIG } from "../config";
 import { Level } from "../utils/level";
+import { trimLicense } from "../utils/license";
 import { Tournament } from "../utils/tournament";
 import { Discipline } from "../utils/discipline";
 import { useAlertsContext } from "../contexts/alerts.context";
-import { CONFIG } from "../config";
 
 export const KEY = "tournaments";
 const ENDPOINT = `${CONFIG.joutonbad.apiUrl}/tournament`;
@@ -23,11 +24,11 @@ export function useQueryTournamentById(id: string) {
 export function useQueryTournamentsByPlayer() {
   const { user } = useAuth0();
   const { getAxios } = useAxios();
+  const license = trimLicense(user?.joutonbad.license ?? "");
 
   return useQuery({
     queryKey: [KEY, user?.joutonbad.license],
-    queryFn: () =>
-      getAxios<Tournament[]>(`${ENDPOINT}/license/${user?.joutonbad.license}`),
+    queryFn: () => getAxios<Tournament[]>(`${ENDPOINT}/license/${license}`),
   });
 }
 

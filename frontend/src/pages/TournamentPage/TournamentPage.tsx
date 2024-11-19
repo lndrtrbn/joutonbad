@@ -36,7 +36,7 @@ export default function TournamentPage() {
       <Title size="3xl">{tournament.name}</Title>
       <Separator />
 
-      <Link inline to="/" style="flex items-center gap-2 mb-4 w-[100px]">
+      <Link inline to="/home" style="flex items-center gap-2 mb-4 w-[100px]">
         <FontAwesomeIcon icon={faChevronLeft} />
         Calendrier
       </Link>
@@ -52,7 +52,7 @@ export default function TournamentPage() {
             <TournamentRegistrationSimple
               tournament={tournament}
               canRegister={!registrationsDone}
-              playerLicense={user.name ?? ""}
+              playerLicense={user.joutonbad.license ?? ""}
             />
           )}
 
@@ -62,7 +62,7 @@ export default function TournamentPage() {
               discipline={Discipline.DH}
               tournament={tournament}
               canRegister={!registrationsDone}
-              playerLicense={user.name ?? ""}
+              playerLicense={user.joutonbad.license ?? ""}
             />
           )}
 
@@ -71,7 +71,7 @@ export default function TournamentPage() {
               discipline={Discipline.DM}
               tournament={tournament}
               canRegister={!registrationsDone}
-              playerLicense={user.name ?? ""}
+              playerLicense={user.joutonbad.license ?? ""}
             />
           )}
         </section>

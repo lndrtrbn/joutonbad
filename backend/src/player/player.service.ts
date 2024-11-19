@@ -57,7 +57,7 @@ export class PlayerService {
    * @param license The license to use to fetch player.
    * @returns The player
    */
-  async getMe(license: string): Promise<Player> {
+  async getMe(license: string, auth0Id: string): Promise<Player> {
     const player = await this.prisma.findMe(license);
 
     if (!player.active) {
@@ -66,6 +66,7 @@ export class PlayerService {
         where: { license: player.license },
         data: {
           active: true,
+          auth0Id,
         },
       });
     }

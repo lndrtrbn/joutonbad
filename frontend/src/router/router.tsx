@@ -17,6 +17,7 @@ import NoPlayerFoundPage from "../pages/NoPlayerFoundPage/NoPlayerFoundPage";
 import AdminTournamentPage from "../pages/AdminTournamentPage/AdminTournamentPage";
 import AdminTournamentsPage from "../pages/AdminTournamentsPage/AdminTournamentsPage";
 import AdminRegistrationsPage from "../pages/AdminRegistrationsPage/AdminRegistrationsPage";
+import ConnectedGuard from "./connected.guard";
 
 export const router = createBrowserRouter([
   {
@@ -27,7 +28,11 @@ export const router = createBrowserRouter([
       // PUBLIC PAGES : NO AUTH REQUIRED
       {
         path: "",
-        element: <ConnectPage />,
+        element: (
+          <ConnectedGuard>
+            <ConnectPage />
+          </ConnectedGuard>
+        ),
       },
       {
         path: "/callback",

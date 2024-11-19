@@ -25,7 +25,8 @@ import { trimLicense } from "src/utils/license";
 import { PlayerService } from "./player.service";
 import { Roles } from "src/auth/roles.decorator";
 import { RolesGuard } from "src/auth/roles.guard";
-import { UserLicense } from "src/auth/user.decorator";
+import { Auth0Service } from "src/auth0/auth0.service";
+import { UserID, UserLicense } from "src/auth/user.decorator";
 import { CsvPlayer, PlayerCreatePayload, PlayerUpdatePayload } from "./player";
 
 @Controller("player")
@@ -33,13 +34,19 @@ import { CsvPlayer, PlayerCreatePayload, PlayerUpdatePayload } from "./player";
 export class PlayerController {
   private readonly logger = new AppLogger(PlayerController.name, "controller");
 
-  constructor(private readonly playerService: PlayerService) {}
+  constructor(
+    private readonly playerService: PlayerService,
+    private readonly auth0Service: Auth0Service,
+  ) {}
 
   @Get("/me")
-  async getMe(@UserLicense() userLicense: string): Promise<Player> {
+  async getMe(
+    @UserLicense() userLicense: string,
+    @UserID() userAuth0Id: string,
+  ): Promise<Player> {
     this.logger.log("getMe", `Get a player by its license: ${userLicense}`);
 
-    return this.playerService.getMe(userLicense);
+    return this.playerService.getMe(userLicense, userAuth0Id);
   }
 
   @Get()
@@ -55,6 +62,21 @@ export class PlayerController {
           }
         : undefined,
     );
+  }
+
+  @Get("admins")
+  @Roles([CONFIG.auth0RoleEditor])
+  async getAdmins(): Promise<Player[]> {
+    this.logger.log("getAdmins", "Get all admin players");
+
+    const auth0Admins = await this.auth0Service.getAdmins();
+    const adminIds = auth0Admins.map((admin) => admin.user_id);
+
+    return this.playerService.getWhere({
+      auth0Id: {
+        in: adminIds,
+      },
+    });
   }
 
   @Get(":license")

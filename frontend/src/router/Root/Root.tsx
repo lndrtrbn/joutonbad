@@ -1,18 +1,16 @@
 import { useEffect } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 import Sidebar from "../../components/Sidebar/Sidebar";
-import { useQueryPlayer } from "../../http/useHttpPlayer";
+import { useQueryMe } from "../../http/useHttpPlayer";
 import { useProfilContext } from "../../contexts/profil.context";
 import ScreenLoader from "../../components/ScreenLoader/ScreenLoader";
 
 export default function Root() {
-  const { user } = useAuth0();
   const navigate = useNavigate();
   const { setProfil } = useProfilContext();
 
-  const { data: player, error } = useQueryPlayer(user?.joutonbad.license);
+  const { data: player, error } = useQueryMe();
 
   useEffect(() => {
     if (player) setProfil(player);
