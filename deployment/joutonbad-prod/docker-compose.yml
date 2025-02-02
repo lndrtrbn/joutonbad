@@ -1,6 +1,6 @@
 version: "3"
 
-name: joutonbad-prod
+name: joutonbad2-prod
 
 volumes:
   mongo_data:
@@ -24,7 +24,7 @@ services:
     volumes:
       - mongo_data:/bitnami/mongodb
     ports:
-      - 27018:27017
+      - 27019:27017
     secrets:
       - mongo_pwd
 
@@ -49,13 +49,13 @@ services:
     build:
       context: ../../backend
       dockerfile: ./Dockerfile
-    image: rec/joutonbad-back
+    image: rec/joutonbad2-back
     restart: always
     environment:
       API_PORT: 3000
       SECRET_NAME: api_secrets
     ports:
-      - 127.0.0.1:3000:3000
+      - 127.0.0.1:3001:3000
     secrets:
       - api_secrets
     depends_on:
@@ -69,7 +69,7 @@ services:
       args:
         VITE_API_URL: /api
         VITE_AUTH0_MODERATOR_ROLE: tournois-api-editor
-    image: rec/joutonbad-front
+    image: rec/joutonbad2-front
     restart: always
     ports:
-      - 127.0.0.1:8888:80
+      - 127.0.0.1:8889:80
