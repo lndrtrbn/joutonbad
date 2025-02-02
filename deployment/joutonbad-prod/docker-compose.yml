@@ -38,7 +38,7 @@ services:
       MONGODB_ADVERTISED_HOSTNAME: mongo-secondary2
       MONGODB_REPLICA_SET_MODE: secondary
       MONGODB_REPLICA_SET_KEY: replicasetkey123
-      MONGODB_INITIAL_PRIMARY_HOST: mongo-primary
+      MONGODB_INITIAL_PRIMARY_HOST: mongo-primary2
       MONGODB_INITIAL_PRIMARY_PORT_NUMBER: 27017
       MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD_FILE: /run/secrets/mongo_pwd
     secrets:
