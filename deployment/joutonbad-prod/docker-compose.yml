@@ -13,11 +13,11 @@ secrets:
 
 services:
   mongo-primary2:
-    container_name: mongo-primary
+    container_name: mongo-primary2
     image: bitnami/mongodb:4.2.21
     restart: always
     environment:
-      MONGODB_ADVERTISED_HOSTNAME: mongo-primary
+      MONGODB_ADVERTISED_HOSTNAME: mongo-primary2
       MONGODB_REPLICA_SET_MODE: primary
       MONGODB_REPLICA_SET_KEY: replicasetkey123
       MONGODB_ROOT_PASSWORD_FILE: /run/secrets/mongo_pwd
@@ -29,13 +29,13 @@ services:
       - mongo_pwd
 
   mongo-secondary2:
-    container_name: mongo-secondary
+    container_name: mongo-secondary2
     image: bitnami/mongodb:4.2.21
     depends_on:
-      - mongo-primary
+      - mongo-primary2
     restart: always
     environment:
-      MONGODB_ADVERTISED_HOSTNAME: mongo-secondary
+      MONGODB_ADVERTISED_HOSTNAME: mongo-secondary2
       MONGODB_REPLICA_SET_MODE: secondary
       MONGODB_REPLICA_SET_KEY: replicasetkey123
       MONGODB_INITIAL_PRIMARY_HOST: mongo-primary
@@ -45,7 +45,7 @@ services:
       - mongo_pwd
 
   api2:
-    container_name: api
+    container_name: api2
     build:
       context: ../../backend
       dockerfile: ./Dockerfile
@@ -59,16 +59,20 @@ services:
     secrets:
       - api_secrets
     depends_on:
-      - mongo-primary
+      - mongo-primary2
 
   app2:
-    container_name: app
+    container_name: app2
     build:
       context: ../../frontend
       dockerfile: ./Dockerfile
       args:
         VITE_API_URL: /api
-        VITE_AUTH0_MODERATOR_ROLE: tournois-api-editor
+        VITE_JOUTONBAD_CLIENT: REC Badminton
+        VITE_AUTH0_MODERATOR_ROLE: moderator
+        VITE_AUTH0_CLIENT_DOMAIN: recbadminton.eu.auth0.com
+        VITE_AUTH0_CLIENT_ID: h5ZaQZStwE2IEFTILTInLheyr88SNIvb
+        VITE_AUTH0_AUDIENCE: joutonbad-api
     image: rec/joutonbad2-front
     restart: always
     ports:
