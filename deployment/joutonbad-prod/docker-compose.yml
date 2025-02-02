@@ -12,7 +12,7 @@ secrets:
     file: secrets/api_secrets
 
 services:
-  mongo-primary:
+  mongo-primary2:
     container_name: mongo-primary
     image: bitnami/mongodb:4.2.21
     restart: always
@@ -28,7 +28,7 @@ services:
     secrets:
       - mongo_pwd
 
-  mongo-secondary:
+  mongo-secondary2:
     container_name: mongo-secondary
     image: bitnami/mongodb:4.2.21
     depends_on:
@@ -44,7 +44,7 @@ services:
     secrets:
       - mongo_pwd
 
-  api:
+  api2:
     container_name: api
     build:
       context: ../../backend
@@ -61,7 +61,7 @@ services:
     depends_on:
       - mongo-primary
 
-  app:
+  app2:
     container_name: app
     build:
       context: ../../frontend
