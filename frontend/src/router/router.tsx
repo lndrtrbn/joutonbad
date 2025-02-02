@@ -5,6 +5,7 @@ import Root from "./Root/Root";
 import AuthGuard from "./auth.guard";
 import EditorGuard from "./editor.guard";
 import FaqPage from "../pages/FaqPage/FaqPage";
+import ConnectedGuard from "./connected.guard";
 import HomePage from "../pages/HomePage/HomePage";
 import RecapPage from "../pages/RecapPage/RecapPage";
 import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
@@ -17,7 +18,6 @@ import NoPlayerFoundPage from "../pages/NoPlayerFoundPage/NoPlayerFoundPage";
 import AdminTournamentPage from "../pages/AdminTournamentPage/AdminTournamentPage";
 import AdminTournamentsPage from "../pages/AdminTournamentsPage/AdminTournamentsPage";
 import AdminRegistrationsPage from "../pages/AdminRegistrationsPage/AdminRegistrationsPage";
-import ConnectedGuard from "./connected.guard";
 
 export const router = createBrowserRouter([
   {
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
       // PRIVATE PAGES : AUTH REQUIRED
       {
         path: "/",
-        element: <Root />,
+        element: <AuthGuard component={Root} />,
         children: [
           {
             path: "/home",
