@@ -3,59 +3,15 @@ version: "3"
 name: joutonbad-dev
 
 volumes:
-  postgres_data:
   mongo_data:
 
 secrets:
-  postgres_user:
-    file: secrets/postgres_user
-  postgres_pwd:
-    file: secrets/postgres_pwd
-  keycloak_user:
-    file: secrets/keycloak_user
-  keycloak_pwd:
-    file: secrets/keycloak_pwd
   mongo_pwd:
     file: secrets/mongo_pwd
   api_secrets:
     file: secrets/api_secrets
 
 services:
-  postgresql-dev:
-    container_name: postgresql-dev
-    image: bitnami/postgresql:14.9.0
-    restart: always
-    volumes:
-      - postgres_data:/bitnami/postgresql
-    environment:
-      POSTGRESQL_DATABASE: keycloak
-      POSTGRESQL_USERNAME_FILE: /run/secrets/postgres_user
-      POSTGRESQL_PASSWORD_FILE: /run/secrets/postgres_pwd
-    secrets:
-      - postgres_user
-      - postgres_pwd
-
-  keycloak-dev:
-    container_name: keycloak-dev
-    image: bitnami/keycloak:22.0.1
-    restart: always
-    environment:
-      KEYCLOAK_DATABASE_HOST: postgresql-dev
-      KEYCLOAK_DATABASE_NAME: keycloak
-      KEYCLOAK_DATABASE_USER_FILE: /run/secrets/postgres_user
-      KEYCLOAK_DATABASE_PASSWORD_FILE: /run/secrets/postgres_pwd
-      KEYCLOAK_ADMIN_FILE: /run/secrets/keycloak_user
-      KEYCLOAK_ADMIN_PASSWORD_FILE: /run/secrets/keycloak_pwd
-    ports:
-      - 127.0.0.1:8081:8080
-    depends_on:
-      - postgresql-dev
-    secrets:
-      - postgres_user
-      - postgres_pwd
-      - keycloak_user
-      - keycloak_pwd
-
   mongo-primary-dev:
     container_name: mongo-primary-dev
     image: bitnami/mongodb:4.2.21

@@ -1,6 +1,6 @@
 import { Logger } from "@nestjs/common";
 
-type AppLoggerType = "controller" | "service";
+type AppLoggerType = "controller" | "service" | "guard";
 
 const COLORS = {
   green: "32",
@@ -28,6 +28,6 @@ export class AppLogger {
 
   error(caller: string, message: string) {
     const context = this.type === "controller" ? `[${caller}]` : `${caller}()`;
-    this.logger.log(`${this.prefix}${context} ${message}`);
+    this.logger.error(`${this.prefix}${context} ${message}`);
   }
 }

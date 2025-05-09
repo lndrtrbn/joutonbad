@@ -1,19 +1,20 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
 
+import App from "../App";
+import Root from "./Root/Root";
 import AuthGuard from "./auth.guard";
 import EditorGuard from "./editor.guard";
-import UnauthGuard from "./unauth.guard";
-import Root from "../components/Root/Root";
 import FaqPage from "../pages/FaqPage/FaqPage";
+import ConnectedGuard from "./connected.guard";
 import HomePage from "../pages/HomePage/HomePage";
 import RecapPage from "../pages/RecapPage/RecapPage";
-import LoginPage from "../pages/LoginPage/LoginPage";
-import SignupPage from "../pages/SignupPage/SignupPage";
 import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
-import ForgotPwdPage from "../pages/ForgotPwdPage/ForgotPwdPage";
+import ConnectPage from "../pages/ConnectPage/ConnectPage";
+import CallbackPage from "../pages/CallbackPage/CallbackPage";
 import TournamentPage from "../pages/TournamentPage/TournamentPage";
 import AdminGlobalPage from "../pages/AdminGlobalPage/AdminGlobalPage";
 import AdminMembersPage from "../pages/AdminMembersPage/AdminMembersPage";
+import NoPlayerFoundPage from "../pages/NoPlayerFoundPage/NoPlayerFoundPage";
 import AdminTournamentPage from "../pages/AdminTournamentPage/AdminTournamentPage";
 import AdminTournamentsPage from "../pages/AdminTournamentsPage/AdminTournamentsPage";
 import AdminRegistrationsPage from "../pages/AdminRegistrationsPage/AdminRegistrationsPage";
@@ -21,45 +22,33 @@ import AdminRegistrationsPage from "../pages/AdminRegistrationsPage/AdminRegistr
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Outlet />,
+    element: <App />,
     errorElement: <ErrorBoundary />,
     children: [
       // PUBLIC PAGES : NO AUTH REQUIRED
       {
-        path: "/login",
+        path: "",
         element: (
-          <UnauthGuard>
-            <LoginPage />
-          </UnauthGuard>
+          <ConnectedGuard>
+            <ConnectPage />
+          </ConnectedGuard>
         ),
       },
       {
-        path: "/signup",
-        element: (
-          <UnauthGuard>
-            <SignupPage />
-          </UnauthGuard>
-        ),
+        path: "/callback",
+        element: <CallbackPage />,
       },
       {
-        path: "/forgotpwd",
-        element: (
-          <UnauthGuard>
-            <ForgotPwdPage />
-          </UnauthGuard>
-        ),
+        path: "/notfound",
+        element: <NoPlayerFoundPage />,
       },
       // PRIVATE PAGES : AUTH REQUIRED
       {
         path: "/",
-        element: (
-          <AuthGuard>
-            <Root />
-          </AuthGuard>
-        ),
+        element: <AuthGuard component={Root} />,
         children: [
           {
-            path: "",
+            path: "/home",
             element: <HomePage />,
           },
           {

@@ -1,22 +1,24 @@
 import { compareAsc } from "date-fns";
+import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useMemo, useState } from "react";
 
-import { Registration, filterByDiscipline } from "../../utils/registration";
 import Box from "../../components/Box/Box";
 import RecapPageStyle from "./RecapPage.style";
 import Title from "../../components/Title/Title";
+import { trimLicense } from "../../utils/license";
 import { Tournament } from "../../utils/tournament";
 import { Discipline } from "../../utils/discipline";
-import { useAuthContext } from "../../contexts/auth.context";
 import Separator from "../../components/Separator/Separator";
 import { useQuerySettings } from "../../http/useHttpSettings";
 import CalendarList from "../HomePage/CalendarList/CalendarList";
 import { useQueryTournamentsByPlayer } from "../../http/useHttpTournament";
+import { Registration, filterByDiscipline } from "../../utils/registration";
 
 export default function RecapPage() {
-  const { user } = useAuthContext();
+  const { user } = useAuth0();
   const { data: settings } = useQuerySettings();
   const { data: myTournaments } = useQueryTournamentsByPlayer();
+  console.log(myTournaments);
 
   const [toCome, setToCome] = useState<Tournament[]>([]);
   const [past, setPast] = useState<Tournament[]>([]);
@@ -51,8 +53,11 @@ export default function RecapPage() {
 
           // Compute how much the player have to pay.
           const registrations = tournament.registrations.filter(
-            (reg) => reg.player.license == user.license && !reg.cancelled,
+            (reg) =>
+              reg.player.license == trimLicense(user.joutonbad.license) &&
+              !reg.cancelled,
           );
+          console.log(registrations);
           setMyregistrations((regs) => [...regs, ...registrations]);
           if (registrations.length == 1) setCost((c) => c + tournament.prices[0]);
           if (registrations.length == 2)
@@ -82,6 +87,14 @@ export default function RecapPage() {
     return null;
   }
 
+  const regStats = [
+    !!regSH.length && regSH.length + " SH",
+    !!regSD.length && regSD.length + " SD",
+    !!regDH.length && regDH.length + " DH",
+    !!regDD.length && regDD.length + " DD",
+    !!regDM.length && regDM.length + " DM",
+  ].filter((a) => !!a);
+
   return (
     <>
       <Title size="3xl">Recap de mes inscriptions</Title>
@@ -93,17 +106,9 @@ export default function RecapPage() {
             <div className={RecapPageStyle.stat}>
               {myTournaments.length} Tournois | {myRegistrations.length} Tableaux
             </div>
-            <div className={RecapPageStyle.stat}>
-              {[
-                !!regSH.length && regSH.length + " SH",
-                !!regSD.length && regSD.length + " SD",
-                !!regDH.length && regDH.length + " DH",
-                !!regDD.length && regDD.length + " DD",
-                !!regDM.length && regDM.length + " DM",
-              ]
-                .filter((a) => !!a)
-                .join(" | ")}
-            </div>
+            {regStats.length > 0 && (
+              <div className={RecapPageStyle.stat}>{regStats.join(" | ")}</div>
+            )}
             <div className={RecapPageStyle.stat}>
               {cost}€ avancé par le club | {personalCost}€ à charge
             </div>

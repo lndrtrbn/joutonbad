@@ -1,10 +1,11 @@
-import { ReactNode, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { ComponentType } from "react";
+import { withAuthenticationRequired } from "@auth0/auth0-react";
 
-import { useAuthContext } from "../contexts/auth.context";
+import useLogin from "../hooks/useLogin";
+import ScreenLoader from "../components/ScreenLoader/ScreenLoader";
 
 type Props = {
-  children: ReactNode;
+  component: ComponentType;
 };
 
 /**
@@ -13,15 +14,13 @@ type Props = {
  * If not redirect to login page.
  * Otherwise continue the navigation.
  */
-export default function AuthGuard({ children }: Props) {
-  const navigate = useNavigate();
-  const { user } = useAuthContext();
+export default function AuthGuard({ component }: Props) {
+  const { loginParams } = useLogin();
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
+  const Component = withAuthenticationRequired(component, {
+    loginOptions: loginParams,
+    onRedirecting: () => <ScreenLoader />,
+  });
 
-  return <>{user ? children : null}</>;
+  return <Component />;
 }

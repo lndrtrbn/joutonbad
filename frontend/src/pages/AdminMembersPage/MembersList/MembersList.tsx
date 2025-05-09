@@ -17,8 +17,8 @@ export default function MembersList({ members }: Props) {
 
   const [paginatedPlayers, pagination] = usePagination(
     (members ?? [])
-      .filter((player) => inactive || player.kcId)
-      .filter((player) => active || !player.kcId)
+      .filter((player) => inactive || player.active)
+      .filter((player) => active || !player.active)
       .sort((a, b) =>
         `${a.lastname} ${a.name}`.localeCompare(`${b.lastname} ${b.name}`),
       ),

@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import useAxios from "./useAxios";
-import { API_URL } from "./config";
+import { CONFIG } from "../config";
 import { Settings } from "../utils/settings";
 import { useAlertsContext } from "../contexts/alerts.context";
 
 const KEY = "settings";
-const ENDPOINT = `${API_URL}/settings`;
+const ENDPOINT = `${CONFIG.joutonbad.apiUrl}/settings`;
 
 export function useQuerySettings() {
   const { getAxios } = useAxios();

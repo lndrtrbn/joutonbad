@@ -2,14 +2,13 @@ import { exit } from "process";
 
 type Config = {
   port: number;
-  kcUrl: string;
-  kcExternalUrl: string;
-  kcRealm: string;
-  kcClientId: string;
-  kcClientSecret: string;
-  kcApiUser: string;
-  kcApiPwd: string;
-  kcRoleEditor: string;
+  auth0Audience: string;
+  auth0RoleEditor: string;
+  auth0RoleEditorId: string;
+  auth0IssuerBaseUrl: string;
+  auth0ApiId: string;
+  auth0ApiAudience: string;
+  auth0ApiSecret: string;
   googleSpreadSheetId: string;
   googlePlayersSheetId: string;
   googleTournamentsSheetId: string;
@@ -20,14 +19,13 @@ type Config = {
 
 export const CONFIG: Config = {
   port: parseInt(process.env.API_PORT ?? ""),
-  kcUrl: process.env.KC_URL ?? "",
-  kcExternalUrl: process.env.KC_EXTERNAL_URL ?? "",
-  kcRealm: process.env.KC_REALM ?? "",
-  kcClientId: process.env.KC_CLIENTID ?? "",
-  kcClientSecret: process.env.KC_CLIENTSECRET ?? "",
-  kcApiUser: process.env.KC_API_USER ?? "",
-  kcApiPwd: process.env.KC_API_PWD ?? "",
-  kcRoleEditor: process.env.KC_ROLE_EDITOR ?? "",
+  auth0Audience: process.env.AUTH0_AUDIENCE ?? "",
+  auth0RoleEditor: process.env.AUTH0_ROLE_EDITOR ?? "",
+  auth0RoleEditorId: process.env.AUTH0_ROLE_EDITOR_ID ?? "",
+  auth0IssuerBaseUrl: process.env.AUTH0_ISSUER_BASE_URL ?? "",
+  auth0ApiId: process.env.AUTH0_API_ID ?? "",
+  auth0ApiAudience: process.env.AUTH0_API_AUDIENCE ?? "",
+  auth0ApiSecret: process.env.AUTH0_API_SECRET ?? "",
   googleSpreadSheetId: process.env.GOOGLE_SPREADSHEET_ID ?? "",
   googlePlayersSheetId: process.env.GOOGLE_PLAYERS_SHEET_ID ?? "",
   googleTournamentsSheetId: process.env.GOOGLE_TOURNAMENTS_SHEET_ID ?? "",

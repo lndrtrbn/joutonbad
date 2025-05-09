@@ -2,7 +2,7 @@ import { Device } from "./preferences";
 
 export type Player = {
   id: string;
-  kcId: string | null;
+  active?: boolean;
   createdAt: string;
   updatedAt: string;
   name: string;

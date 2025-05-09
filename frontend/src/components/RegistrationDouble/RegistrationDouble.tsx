@@ -9,6 +9,7 @@ import FormRegistrationDouble, {
 } from "./FormRegistrationDouble/FormRegistrationDouble";
 import Alert from "../Alert/Alert";
 import Title from "../Title/Title";
+import { trimLicense } from "../../utils/license";
 import { Discipline } from "../../utils/discipline";
 import { Tournament } from "../../utils/tournament";
 import { APIErrorMessage } from "../../utils/error";
@@ -47,7 +48,7 @@ export default function RegistrationDouble({
 
   const registration = tournament.registrations.find(
     (reg) =>
-      reg.player.license == playerLicense &&
+      reg.player.license == trimLicense(playerLicense) &&
       !reg.cancelled &&
       ((isMixte && reg.discipline == Discipline.DM) ||
         (!isMixte &&
@@ -105,7 +106,11 @@ export default function RegistrationDouble({
               disciplines={availableDisciplines}
             />
           )}
-          {errorMsg && <Alert type="error">{errorMsg}</Alert>}
+          {errorMsg && (
+            <Alert type="error" style="mt-4">
+              {errorMsg}
+            </Alert>
+          )}
         </>
       ) : (
         <Title subtitle>

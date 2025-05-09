@@ -1,15 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import useAxios from "./useAxios";
-import { API_URL } from "./config";
 import { Level } from "../utils/level";
 import { Discipline } from "../utils/discipline";
 import { Registration } from "../utils/registration";
 import { KEY as TOURNAMENT_KEY } from "./useHttpTournament";
 import { useAlertsContext } from "../contexts/alerts.context";
+import { CONFIG } from "../config";
 
 const KEY = "registrations";
-const ENDPOINT = `${API_URL}/registration`;
+const ENDPOINT = `${CONFIG.joutonbad.apiUrl}/registration`;
 
 export function useQueryRegistrations() {
   const { getAxios } = useAxios();

@@ -1,11 +1,8 @@
 import { useRouteError } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFaceDizzy } from "@fortawesome/free-regular-svg-icons";
 
 import Link from "../../components/Link/Link";
 import Alert from "../../components/Alert/Alert";
-import ErrorBoundaryStyle from "./ErrorBoundary.style";
-import AuthLayout from "../../components/AuthLayout/AuthLayout";
+import SimpleLayout from "../../components/SimpleLayout/SimpleLayout";
 
 export default function ErrorBoundary() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,19 +16,18 @@ export default function ErrorBoundary() {
   }
 
   return (
-    <AuthLayout>
-      <div className={ErrorBoundaryStyle.content}>
-        <FontAwesomeIcon size="2x" icon={faFaceDizzy} />
-
+    <SimpleLayout>
+      <div className="flex flex-col items-center gap-4 w-72 sm:w-80">
         <Alert type="error">
-          {error.status}
           <p>{errorMessage}</p>
         </Alert>
 
-        <Link to="/" inline>
-          Page d'accueil
-        </Link>
+        {error.status == 404 && (
+          <Link to="/" inline>
+            Page d'accueil
+          </Link>
+        )}
       </div>
-    </AuthLayout>
+    </SimpleLayout>
   );
 }

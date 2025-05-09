@@ -41,6 +41,5 @@ lerna-debug.log*
 .env
 google-private-key.json
 secrets
-dist_keycloak
 build
 storybook-static

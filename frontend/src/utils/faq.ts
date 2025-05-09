@@ -16,7 +16,7 @@ export const FAQ: Faq = [
     question: "Comment sont utilisées mes données personnelles ?",
     answers: [
       "Elles sont utilisées uniquement pour le bon fonctionnement de l'application.",
-      "Aucune donnée n'est transmise à des tiers.",
+      "Le seul tiers utilisé est Auth0 qui est là pour gérer la connexion, gestion de son compte.",
       "Le mail sert en cas d'oublie du mot de passe. Le nom et la licence sont les informations nécessaires pour pouvoir faire les inscriptions.",
       "Pour toute question RGDP ou la suppression de compte tu peux contacter un membre du bureau.",
     ],

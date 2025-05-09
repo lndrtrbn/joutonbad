@@ -8,15 +8,14 @@
   - [Nginx configuration](#nginx-configuration)
     - [Set app in maintenance](#set-app-in-maintenance)
     - [Set app back online](#set-app-back-online)
-    - [Make keycloak available](#make-keycloak-available)
 
 
 ## Repository organization
 
 **joutonbad-dev** - Docker compose to deploy a dev/test env.\
-**joutonbad-local** - Docker compose for a local env for development purpose.\
-**joutonbad-prod** - Docker compose for prod.\
-**maintenance.html** - HTML page where in maintenance.
+**joutonbad-local** - Docker compose for local env - development purpose.\
+**joutonbad-prod** - Docker compose for prod env.\
+**maintenance.html** - HTML page where prod is in maintenance.
 
 ## Deploy the application
 
@@ -24,7 +23,7 @@ Connect to the VPS through SSH.
 
 Go to `joutonbad/deployment/joutonbad-prod` folder.
 
-Fetch last commits and run
+Fetch last commits and run the following commands:
 
 ```
 docker compose build
@@ -58,7 +57,6 @@ docker compose up -d
 ```
 sudo rm /etc/nginx/sites-enabled/joutonbad
 sudo ln -s /etc/nginx/sites-available/joutonbad-maintenance-app /etc/nginx/sites-enabled/joutonbad-maintenance-app
-sudo ln -s /etc/nginx/sites-available/joutonbad-maintenance-kc /etc/nginx/sites-enabled/joutonbad-maintenance-kc
 sudo service nginx restart
 ```
 
@@ -67,12 +65,5 @@ sudo service nginx restart
 ```
 sudo rm /etc/nginx/sites-enabled/joutonbad-maintenance-app
 sudo ln -s /etc/nginx/sites-available/joutonbad /etc/nginx/sites-enabled/joutonbad
-sudo service nginx restart
-```
-
-### Make keycloak available
-
-```
-sudo rm /etc/nginx/sites-enabled/joutonbad-maintenance-kc
 sudo service nginx restart
 ```

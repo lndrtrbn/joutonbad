@@ -12,15 +12,16 @@
     "nc": "node ./bin/nc.cjs"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@hookform/resolvers": "^3.1.1",
     "@tanstack/react-query": "^5.51.11",
+    "animejs": "^3.2.2",
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
-    "jose": "^4.14.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.1",
@@ -28,6 +29,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@types/animejs": "^3.1.12",
     "@types/node": "^20.11.24",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",

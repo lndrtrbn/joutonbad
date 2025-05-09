@@ -111,7 +111,7 @@ export default function FormRegistrationDouble({
       <InputCheckbox
         checked={partnerClub}
         onChange={setPartnerClub}
-        children="Partenaire dans le club du REC"
+        children="Partenaire dans le club"
       />
 
       {partnerClub && (
